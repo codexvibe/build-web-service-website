@@ -1,175 +1,109 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { ShoppingCart, Menu, X, Sun, Moon } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
-import Link from 'next/link';
-import Image from 'next/image';
-import { useCart } from '../context/CartContext';
-import { CartSidebar } from './CartSidebar';
-import { useTheme } from 'next-themes';
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-export const Header = () => {
+const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-  const { itemCount, setIsSidebarOpen } = useCart();
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const navLinks = [
-    { name: 'Accueil', href: '/' },
-    { name: 'Boutique', href: '/shop' },
-    { name: 'Promotions', href: '/promos' },
-    { name: 'Acheter en Gros', href: '/gros' },
+    { name: "Accueil", href: "/" },
+    { name: "Services", href: "/services" },
+    { name: "Portfolio", href: "/portfolio" },
+    { name: "Contact", href: "/contact" },
   ];
 
   return (
-    <div className="fixed top-0 left-0 w-full z-50 flex flex-col">
-      <div 
-        className="bg-neon-red text-white flex whitespace-nowrap relative font-bold text-xs md:text-sm tracking-widest h-[32px] overflow-hidden border-b border-black w-full"
-      >
-        <div className="animate-marquee h-full flex items-center shrink-0 w-max">
-          {/* Bloc de texte 1 */}
-          <div className="flex items-center shrink-0">
-            <span className="mx-4">🔥 LIVRAISON RAPIDE 58 WILAYAS 🇩🇿</span>
-            <span className="mx-4">|</span>
-            <span className="mx-4">CONTREFAÇON ❌</span>
-            <span className="mx-4">|</span>
-            <span className="mx-4">L'ORIGINAL EST ICI 💎</span>
-            <span className="mx-4">|</span>
-            <span className="mx-4">🔥 LIVRAISON RAPIDE 58 WILAYAS 🇩🇿</span>
-            <span className="mx-4">|</span>
-            <span className="mx-4">CONTREFAÇON ❌</span>
-            <span className="mx-4">|</span>
-            <span className="mx-4">L'ORIGINAL EST ICI 💎</span>
-            <span className="mx-4">|</span>
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b border-transparent ${
+        isScrolled ? "glass py-4 border-white/10" : "bg-transparent py-6"
+      }`}
+    >
+      <div className="container mx-auto px-6 flex items-center justify-between">
+        <Link href="/" className="flex items-center gap-3 z-50">
+          <div className="relative w-10 h-10 flex items-center justify-center">
+            <div className="absolute inset-0 bg-brand opacity-20 blur-md rounded-full"></div>
+            <div className="relative w-full h-full bg-card border border-brand/50 rounded-xl flex items-center justify-center shadow-[0_0_15px_rgba(14,165,233,0.3)]">
+              <span className="text-brand font-display font-bold text-xl">W</span>
+            </div>
           </div>
-          {/* Bloc de texte 2 Identique pour la boucle fluide */}
-          <div className="flex items-center shrink-0">
-            <span className="mx-4">🔥 LIVRAISON RAPIDE 58 WILAYAS 🇩🇿</span>
-            <span className="mx-4">|</span>
-            <span className="mx-4">CONTREFAÇON ❌</span>
-            <span className="mx-4">|</span>
-            <span className="mx-4">L'ORIGINAL EST ICI 💎</span>
-            <span className="mx-4">|</span>
-            <span className="mx-4">🔥 LIVRAISON RAPIDE 58 WILAYAS 🇩🇿</span>
-            <span className="mx-4">|</span>
-            <span className="mx-4">CONTREFAÇON ❌</span>
-            <span className="mx-4">|</span>
-            <span className="mx-4">L'ORIGINAL EST ICI 💎</span>
-            <span className="mx-4">|</span>
-          </div>
-        </div>
+          <span className="text-2xl font-display font-bold text-white tracking-tight">
+            Web<span className="text-brand-gradient">Craft</span>
+          </span>
+        </Link>
+
+        {/* Desktop Nav */}
+        <nav className="hidden md:flex items-center gap-8">
+          {navLinks.map((link) => (
+            <Link
+              key={link.name}
+              href={link.href}
+              className={`text-sm font-semibold tracking-wide uppercase transition-colors hover:text-brand ${
+                pathname === link.href ? "text-brand" : "text-gray-400"
+              }`}
+            >
+              {link.name}
+            </Link>
+          ))}
+          <Link href="/order" className="btn-brand py-2.5 px-6 ml-4 shadow-[0_0_20px_rgba(14,165,233,0.3)]">
+            Commander
+          </Link>
+        </nav>
+
+        {/* Mobile Menu Toggle */}
+        <button
+          className="md:hidden text-white p-2 z-50 relative"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        >
+          {isMobileMenuOpen ? (
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          ) : (
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          )}
+        </button>
       </div>
 
-      <header 
-        className={`w-full transition-all duration-300 ${
-          isScrolled ? 'bg-white dark:bg-black/90 dark:backdrop-blur-lg py-3 border-b border-black/10 dark:border-white/10' : 'bg-transparent py-4 md:py-6'
+      {/* Mobile Nav Overlay */}
+      <div
+        className={`fixed inset-0 bg-bg/95 backdrop-blur-xl z-40 flex flex-col items-center justify-center transition-all duration-300 ${
+          isMobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible pointer-events-none"
         }`}
       >
-        <div className="container mx-auto px-4 md:px-6 flex justify-between items-center">
-          
-          <Link href="/" className="flex items-center gap-3 group">
-            <img 
-              src="/assets/logo.jpg" 
-              alt="HM.ZONEDZ Logo" 
-              width="50" 
-              height="50" 
-              className="rounded-md object-contain group-hover:scale-105 transition-transform duration-300"
-            />
-            <div className="flex flex-col leading-none">
-              <span className="text-[10px] md:text-xs text-neon-green font-bold tracking-widest uppercase">N°1 EN ALGÉRIE</span>
-            </div>
-          </Link>
-
-          <nav className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <Link 
-                key={link.name} 
-                href={link.href}
-                className="font-heading text-lg text-black dark:text-white hover:text-neon-green dark:hover:text-neon-green transition-colors uppercase tracking-wide"
-              >
-                {link.name}
-              </Link>
-            ))}
-          </nav>
-
-          <div className="flex items-center gap-2 md:gap-4">
-            
-            <button 
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className="p-2 text-black dark:text-white hover:text-neon-green transition-colors"
-              title={theme === 'light' ? "Passer au thème sombre" : "Passer au thème clair"}
+        <nav className="flex flex-col items-center gap-8">
+          {navLinks.map((link) => (
+            <Link
+              key={link.name}
+              href={link.href}
+              className={`text-2xl font-display font-bold uppercase tracking-widest transition-colors hover:text-brand ${
+                pathname === link.href ? "text-brand" : "text-white"
+              }`}
+              onClick={() => setIsMobileMenuOpen(false)}
             >
-              {mounted && (theme === 'light' ? <Moon size={24} /> : <Sun size={24} />)}
-            </button>
-
-            <button 
-              onClick={() => setIsSidebarOpen(true)}
-              className="relative p-2 text-black dark:text-white hover:text-neon-green transition-colors"
-            >
-              <ShoppingCart size={24} />
-              {itemCount > 0 && (
-                <span className="absolute top-0 right-0 bg-neon-red text-white text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center">
-                  {itemCount}
-                </span>
-              )}
-            </button>
-
-            <button 
-              className="md:hidden p-2 text-black dark:text-white"
-              onClick={() => setMobileMenuOpen(true)}
-            >
-              <Menu size={28} />
-            </button>
-          </div>
-        </div>
-      </header>
-
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div 
-            initial={{ opacity: 0, x: '100%' }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: '100%' }}
-            transition={{ type: 'tween', duration: 0.3 }}
-            className="fixed inset-0 z-50 bg-white/95 dark:bg-black/95 backdrop-blur-xl flex flex-col pt-20 px-6 pb-6"
+              {link.name}
+            </Link>
+          ))}
+          <Link
+            href="/order"
+            className="btn-brand mt-4 text-lg px-8 py-4 shadow-[0_0_30px_rgba(14,165,233,0.4)]"
+            onClick={() => setIsMobileMenuOpen(false)}
           >
-            <button 
-              className="absolute top-6 right-6 text-black dark:text-white p-2 rounded-full border border-black/20 dark:border-white/20 hover:text-neon-green hover:border-neon-green dark:hover:border-neon-green"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              <X size={24} />
-            </button>
-
-            <nav className="flex flex-col gap-6 mt-10">
-              {navLinks.map((link) => (
-                <Link 
-                  key={link.name} 
-                  href={link.href}
-                  className="font-heading text-4xl text-black dark:text-white hover:text-neon-green dark:hover:text-neon-green uppercase tracking-wide border-b border-black/10 dark:border-white/10 pb-4"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {link.name}
-                </Link>
-              ))}
-            </nav>
-          </motion.div>
-        )}
-      </AnimatePresence>
-      <CartSidebar />
-    </div>
+            Commander un site
+          </Link>
+        </nav>
+      </div>
+    </header>
   );
 };
+
+export default Header;
