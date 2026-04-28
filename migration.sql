@@ -56,8 +56,20 @@ CREATE TABLE IF NOT EXISTS orders (
 ALTER TABLE orders ADD COLUMN IF NOT EXISTS subtotal_price BIGINT DEFAULT 0;
 ALTER TABLE orders ADD COLUMN IF NOT EXISTS delivery_price BIGINT DEFAULT 0;
 ALTER TABLE orders ADD COLUMN IF NOT EXISTS items_list TEXT DEFAULT 'Non spécifié';
-ALTER TABLE orders ALTER COLUMN total_price TYPE BIGINT USING total_price::BIGINT;
+ALTER TABLE orders ADD COLUMN IF NOT EXISTS total_price BIGINT NOT NULL DEFAULT 0;
 ALTER TABLE orders ALTER COLUMN status SET DEFAULT 'En attente';
+
+-- Convertir total_price en BIGINT si la colonne existe déjà avec un autre type
+DO $$
+BEGIN
+  IF EXISTS (
+    SELECT 1 FROM information_schema.columns 
+    WHERE table_name = 'orders' AND column_name = 'total_price'
+    AND data_type != 'bigint'
+  ) THEN
+    ALTER TABLE orders ALTER COLUMN total_price TYPE BIGINT USING total_price::BIGINT;
+  END IF;
+END $$;
 
 -- Table des Administrateurs
 CREATE TABLE IF NOT EXISTS admins (
