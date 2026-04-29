@@ -4,39 +4,39 @@ import Link from "next/link";
 export default function ServicesPage() {
   const allServices = [
     {
-      title: "Création de Sites Web",
-      description: "Sites vitrines, e-commerce et applications web sur mesure. Design moderne, performance optimisée et référencement naturel.",
+      title: "Sites Vitrines",
+      description: "Présentez votre entreprise avec un site moderne et professionnel. Design unique, responsive et optimisé pour Google.",
       price: "Dès 15 000 DA",
       icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>,
     },
     {
-      title: "Nettoyage Professionnel",
-      description: "Entretien complet de vos locaux, bureaux ou domicile. Équipes qualifiées, produits écologiques et horaires flexibles.",
+      title: "Boutiques E-commerce",
+      description: "Lancez votre commerce en ligne. Gestion des stocks, paiements sécurisés et interface client intuitive.",
+      price: "Dès 45 000 DA",
+      icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>,
+    },
+    {
+      title: "Applications Web",
+      description: "Développement d'applications métiers, SaaS et plateformes complexes adaptées à vos processus internes.",
       price: "Sur Devis",
-      icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2a10 10 0 1 0 10 10 10 10 0 0 0-10-10zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/><path d="M12 6v6l4 2"/></svg>,
+      icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg>,
     },
     {
-      title: "Plomberie & Chauffage",
-      description: "Installation, entretien et dépannage d'urgence 24/7. Réparation de fuites, débouchage, et systèmes de chauffage central.",
-      price: "Dès 3000 DA",
-      icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>,
+      title: "SEO & Référencement",
+      description: "Audit technique, optimisation on-page et stratégie de mots-clés pour dominer les résultats de recherche.",
+      price: "Dès 10 000 DA",
+      icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>,
     },
     {
-      title: "Électricité Générale",
-      description: "Mise aux normes, installation de tableaux électriques, domotique et dépannage d'urgence par des électriciens certifiés.",
-      price: "Dès 4000 DA",
-      icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>,
-    },
-    {
-      title: "Déménagement & Transport",
-      description: "Service clé en main pour particuliers et entreprises. Emballage sécurisé, transport, démontage et remontage de meubles.",
+      title: "UI/UX Design",
+      description: "Conception d'interfaces modernes et ergonomiques centrées sur l'utilisateur pour une conversion maximale.",
       price: "Sur Devis",
-      icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>,
+      icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h.01"/><path d="M7 20h.01"/><path d="M17 20h.01"/><path d="M2 15h20"/><path d="M2 9h20"/><path d="M12 4v16"/></svg>,
     },
     {
-      title: "Consulting IT & Réseaux",
-      description: "Audit de sécurité, installation de serveurs, câblage réseau et conseil en transformation digitale pour votre PME.",
-      price: "Sur Devis",
+      title: "Maintenance & Support",
+      description: "Mises à jour de sécurité, sauvegardes régulières et assistance technique pour garantir la pérennité de votre site.",
+      price: "Dès 4 000 DA",
       icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>,
     },
   ];
@@ -78,12 +78,12 @@ export default function ServicesPage() {
         
         {/* Header */}
         <div className="text-center mb-20 max-w-3xl mx-auto">
-          <span className="badge mb-6 animate-fade-up">Nos Prestations</span>
+          <span className="badge mb-6 animate-fade-up">Notre Expertise</span>
           <h1 className="text-4xl md:text-6xl font-display font-bold text-text mb-6 animate-fade-up-delay leading-tight">
-            Des services de <span className="text-brand">haute qualité.</span>
+            Des solutions digitales <span className="text-brand">performantes.</span>
           </h1>
           <p className="text-text-sub text-lg font-sans leading-relaxed animate-fade-up-delay-2">
-            Nous offrons une large gamme de services pour faciliter votre quotidien et assurer le bon fonctionnement de vos installations.
+            Nous concevons des expériences web uniques pour aider votre entreprise à se démarquer et à croître dans l'écosystème numérique actuel.
           </p>
         </div>
 
@@ -163,7 +163,7 @@ export default function ServicesPage() {
             
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
               <div>
-                <h2 className="text-3xl md:text-5xl font-display font-bold text-text mb-10">L'ADN ProServices.</h2>
+                <h2 className="text-3xl md:text-5xl font-display font-bold text-text mb-10">L'ADN Digitale.</h2>
                 <div className="space-y-8">
                   <div className="flex gap-5">
                     <div className="w-12 h-12 rounded-xl bg-surface border border-border flex items-center justify-center shrink-0">
@@ -199,8 +199,8 @@ export default function ServicesPage() {
                 <div className="absolute -inset-0.5 bg-linear-to-br from-brand via-accent to-brand rounded-3xl blur-xl opacity-20 group-hover:opacity-40 transition duration-700"></div>
                 <div className="relative bg-surface border border-border rounded-2xl p-6 aspect-square flex flex-col justify-center items-center text-center overflow-hidden shadow-lg">
                   <div className="relative z-10">
-                    <h3 className="text-4xl font-display font-bold text-text mb-4">Besoin d'une intervention ?</h3>
-                    <p className="text-text-sub mb-8 max-w-xs mx-auto">Confiez-nous votre besoin, nos experts s'occupent du reste.</p>
+                    <h3 className="text-4xl font-display font-bold text-text mb-4">Prêt à lancer votre site ?</h3>
+                    <p className="text-text-sub mb-8 max-w-xs mx-auto">Confiez-nous votre projet web, nos experts s'occupent du reste.</p>
                     <Link href="/order" className="btn-brand">
                       Demander un devis
                     </Link>

@@ -21,7 +21,7 @@ const Footer = () => {
               </span>
             </Link>
             <p className="text-text-sub text-sm leading-relaxed mb-8 max-w-md">
-              Entreprise de services professionnels dédiée à vous offrir des solutions de haute qualité, rapides et fiables pour tous vos besoins.
+              Agence digitale spécialisée dans la création de sites web haute performance, le design UX/UI et le référencement pour propulser votre business.
             </p>
             <div className="flex gap-4">
               <a href="#" className="w-10 h-10 rounded-xl bg-surface border border-border flex items-center justify-center text-text-sub hover:bg-brand/10 hover:border-brand/30 hover:text-brand transition-all">
@@ -39,10 +39,10 @@ const Footer = () => {
           <div className="md:col-span-2">
             <h4 className="text-text font-display font-bold mb-6 text-sm uppercase tracking-wider">Expertise</h4>
             <ul className="space-y-3">
-              <li><Link href="/services" className="text-text-sub hover:text-brand text-sm transition-colors flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-brand/50"></span>Nettoyage</Link></li>
-              <li><Link href="/services" className="text-text-sub hover:text-brand text-sm transition-colors flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-brand/50"></span>Plomberie</Link></li>
-              <li><Link href="/services" className="text-text-sub hover:text-brand text-sm transition-colors flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-brand/50"></span>Consulting IT</Link></li>
-              <li><Link href="/services" className="text-text-sub hover:text-brand text-sm transition-colors flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-brand/50"></span>Déménagement</Link></li>
+              <li><Link href="/services" className="text-text-sub hover:text-brand text-sm transition-colors flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-brand/50"></span>Site Vitrine</Link></li>
+              <li><Link href="/services" className="text-text-sub hover:text-brand text-sm transition-colors flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-brand/50"></span>E-commerce</Link></li>
+              <li><Link href="/services" className="text-text-sub hover:text-brand text-sm transition-colors flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-brand/50"></span>App Web / SaaS</Link></li>
+              <li><Link href="/services" className="text-text-sub hover:text-brand text-sm transition-colors flex items-center gap-2"><span className="w-1 h-1 rounded-full bg-brand/50"></span>SEO & Digital</Link></li>
             </ul>
           </div>
 

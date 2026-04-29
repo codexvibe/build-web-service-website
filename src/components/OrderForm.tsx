@@ -19,35 +19,22 @@ const OrderForm = () => {
   });
 
   const serviceTypes = [
-    { id: "web", label: "Création de Sites Web" },
-    { id: "nettoyage", label: "Nettoyage Professionnel" },
-    { id: "plomberie", label: "Plomberie & Chauffage" },
-    { id: "electricite", label: "Électricité Générale" },
-    { id: "demenagement", label: "Déménagement & Transport" },
-    { id: "consulting", label: "Consulting IT & Réseaux" },
-    { id: "jardinage", label: "Entretien d'Espaces Verts" },
-    { id: "autre", label: "Autre besoin spécifique" },
+    { id: "vitrine", label: "Site Vitrine" },
+    { id: "ecommerce", label: "Boutique E-commerce" },
+    { id: "application", label: "Application Web / SaaS" },
+    { id: "seo", label: "SEO & Référencement" },
+    { id: "design", label: "UI/UX Design" },
+    { id: "autre", label: "Autre projet digital" },
   ];
 
-  const webOptions = [
-    "PACK BASIC (15,000 DA)",
-    "PACK STANDARD (25,000 DA)",
-    "PACK PREMIUM (45,000 DA)",
-    "Option: Admin Dashboard (+10,000 DA)",
-    "Option: Optimisation vitesse (+5,000 DA)",
-    "Option: Multilingue (+5,000 DA)",
+  const optionsList = [
+    "Design sur mesure",
+    "Paiement en ligne",
+    "Espace Client / Admin",
+    "Optimisation SEO",
+    "Multilingue (FR/AR/EN)",
+    "Maintenance mensuelle",
   ];
-
-  const generalOptions = [
-    "Urgence (Sous 2h)",
-    "Intervention le Week-end",
-    "Fourniture de pièces requise",
-    "Contrat d'entretien annuel",
-    "Devis sur place nécessaire",
-    "Besoin de conseil technique",
-  ];
-
-  const currentOptions = formData.serviceType === "web" ? webOptions : generalOptions;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -78,7 +65,6 @@ const OrderForm = () => {
           urgency: formData.options.join(", "),
           preferred_date: formData.preferredDate,
           budget: formData.budget,
-          preferred_time: formData.preferredTime,
         },
       ]);
 
@@ -102,7 +88,7 @@ const OrderForm = () => {
         </div>
         <h2 className="text-4xl font-display font-bold text-text mb-4 relative z-10">Demande Enregistrée.</h2>
         <p className="text-text-sub mb-10 max-w-lg mx-auto font-sans text-lg relative z-10">
-          Votre demande d'intervention a bien été reçue. Un de nos experts prendra contact avec vous très rapidement pour confirmer les détails.
+          Votre demande de projet a bien été reçue. Un de nos experts prendra contact avec vous très rapidement pour discuter de votre futur site.
         </p>
         <div className="flex flex-col md:flex-row gap-4 justify-center relative z-10">
           <button 
@@ -210,7 +196,7 @@ const OrderForm = () => {
       <div className="space-y-8 relative z-10">
         <div className="flex items-center gap-4 border-b border-border pb-4">
              <div className="w-10 h-10 rounded-lg bg-surface border border-border text-brand flex items-center justify-center font-display font-bold text-lg shadow-sm">03</div>
-             <h3 className="text-2xl font-display font-bold text-text">Détails de l'intervention</h3>
+             <h3 className="text-2xl font-display font-bold text-text">Détails du Projet</h3>
         </div>
         
         <div className="space-y-2">
@@ -222,14 +208,14 @@ const OrderForm = () => {
             value={formData.description}
             onChange={handleChange}
             className="input resize-none"
-            placeholder="Décrivez précisément ce dont vous avez besoin..."
+            placeholder="Décrivez votre projet, vos objectifs et vos fonctionnalités souhaitées..."
           />
         </div>
 
         <div className="space-y-4 pt-4">
           <label className="text-xs font-bold text-text-sub uppercase tracking-wider block mb-4">Options supplémentaires</label>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {currentOptions.map((option) => (
+            {optionsList.map((option) => (
               <label
                 key={option}
                 className={`flex items-center gap-3 p-4 rounded-xl border cursor-pointer transition-all ${
