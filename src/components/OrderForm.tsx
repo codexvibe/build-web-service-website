@@ -82,9 +82,10 @@ const OrderForm = () => {
 
       if (error) throw error;
       setSubmitted(true);
-    } catch (err) {
-      console.error("Error submitting request:", err);
-      alert(language === 'ar' ? "خطأ في النظام. يرجى المحاولة مرة أخرى." : "Erreur système lors de l'envoi. Veuillez réessayer.");
+    } catch (err: any) {
+      console.error("Detailed submission error:", err);
+      const errorMsg = err.message || (language === 'ar' ? "خطأ في النظام." : "Erreur système.");
+      alert(`${errorMsg} - ${language === 'ar' ? "يرجى المحاولة مرة أخرى." : "Veuillez réessayer."}`);
     } finally {
       setLoading(false);
     }

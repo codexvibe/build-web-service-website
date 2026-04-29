@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useTransition, useMemo } from 'react'
 import { 
-  Search, Bell, Plus, Users, Trash2, LayoutDashboard, Activity
+  Search, Bell, Plus, Users, Trash2, LayoutDashboard, Activity, Settings
 } from 'lucide-react'
 import { 
   updateRequestStatusAction, deleteRequestAction,
@@ -13,6 +13,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import Sidebar from './components/Sidebar'
 import StatsOverview from './components/StatsOverview'
 import LeadDetails from './components/LeadDetails'
+import SettingsView from './components/SettingsView'
 
 interface ServiceRequest {
   id: string
@@ -125,31 +126,36 @@ export default function DashboardClient({ initialRequests }: { initialRequests: 
       <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} onLogout={async () => { await logoutAction(); window.location.href = '/admin'; }} />
 
       <main className="flex-1 relative overflow-y-auto custom-scrollbar bg-[#0a0c10]">
-        <header className="sticky top-0 z-40 bg-[#0a0c10]/80 backdrop-blur-xl border-b border-white/5 px-8 py-6 flex items-center justify-between">
-           <h2 className="text-2xl font-display font-bold tracking-tight">
-             {activeTab === 'requests' && 'Gestion des Demandes'}
-             {activeTab === 'stats' && 'Statistiques de l\'Agence'}
-             {activeTab === 'team' && 'Équipe Administrative'}
-             {activeTab === 'settings' && 'Paramètres Système'}
-           </h2>
-
+        <header className="sticky top-0 z-40 bg-[#0a0c10]/80 backdrop-blur-xl border-b border-white/5 px-10 py-8 flex items-center justify-between">
            <div className="flex items-center gap-6">
-              <div className="hidden sm:flex items-center gap-3 px-4 py-2 bg-white/5 rounded-full border border-white/5">
-                 <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                 <span className="text-[10px] font-bold text-white/60 uppercase tracking-widest">Système Opérationnel</span>
+              <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center lg:hidden">
+                 <LayoutDashboard size={24} className="text-brand" />
               </div>
-              <div className="h-8 w-px bg-white/5 mx-2" />
-              <button className="relative w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-white/40 hover:text-white transition-colors">
-                 <Bell size={20} />
-                 <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-brand rounded-full" />
+              <h2 className="text-3xl font-display font-bold tracking-tight">
+                {activeTab === 'requests' && 'Gestion des Demandes'}
+                {activeTab === 'stats' && 'Statistiques de l\'Agence'}
+                {activeTab === 'team' && 'Équipe Administrative'}
+                {activeTab === 'settings' && 'Configuration Système'}
+              </h2>
+           </div>
+
+           <div className="flex items-center gap-8">
+              <div className="hidden xl:flex items-center gap-4 px-6 py-3 bg-white/5 rounded-full border border-white/10">
+                 <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.5)]" />
+                 <span className="text-[11px] font-bold text-white/60 uppercase tracking-widest">Serveur Opérationnel (DZ)</span>
+              </div>
+              <div className="h-10 w-px bg-white/10 mx-2" />
+              <button className="relative w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:text-white transition-all hover:border-brand/50 group">
+                 <Bell size={22} className="group-hover:rotate-12 transition-transform" />
+                 <span className="absolute top-3 right-3 w-2.5 h-2.5 bg-brand rounded-full border-2 border-[#0a0c10]" />
               </button>
            </div>
         </header>
 
-        <div className="p-8 lg:p-12 max-w-[1600px] mx-auto">
+        <div className="p-10 lg:p-14 2xl:p-20 w-full max-w-full">
            <AnimatePresence mode="wait">
               {activeTab === 'requests' && (
-                <motion.div key="requests" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="space-y-10">
+                <motion.div key="requests" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="space-y-12">
                   <StatsOverview 
                     totalLeads={requests.length} 
                     pendingLeads={requests.filter(r => r.status === 'pending').length}
@@ -157,79 +163,93 @@ export default function DashboardClient({ initialRequests }: { initialRequests: 
                     totalRevenue={`${totalEstimatedRevenue.toLocaleString()} DA`}
                   />
 
-                  <div className="bg-[#0f1117] p-3 rounded-[1.5rem] border border-white/5 flex flex-col lg:flex-row gap-4 items-center">
+                  <div className="bg-[#0f1117] p-4 rounded-4xl border border-white/5 flex flex-col lg:flex-row gap-6 items-center shadow-2xl">
                     <div className="relative flex-1 w-full">
-                       <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-white/20" size={18} />
+                       <Search className="absolute left-8 top-1/2 -translate-y-1/2 text-white/20" size={20} />
                        <input 
                          type="text" 
-                         placeholder="Rechercher par nom, service ou client..."
+                         placeholder="Rechercher un client, un service ou une localisation..."
                          value={searchTerm}
                          onChange={e => setSearchTerm(e.target.value)}
-                         className="w-full bg-transparent border-none focus:ring-0 text-sm py-4 pl-16 text-white placeholder:text-white/20"
+                         className="w-full bg-transparent border-none focus:ring-0 text-base py-5 pl-20 text-white placeholder:text-white/20"
                        />
                     </div>
-                    <select 
-                      value={filterStatus}
-                      onChange={e => setFilterStatus(e.target.value)}
-                      className="lg:w-48 bg-white/5 border border-white/5 rounded-xl py-4 px-6 text-sm text-white/60 cursor-pointer focus:border-brand/50 transition-all"
-                    >
-                      <option value="all">Tous les Statuts</option>
-                      <option value="pending">⏳ En Attente</option>
-                      <option value="contacted">📞 Contacté</option>
-                      <option value="in_progress">⚙️ En Cours</option>
-                      <option value="completed">✅ Terminé</option>
-                    </select>
+                    <div className="flex gap-4 w-full lg:w-auto">
+                      <select 
+                        value={filterStatus}
+                        onChange={e => setFilterStatus(e.target.value)}
+                        className="flex-1 lg:w-60 bg-white/5 border border-white/10 rounded-2xl py-5 px-8 text-sm font-bold text-white/60 cursor-pointer focus:border-brand/50 transition-all outline-none"
+                      >
+                        <option value="all">Tous les Statuts</option>
+                        <option value="pending">⏳ En Attente</option>
+                        <option value="contacted">📞 Contacté</option>
+                        <option value="in_progress">⚙️ En Cours</option>
+                        <option value="completed">✅ Terminé</option>
+                      </select>
+                    </div>
                   </div>
 
-                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                    <div className="lg:col-span-4 xl:col-span-5 space-y-4">
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+                    <div className="lg:col-span-4 xl:col-span-4 space-y-4 max-h-[1000px] overflow-y-auto pr-2 custom-scrollbar">
                        {filteredRequests.map(req => (
                          <button
                            key={req.id}
                            onClick={() => setSelectedRequest(req)}
-                           className={`w-full text-left p-6 rounded-3xl transition-all duration-300 border group ${
+                           className={`w-full text-left p-8 rounded-4xl transition-all duration-500 border group relative overflow-hidden ${
                              selectedRequest?.id === req.id 
-                             ? 'bg-brand/10 border-brand shadow-2xl shadow-brand/5' 
-                             : 'bg-[#0f1117] border-white/5 hover:border-white/20'
+                             ? 'bg-brand/10 border-brand shadow-2xl shadow-brand/10' 
+                             : 'bg-[#0f1117] border-white/5 hover:border-white/20 hover:scale-[1.02]'
                            }`}
                          >
-                            <div className="flex justify-between items-start mb-4">
-                               <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-xs font-bold ${
-                                 selectedRequest?.id === req.id ? 'bg-brand text-white' : 'bg-white/5 text-white/40'
+                            <div className="flex justify-between items-start mb-6">
+                               <div className={`w-12 h-12 rounded-2xl flex items-center justify-center text-sm font-bold transition-all ${
+                                 selectedRequest?.id === req.id ? 'bg-brand text-white' : 'bg-white/10 text-white/60 group-hover:bg-brand/20 group-hover:text-brand'
                                }`}>
                                  {req.full_name.charAt(0).toUpperCase()}
                                </div>
-                               <span className={`text-[8px] font-bold px-2 py-1 rounded-md uppercase tracking-wider ${
-                                 req.status === 'pending' ? 'bg-amber-500/10 text-amber-500 border border-amber-500/10' :
-                                 req.status === 'completed' ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/10' :
-                                 'bg-blue-500/10 text-blue-500 border border-blue-500/10'
+                               <span className={`text-[9px] font-bold px-3 py-1.5 rounded-lg uppercase tracking-[0.15em] ${
+                                 req.status === 'pending' ? 'bg-amber-500/10 text-amber-500 border border-amber-500/20' :
+                                 req.status === 'completed' ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20' :
+                                 'bg-blue-500/10 text-blue-500 border border-blue-500/20'
                                }`}>
                                  {req.status}
                                </span>
                             </div>
-                            <h5 className="font-display font-bold text-lg mb-1 group-hover:text-brand transition-colors">{req.full_name}</h5>
-                            <p className="text-[11px] text-white/30 font-bold uppercase tracking-widest">{req.service_type}</p>
-                            <div className="mt-6 flex items-center justify-between">
-                               <span className="text-xs font-bold text-white/60">{req.budget}</span>
-                               <span className="text-[10px] text-white/20 font-bold">{new Date(req.created_at).toLocaleDateString()}</span>
+                            <h5 className="font-display font-bold text-xl mb-2 group-hover:text-brand transition-colors">{req.full_name}</h5>
+                            <div className="flex items-center gap-3">
+                               <p className="text-[11px] text-white/30 font-bold uppercase tracking-widest">{req.service_type}</p>
+                               <span className="w-1 h-1 rounded-full bg-white/10" />
+                               <p className="text-[11px] text-white/20 font-bold">{req.location}</p>
+                            </div>
+                            <div className="mt-8 flex items-center justify-between pt-6 border-t border-white/5">
+                               <span className="text-sm font-bold text-white/80">{req.budget}</span>
+                               <span className="text-[10px] text-white/20 font-bold uppercase tracking-widest">{new Date(req.created_at).toLocaleDateString()}</span>
                             </div>
                          </button>
                        ))}
                     </div>
 
-                    <div className="lg:col-span-8 xl:col-span-7">
+                    <div className="lg:col-span-8 xl:col-span-8">
                        {selectedRequest ? (
                          <LeadDetails lead={selectedRequest} onDelete={handleDeleteRequest} onClose={() => setSelectedRequest(null)} onUpdateStatus={handleUpdateStatus} />
                        ) : (
-                         <div className="h-[700px] flex items-center justify-center bg-[#0f1117]/50 rounded-[3rem] border-2 border-dashed border-white/5">
-                            <div className="text-center space-y-6">
-                               <div className="w-24 h-24 rounded-full bg-brand/5 flex items-center justify-center mx-auto text-brand/20">
-                                  <LayoutDashboard size={48} />
+                         <div className="h-[800px] flex items-center justify-center bg-[#0f1117]/50 rounded-[3.5rem] border-2 border-dashed border-white/5 relative overflow-hidden group">
+                            <div className="absolute inset-0 bg-brand/5 opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+                            <div className="text-center space-y-8 relative z-10">
+                               <div className="w-32 h-32 rounded-[2.5rem] bg-brand/5 border border-brand/10 flex items-center justify-center mx-auto text-brand/20 group-hover:text-brand/40 group-hover:scale-110 transition-all duration-700">
+                                  <LayoutDashboard size={64} />
                                </div>
-                               <h3 className="text-xl font-display font-bold text-white/40">Visualiseur de Projet</h3>
-                               <p className="text-[10px] text-white/10 font-bold uppercase tracking-[0.3em] max-w-[280px] mx-auto leading-loose">
-                                  Sélectionnez un lead à gauche pour afficher les détails complets et agir.
-                               </p>
+                               <div className="space-y-4">
+                                  <h3 className="text-2xl font-display font-bold text-white/40">Visualiseur de Projet Pro</h3>
+                                  <p className="text-[11px] text-white/10 font-bold uppercase tracking-[0.4em] max-w-[320px] mx-auto leading-loose">
+                                     Sélectionnez un dossier client pour accéder à l'interface de gestion prioritaire.
+                                  </p>
+                               </div>
+                               <div className="flex justify-center gap-2">
+                                  <div className="w-1.5 h-1.5 rounded-full bg-brand/20" />
+                                  <div className="w-1.5 h-1.5 rounded-full bg-brand/40" />
+                                  <div className="w-1.5 h-1.5 rounded-full bg-brand/20" />
+                               </div>
                             </div>
                          </div>
                        )}
@@ -240,53 +260,65 @@ export default function DashboardClient({ initialRequests }: { initialRequests: 
 
               {activeTab === 'stats' && (
                 <motion.div key="stats" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-12">
-                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-                      <div className="bg-[#0f1117] p-10 rounded-[3rem] border border-white/5 relative overflow-hidden">
-                         <div className="absolute top-0 left-0 w-32 h-32 bg-brand/10 blur-[60px] -ml-16 -mt-16" />
-                         <h3 className="text-2xl font-display font-bold mb-12 flex items-center gap-4">
-                            <Activity className="text-brand" size={24} /> Distribution par Service
+                   <div className="grid grid-cols-1 xl:grid-cols-2 gap-10">
+                      <div className="bg-[#0f1117] p-12 rounded-[3.5rem] border border-white/5 relative overflow-hidden shadow-2xl">
+                         <div className="absolute top-0 left-0 w-64 h-64 bg-brand/10 blur-[100px] -ml-32 -mt-32" />
+                         <h3 className="text-3xl font-display font-bold mb-14 flex items-center gap-6">
+                            <Activity className="text-brand" size={32} /> Performance par Service
                          </h3>
-                         <div className="space-y-8">
+                         <div className="space-y-10">
                             {['vitrine', 'ecommerce', 'application', 'seo'].map(id => {
                                const count = requests.filter(r => r.service_type.toLowerCase().includes(id)).length
                                const percent = requests.length ? (count / requests.length) * 100 : 0
                                return (
-                                 <div key={id} className="space-y-3">
-                                    <div className="flex justify-between items-center text-[11px] font-bold uppercase tracking-widest">
+                                 <div key={id} className="space-y-4">
+                                    <div className="flex justify-between items-center text-[12px] font-bold uppercase tracking-[0.2em]">
                                        <span className="text-white/40">{id}</span>
-                                       <span className="text-brand">{count} leads</span>
+                                       <span className="text-brand">{count} Leads</span>
                                     </div>
-                                    <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden"><motion.div initial={{ width: 0 }} animate={{ width: `${percent}%` }} className="h-full bg-brand rounded-full" /></div>
+                                    <div className="h-3 w-full bg-white/5 rounded-full overflow-hidden border border-white/5 shadow-inner">
+                                       <motion.div initial={{ width: 0 }} animate={{ width: `${percent}%` }} transition={{ duration: 1, ease: "easeOut" }} className="h-full bg-brand rounded-full shadow-[0_0_15px_rgba(37,99,235,0.4)]" />
+                                    </div>
                                  </div>
                                )
                             })}
                          </div>
                       </div>
-                      <div className="bg-[#0f1117] p-10 rounded-[3rem] border border-white/5 flex flex-col items-center justify-center text-center">
-                         <h4 className="text-xl font-display font-bold text-white/40 mb-2">Performances Temporelles</h4>
-                         <p className="text-[10px] text-white/10 font-bold uppercase tracking-widest max-w-[280px]">Automatiquement activé dès 20 demandes.</p>
+                      <div className="bg-[#0f1117] p-12 rounded-[3.5rem] border border-white/5 flex flex-col items-center justify-center text-center shadow-2xl relative overflow-hidden">
+                         <div className="absolute bottom-0 right-0 w-48 h-48 bg-brand/5 blur-[80px] -mr-24 -mb-24" />
+                         <div className="w-24 h-24 rounded-full bg-white/5 flex items-center justify-center text-white/10 mb-8 border border-white/5"><Activity size={40} /></div>
+                         <h4 className="text-2xl font-display font-bold text-white/40 mb-4">Graphiques de Croissance</h4>
+                         <p className="text-[11px] text-white/10 font-bold uppercase tracking-[0.3em] max-w-[320px] leading-loose">Activation automatique dès que le volume de données atteint 50 entrées.</p>
                       </div>
                    </div>
                 </motion.div>
               )}
 
               {activeTab === 'team' && (
-                <motion.div key="team" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-10">
-                   <div className="bg-[#0f1117] p-10 rounded-[3rem] border border-white/5 flex justify-between items-center">
-                      <h3 className="text-3xl font-display font-bold">Équipe</h3>
-                      <button onClick={() => setIsAdminModalOpen(true)} className="btn-brand px-10 py-5 rounded-2xl flex items-center gap-3"><Plus size={20} /> Nouveau</button>
+                <motion.div key="team" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-12">
+                   <div className="bg-[#0f1117] p-12 rounded-3xl border border-white/5 flex flex-col md:flex-row justify-between items-center gap-8 shadow-2xl">
+                      <div>
+                        <h3 className="text-4xl font-display font-bold mb-2">Gestion d'Équipe</h3>
+                        <p className="text-white/30 text-sm">Administrez les accès et rôles de votre équipe.</p>
+                      </div>
+                      <button onClick={() => setIsAdminModalOpen(true)} className="btn-brand px-12 py-6 rounded-[1.5rem] flex items-center gap-4 text-lg active:scale-95 transition-all"><Plus size={24} /> Nouvel Administrateur</button>
                    </div>
-                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                       {admins.map(admin => (
-                        <div key={admin.id} className="bg-[#0f1117] p-8 rounded-[2.5rem] border border-white/5 flex items-center justify-between group">
-                           <div className="flex items-center gap-6">
-                              <div className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center text-white/20 group-hover:bg-brand group-hover:text-white transition-all"><Users size={24} /></div>
-                              <h5 className="font-display font-bold text-lg">{admin.name}</h5>
-                           </div>
-                           <button onClick={() => handleDeleteAdmin(admin.id)} className="text-white/20 hover:text-red-500 transition-all"><Trash2 size={20} /></button>
+                        <div key={admin.id} className="bg-[#0f1117] p-10 rounded-3xl border border-white/5 flex flex-col items-center justify-center text-center group transition-all hover:border-brand/30 hover:shadow-2xl hover:shadow-brand/5">
+                           <div className="w-20 h-20 rounded-[2rem] bg-white/5 flex items-center justify-center text-white/20 group-hover:bg-brand group-hover:text-white transition-all duration-500 mb-6 shadow-xl"><Users size={32} /></div>
+                           <h5 className="font-display font-bold text-xl mb-1">{admin.name}</h5>
+                           <p className="text-[10px] text-white/20 font-bold uppercase tracking-widest mb-8">Administrateur Senior</p>
+                           <button onClick={() => handleDeleteAdmin(admin.id)} className="w-12 h-12 rounded-2xl bg-red-500/10 text-red-500 flex items-center justify-center hover:bg-red-500 hover:text-white transition-all border border-red-500/20"><Trash2 size={20} /></button>
                         </div>
                       ))}
                    </div>
+                </motion.div>
+              )}
+
+              {activeTab === 'settings' && (
+                <motion.div key="settings" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.98 }}>
+                   <SettingsView />
                 </motion.div>
               )}
            </AnimatePresence>
@@ -295,14 +327,21 @@ export default function DashboardClient({ initialRequests }: { initialRequests: 
 
       <AnimatePresence>
          {isAdminModalOpen && (
-           <div className="fixed inset-0 z-[100] flex items-center justify-center p-6">
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setIsAdminModalOpen(false)} className="absolute inset-0 bg-black/90 backdrop-blur-xl" />
-              <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} className="w-full max-w-md bg-[#0f1117] border border-white/10 p-12 rounded-[3rem] shadow-2xl relative">
-                 <h3 className="text-3xl font-display font-bold mb-8">Ajouter un Admin</h3>
-                 <form onSubmit={handleAddAdmin} className="space-y-6">
-                    <input required type="text" value={adminFormData.name} onChange={e => setAdminFormData(p => ({ ...p, name: e.target.value }))} className="w-full bg-white/5 border border-white/5 rounded-2xl py-5 px-8 text-white" placeholder="Nom" />
-                    <input required type="password" value={adminFormData.passcode} onChange={e => setAdminFormData(p => ({ ...p, passcode: e.target.value }))} className="w-full bg-white/5 border border-white/5 rounded-2xl py-5 px-8 text-white" placeholder="Passcode" />
-                    <button type="submit" className="btn-brand w-full py-5 rounded-2xl font-bold">Créer</button>
+           <div className="fixed inset-0 z-100 flex items-center justify-center p-6">
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setIsAdminModalOpen(false)} className="absolute inset-0 bg-black/90 backdrop-blur-2xl" />
+              <motion.div initial={{ opacity: 0, scale: 0.9, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.9, y: 20 }} className="w-full max-w-lg bg-[#0f1117] border border-white/10 p-14 rounded-3xl shadow-2xl relative overflow-hidden">
+                 <div className="absolute top-0 right-0 w-48 h-48 bg-brand/10 blur-[80px] -mr-24 -mt-24" />
+                 <h3 className="text-4xl font-display font-bold mb-10">Accès Équipe</h3>
+                 <form onSubmit={handleAddAdmin} className="space-y-8 relative z-10">
+                    <div className="space-y-3">
+                       <label className="text-[11px] font-bold text-white/30 uppercase tracking-[0.2em] ml-2">Nom Complet</label>
+                       <input required type="text" value={adminFormData.name} onChange={e => setAdminFormData(p => ({ ...p, name: e.target.value }))} className="w-full bg-white/5 border border-white/10 rounded-3xl py-6 px-10 text-white focus:border-brand transition-all outline-none" placeholder="Ex: Jean Dupont" />
+                    </div>
+                    <div className="space-y-3">
+                       <label className="text-[11px] font-bold text-white/30 uppercase tracking-[0.2em] ml-2">Code d'accès sécurisé</label>
+                       <input required type="password" value={adminFormData.passcode} onChange={e => setAdminFormData(p => ({ ...p, passcode: e.target.value }))} className="w-full bg-white/5 border border-white/10 rounded-3xl py-6 px-10 text-white focus:border-brand transition-all outline-none" placeholder="••••••••" />
+                    </div>
+                    <button type="submit" className="btn-brand w-full py-6 rounded-3xl font-bold text-lg mt-4 shadow-2xl shadow-brand/20">Valider l'Accès</button>
                  </form>
               </motion.div>
            </div>

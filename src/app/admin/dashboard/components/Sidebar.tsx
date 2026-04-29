@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { 
-  Shield, MessageSquare, Activity, Users, Settings, LogOut 
+  MessageSquare, Activity, Users, Settings, LogOut 
 } from 'lucide-react'
 
 interface SidebarProps {
@@ -22,8 +22,9 @@ export default function Sidebar({ activeTab, setActiveTab, onLogout }: SidebarPr
   return (
     <aside className="w-full md:w-24 lg:w-72 bg-[#0f1117] border-r border-white/5 flex flex-col z-50">
       <div className="p-8 flex items-center gap-4">
-        <div className="w-12 h-12 rounded-2xl bg-brand flex items-center justify-center shadow-2xl shadow-brand/20">
-          <Shield size={24} className="text-white" />
+        <div className="w-14 h-14 relative flex items-center justify-center">
+          <div className="absolute inset-0 bg-brand opacity-20 blur-md rounded-full"></div>
+          <img src="/logo.png" alt="ProServices" className="relative w-full h-full object-contain" />
         </div>
         <div className="hidden lg:block">
           <h1 className="font-display font-bold text-xl tracking-tight">Agency<span className="text-brand">Hub</span></h1>

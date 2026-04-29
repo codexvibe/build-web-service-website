@@ -1,10 +1,14 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useTranslation } from "./LanguageProvider";
 
 const Footer = () => {
   const { t } = useTranslation();
+  const pathname = usePathname();
+
+  if (pathname.startsWith('/admin')) return null;
   
   return (
     <footer className="bg-bg border-t border-border pt-20 pb-10 relative overflow-hidden">
@@ -15,11 +19,9 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-16">
           <div className="md:col-span-5">
             <Link href="/" className="flex items-center gap-3 mb-6">
-              <div className="relative w-10 h-10 flex items-center justify-center">
+              <div className="relative w-20 h-20 flex items-center justify-center">
                 <div className="absolute inset-0 bg-brand opacity-20 blur-md rounded-full"></div>
-                <div className="relative w-full h-full bg-surface border border-brand/50 rounded-xl flex items-center justify-center">
-                  <span className="text-brand font-display font-bold text-xl">P</span>
-                </div>
+                <img src="/logo.png" alt="ProServices" className="relative w-full h-full object-contain" />
               </div>
               <span className="text-2xl font-display font-bold text-text tracking-tight">
                 Pro<span className="text-brand">Services</span>
