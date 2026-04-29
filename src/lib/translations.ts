@@ -23,6 +23,22 @@ export const translations = {
       pack_premium: "Pack Premium",
       pricing_title: "Des solutions adaptées à votre budget.",
       pricing_subtitle: "Choisissez le pack qui correspond le mieux à vos besoins.",
+      vitrine: {
+        title: "Sites Vitrines",
+        desc: "Présentez votre activité avec un design élégant et professionnel. Idéal pour les artisans et PME."
+      },
+      ecommerce: {
+        title: "E-commerce",
+        desc: "Vendez vos produits en ligne avec une boutique performante, sécurisée et facile à gérer."
+      },
+      seo: {
+        title: "SEO & Visibilité",
+        desc: "Optimisez votre positionnement sur Google et attirez plus de clients qualifiés."
+      },
+      apps: {
+        title: "Applications Web",
+        desc: "Développement sur mesure d'outils métiers et de plateformes complexes pour votre entreprise."
+      }
     },
     order: {
       title: "Configurez votre Projet",
@@ -56,6 +72,34 @@ export const translations = {
     theme: {
       light: "Mode Clair",
       dark: "Mode Sombre",
+    },
+    stats: {
+      projects: "Projets",
+      quality: "Qualité",
+      response: "Réponse",
+      country: "Algérie"
+    },
+    testimonials: {
+      title: "Ils nous font confiance.",
+      t1: {
+        name: "Ahmed Benali",
+        role: "Gérant d'Entreprise",
+        content: "Une équipe très professionnelle. L'intervention a été rapide et le résultat est impeccable."
+      },
+      t2: {
+        name: "Sonia Mansouri",
+        role: "Particulier",
+        content: "Service parfait de bout en bout. Ils ont été ponctuels et efficaces."
+      },
+      t3: {
+        name: "Karim Ziani",
+        role: "Directeur Opérationnel",
+        content: "Réactivité et professionnalisme sont les maîtres mots."
+      }
+    },
+    cta: {
+      title: "Prêt à lancer votre projet ?",
+      whatsapp: "Discuter sur WhatsApp"
     }
   },
   en: {
@@ -82,6 +126,22 @@ export const translations = {
       pack_premium: "Premium Pack",
       pricing_title: "Solutions adapted to your budget.",
       pricing_subtitle: "Choose the pack that best fits your needs.",
+      vitrine: {
+        title: "Showcase Sites",
+        desc: "Present your activity with an elegant and professional design. Ideal for artisans and SMEs."
+      },
+      ecommerce: {
+        title: "E-commerce",
+        desc: "Sell your products online with a high-performance, secure and easy-to-manage store."
+      },
+      seo: {
+        title: "SEO & Visibility",
+        desc: "Optimize your positioning on Google and attract more qualified customers."
+      },
+      apps: {
+        title: "Web Applications",
+        desc: "Custom development of business tools and complex platforms for your company."
+      }
     },
     order: {
       title: "Configure your Project",
@@ -115,6 +175,34 @@ export const translations = {
     theme: {
       light: "Light Mode",
       dark: "Dark Mode",
+    },
+    stats: {
+      projects: "Projects",
+      quality: "Quality",
+      response: "Response",
+      country: "Algeria"
+    },
+    testimonials: {
+      title: "They trust us.",
+      t1: {
+        name: "Ahmed Benali",
+        role: "Business Manager",
+        content: "A very professional team. The intervention was fast and the result is impeccable."
+      },
+      t2: {
+        name: "Sonia Mansouri",
+        role: "Individual",
+        content: "Perfect service from start to finish. They were punctual and efficient."
+      },
+      t3: {
+        name: "Karim Ziani",
+        role: "Operational Director",
+        content: "Responsiveness and professionalism are the keywords."
+      }
+    },
+    cta: {
+      title: "Ready to launch your project?",
+      whatsapp: "Chat on WhatsApp"
     }
   },
   ar: {
@@ -141,6 +229,22 @@ export const translations = {
       pack_premium: "الباقة المميزة",
       pricing_title: "حلول تتناسب مع ميزانيتك.",
       pricing_subtitle: "اختر الباقة التي تناسب احتياجاتك بشكل أفضل.",
+      vitrine: {
+        title: "مواقع تعريفية",
+        desc: "اعرض نشاطك بتصميم أنيق واحترافي. مثالي للحرفيين والشركات الصغيرة والمتوسطة."
+      },
+      ecommerce: {
+        title: "التجارة الإلكترونية",
+        desc: "بع منتجاتك عبر الإنترنت بمتجر عالي الأداء وآمن وسهل الإدارة."
+      },
+      seo: {
+        title: "SEO والظهور",
+        desc: "حسن ترتيبك على Google واجذب المزيد من العملاء المؤهلين."
+      },
+      apps: {
+        title: "تطبيقات الويب",
+        desc: "تطوير أدوات أعمال ومنصات معقدة مخصصة لشركتك."
+      }
     },
     order: {
       title: "تكوين مشروعك",
@@ -174,6 +278,34 @@ export const translations = {
     theme: {
       light: "الوضع المضيء",
       dark: "الوضع المظلم",
+    },
+    stats: {
+      projects: "مشاريع",
+      quality: "جودة",
+      response: "رد سريع",
+      country: "الجزائر"
+    },
+    testimonials: {
+      title: "يثقون بنا.",
+      t1: {
+        name: "أحمد بن علي",
+        role: "مدير شركة",
+        content: "فريق محترف للغاية. كان التدخل سريعًا والنتيجة لا تشوبها شائبة."
+      },
+      t2: {
+        name: "سونيا منصوري",
+        role: "فرد",
+        content: "خدمة مثالية من البداية إلى النهاية. كانوا دقيقين وفعالين."
+      },
+      t3: {
+        name: "كريم زياني",
+        role: "مدير عمليات",
+        content: "الاستجابة والاحترافية هما الكلمات الأساسية."
+      }
+    },
+    cta: {
+      title: "هل أنت مستعد لبدء مشروعك؟",
+      whatsapp: "تحدث عبر واتساب"
     }
   }
 };
