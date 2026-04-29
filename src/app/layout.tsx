@@ -22,7 +22,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <LanguageProvider>
           <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
             <Header />
-            <main>{children}</main>
+            <main className="pt-24 md:pt-28 min-h-screen">{children}</main>
             <Footer />
           </ThemeProvider>
         </LanguageProvider>
