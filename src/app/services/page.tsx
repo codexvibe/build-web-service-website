@@ -5,31 +5,31 @@ import Link from "next/link";
 import { useTranslation } from "@/components/LanguageProvider";
 
 export default function ServicesPage() {
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
 
   const allServices = [
     {
-      title: "Sites Vitrines",
-      description: "Présentez votre entreprise avec un site moderne et professionnel. Design unique, responsive et optimisé pour Google.",
-      price: "Dès 15 000 DA",
+      title: t("services.vitrine.title"),
+      description: t("services.vitrine.desc"),
+      price: language === 'ar' ? "من 15,000 دج" : "Dès 15 000 DA",
       icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>,
     },
     {
-      title: "Boutiques E-commerce",
-      description: "Lancez votre commerce en ligne. Gestion des stocks, paiements sécurisés et interface client intuitive.",
-      price: "Dès 45 000 DA",
+      title: t("services.ecommerce.title"),
+      description: t("services.ecommerce.desc"),
+      price: language === 'ar' ? "من 45,000 دج" : "Dès 45 000 DA",
       icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>,
     },
     {
-      title: "Applications Web",
-      description: "Développement d'applications métiers, SaaS et plateformes complexes adaptées à vos processus internes.",
-      price: "Sur Devis",
+      title: t("services.apps.title"),
+      description: t("services.apps.desc"),
+      price: language === 'ar' ? "حسب الطلب" : "Sur Devis",
       icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg>,
     },
     {
-      title: "SEO & Référencement",
-      description: "Audit technique, optimisation on-page et stratégie de mots-clés pour dominer les résultats de recherche.",
-      price: "Dès 10 000 DA",
+      title: t("services.seo.title"),
+      description: t("services.seo.desc"),
+      price: language === 'ar' ? "من 10,000 دج" : "Dès 10 000 DA",
       icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>,
     },
   ];
@@ -38,23 +38,35 @@ export default function ServicesPage() {
     {
       name: t("services.pack_basic"),
       price: "15,000 DA",
-      features: ["1 à 3 pages", "Design moderne", "Version mobile"],
-      tag: "CRÉATION"
+      features: language === 'ar' 
+        ? ["من 1 إلى 3 صفحات", "تصميم عصري", "نسخة للهاتف"]
+        : ["1 à 3 pages", "Design moderne", "Version mobile"],
+      tag: language === 'ar' ? "تصميم" : "CRÉATION"
     },
     {
       name: t("services.pack_standard"),
       price: "25,000 DA",
-      features: ["Jusqu'à 5 pages", "Design professionnel", "SEO de base"],
+      features: language === 'ar'
+        ? ["حتى 5 صفحات", "تصميم احترافي", "SEO أساسي"]
+        : ["Jusqu'à 5 pages", "Design professionnel", "SEO de base"],
       tag: "PROFESSIONAL",
       popular: true
     },
     {
       name: t("services.pack_premium"),
       price: "45,000 DA",
-      features: ["Site e-commerce", "Ajout de produits", "Design avancé"],
+      features: language === 'ar'
+        ? ["موقع تجارة إلكترونية", "إضافة منتجات", "تصميم متقدم"]
+        : ["Site e-commerce", "Ajout de produits", "Design avancé"],
       tag: "E-COMMERCE"
     }
   ];
+
+  const popularText = {
+    fr: "Populaire",
+    en: "Popular",
+    ar: "الأكثر طلباً"
+  }[language as 'fr' | 'en' | 'ar'];
 
   return (
     <div className="pt-32 pb-20 md:pt-48 md:pb-32 bg-bg min-h-screen">
@@ -94,12 +106,12 @@ export default function ServicesPage() {
               <div 
                 key={idx} 
                 className={`card p-8 flex flex-col relative overflow-hidden transition-all duration-300 hover:-translate-y-2 ${
-                  pack.popular ? 'border-brand ring-1 ring-brand/50' : 'border-border'
+                  pack.popular ? 'border-brand ring-1 ring-brand/50 shadow-xl shadow-brand/10' : 'border-border'
                 }`}
               >
                 {pack.popular && (
-                  <div className="absolute top-0 right-0 bg-brand text-bg text-[10px] font-bold px-3 py-1 rounded-bl-lg uppercase tracking-wider">
-                    Populaire
+                  <div className="absolute top-0 right-0 bg-brand text-white text-[10px] font-bold px-3 py-1 rounded-bl-lg uppercase tracking-wider">
+                    {popularText}
                   </div>
                 )}
                 <span className="text-xs font-bold text-brand uppercase tracking-widest mb-4">{pack.tag}</span>

@@ -5,7 +5,7 @@ import { supabase } from "@/lib/supabase";
 import { useTranslation } from "./LanguageProvider";
 
 const OrderForm = () => {
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState({
@@ -20,21 +20,21 @@ const OrderForm = () => {
   });
 
   const serviceTypes = [
-    { id: "vitrine", label: "Site Vitrine", price: 15000 },
-    { id: "ecommerce", label: "Boutique E-commerce", price: 45000 },
-    { id: "application", label: "Application Web / SaaS", price: 80000 },
-    { id: "seo", label: "SEO & Référencement", price: 10000 },
-    { id: "design", label: "UI/UX Design", price: 20000 },
-    { id: "autre", label: "Autre projet digital", price: 0 },
+    { id: "vitrine", label: { fr: "Site Vitrine", en: "Showcase Site", ar: "موقع تعريفي" }[language], price: 15000 },
+    { id: "ecommerce", label: { fr: "Boutique E-commerce", en: "E-commerce Store", ar: "متجر إلكتروني" }[language], price: 45000 },
+    { id: "application", label: { fr: "Application Web / SaaS", en: "Web App / SaaS", ar: "تطبيق ويب / SaaS" }[language], price: 80000 },
+    { id: "seo", label: { fr: "SEO & Référencement", en: "SEO & Visibility", ar: "سيو وتحسين محركات البحث" }[language], price: 10000 },
+    { id: "design", label: { fr: "UI/UX Design", en: "UI/UX Design", ar: "تصميم واجهة وتجربة المستخدم" }[language], price: 20000 },
+    { id: "autre", label: { fr: "Autre projet digital", en: "Other digital project", ar: "مشروع رقمي آخر" }[language], price: 0 },
   ];
 
   const optionsList = [
-    { label: "Design sur mesure", price: 5000 },
-    { label: "Paiement en ligne", price: 10000 },
-    { label: "Espace Client / Admin", price: 15000 },
-    { label: "Optimisation SEO", price: 5000 },
-    { label: "Multilingue (FR/AR/EN)", price: 8000 },
-    { label: "Maintenance mensuelle", price: 4000 },
+    { label: { fr: "Design sur mesure", en: "Custom Design", ar: "تصميم مخصص" }[language], price: 5000 },
+    { label: { fr: "Paiement en ligne", en: "Online Payment", ar: "الدفع الإلكتروني" }[language], price: 10000 },
+    { label: { fr: "Espace Client / Admin", en: "Client / Admin Area", ar: "لوحة تحكم / مساحة عملاء" }[language], price: 15000 },
+    { label: { fr: "Optimisation SEO", en: "SEO Optimization", ar: "تحسين محركات البحث" }[language], price: 5000 },
+    { label: { fr: "Multilingue (FR/AR/EN)", en: "Multilingual (FR/AR/EN)", ar: "متعدد اللغات" }[language], price: 8000 },
+    { label: { fr: "Maintenance mensuelle", en: "Monthly Maintenance", ar: "صيانة شهرية" }[language], price: 4000 },
   ];
 
   const calculateTotal = () => {
@@ -84,7 +84,7 @@ const OrderForm = () => {
       setSubmitted(true);
     } catch (err) {
       console.error("Error submitting request:", err);
-      alert("Erreur système lors de l'envoi. Veuillez réessayer.");
+      alert(language === 'ar' ? "خطأ في النظام. يرجى المحاولة مرة أخرى." : "Erreur système lors de l'envoi. Veuillez réessayer.");
     } finally {
       setLoading(false);
     }
@@ -97,12 +97,12 @@ const OrderForm = () => {
         <div className="w-24 h-24 bg-emerald-500/10 text-emerald-500 rounded-full flex items-center justify-center mx-auto mb-8 border border-emerald-500/20">
           <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
         </div>
-        <h2 className="text-4xl font-display font-bold text-text mb-4">Demande Enregistrée.</h2>
+        <h2 className="text-4xl font-display font-bold text-text mb-4">{t("order.success_title")}</h2>
         <p className="text-text-sub mb-10 max-w-lg mx-auto font-sans">
-          Votre demande a bien été reçue. Nous vous contacterons très prochainement.
+          {t("order.success_desc")}
         </p>
         <div className="flex flex-col md:flex-row gap-4 justify-center">
-          <button onClick={() => setSubmitted(false)} className="btn-ghost bg-surface">Nouvelle demande</button>
+          <button onClick={() => setSubmitted(false)} className="btn-ghost bg-surface">{t("order.new_request")}</button>
           <a href={`https://wa.me/213555555555`} target="_blank" className="btn-brand" style={{ backgroundColor: '#25D366', color: '#fff' }}>WhatsApp</a>
         </div>
       </div>
@@ -117,16 +117,16 @@ const OrderForm = () => {
         <div className="space-y-8">
           <div className="flex items-center gap-4 border-b border-border pb-4">
              <div className="w-10 h-10 rounded-lg bg-surface border border-border text-brand flex items-center justify-center font-display font-bold text-lg shadow-sm">01</div>
-             <h3 className="text-2xl font-display font-bold text-text">Coordonnées</h3>
+             <h3 className="text-2xl font-display font-bold text-text">{t("order.section_contact")}</h3>
           </div>
           <div className="space-y-6">
             <div className="space-y-2">
               <label className="text-xs font-bold text-text-sub uppercase tracking-wider">{t("order.form_name")}</label>
-              <input required type="text" name="fullName" value={formData.fullName} onChange={handleChange} className="input" placeholder="Ex: Mohamed Ali" />
+              <input required type="text" name="fullName" value={formData.fullName} onChange={handleChange} className="input" placeholder={language === 'ar' ? "مثال: محمد علي" : "Ex: Mohamed Ali"} />
             </div>
             <div className="space-y-2">
               <label className="text-xs font-bold text-text-sub uppercase tracking-wider">{t("order.form_contact")}</label>
-              <input required type="text" name="contactInfo" value={formData.contactInfo} onChange={handleChange} className="input" placeholder="Ex: 0555..." />
+              <input required type="text" name="contactInfo" value={formData.contactInfo} onChange={handleChange} className="input" placeholder={language === 'ar' ? "مثال: 0555..." : "Ex: 0555..."} />
             </div>
           </div>
         </div>
@@ -134,11 +134,11 @@ const OrderForm = () => {
         <div className="space-y-8">
           <div className="flex items-center gap-4 border-b border-border pb-4">
              <div className="w-10 h-10 rounded-lg bg-surface border border-border text-brand flex items-center justify-center font-display font-bold text-lg shadow-sm">02</div>
-             <h3 className="text-2xl font-display font-bold text-text">Votre Besoin</h3>
+             <h3 className="text-2xl font-display font-bold text-text">{t("order.section_need")}</h3>
           </div>
           <div className="space-y-6">
             <div className="space-y-2">
-              <label className="text-xs font-bold text-text-sub uppercase tracking-wider">Prestation</label>
+              <label className="text-xs font-bold text-text-sub uppercase tracking-wider">{t("order.prestation")}</label>
               <select name="serviceType" value={formData.serviceType} onChange={handleChange} className="input cursor-pointer">
                 {serviceTypes.map((type) => (
                   <option key={type.id} value={type.id}>{type.label}</option>
@@ -147,7 +147,7 @@ const OrderForm = () => {
             </div>
             <div className="space-y-2">
               <label className="text-xs font-bold text-text-sub uppercase tracking-wider">{t("order.form_location")}</label>
-              <input required type="text" name="location" value={formData.location} onChange={handleChange} className="input" placeholder="Ex: Alger" />
+              <input required type="text" name="location" value={formData.location} onChange={handleChange} className="input" placeholder={language === 'ar' ? "مثال: الجزائر" : "Ex: Alger"} />
             </div>
           </div>
         </div>
@@ -156,7 +156,7 @@ const OrderForm = () => {
       <div className="space-y-8 relative z-10">
         <div className="flex items-center gap-4 border-b border-border pb-4">
              <div className="w-10 h-10 rounded-lg bg-surface border border-border text-brand flex items-center justify-center font-display font-bold text-lg shadow-sm">03</div>
-             <h3 className="text-2xl font-display font-bold text-text">Détails</h3>
+             <h3 className="text-2xl font-display font-bold text-text">{t("order.section_details")}</h3>
         </div>
         <div className="space-y-2">
           <label className="text-xs font-bold text-text-sub uppercase tracking-wider">{t("order.form_desc")}</label>
@@ -185,17 +185,17 @@ const OrderForm = () => {
           <input readOnly type="text" value={`${calculateTotal()} DA`} className="input bg-brand/5 border-brand/30 text-brand font-bold text-xl" />
         </div>
         <div className="space-y-2">
-          <label className="text-xs font-bold text-text-sub uppercase tracking-wider">Urgence</label>
+          <label className="text-xs font-bold text-text-sub uppercase tracking-wider">{t("order.urgency")}</label>
           <select name="preferredTime" value={formData.preferredTime} onChange={handleChange} className="input">
-            <option value="normal">Normal</option>
-            <option value="prioritaire">Prioritaire (+5,000 DA)</option>
+            <option value="normal">{t("order.normal")}</option>
+            <option value="prioritaire">{t("order.priority")} (+5,000 DA)</option>
           </select>
         </div>
       </div>
 
       <div className="pt-8 border-t border-border relative z-10">
         <button disabled={loading} type="submit" className="btn-brand w-full py-5 text-lg justify-center uppercase tracking-widest text-white">
-          {loading ? "Envoi..." : t("order.form_submit")}
+          {loading ? t("order.sending") : t("order.form_submit")}
         </button>
       </div>
     </form>
