@@ -17,12 +17,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="fr" className="scroll-smooth">
+    <html lang="fr" className="scroll-smooth" suppressHydrationWarning>
       <body className={`${dmSans.variable} ${spaceGrotesk.variable} antialiased`}>
         <LanguageProvider>
           <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
             <Header />
-            <main className="pt-24 md:pt-28 min-h-screen">{children}</main>
+            {children}
             <Footer />
           </ThemeProvider>
         </LanguageProvider>

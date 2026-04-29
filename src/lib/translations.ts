@@ -60,7 +60,14 @@ export const translations = {
       urgency: "Urgence",
       normal: "Normal",
       priority: "Prioritaire",
-      sending: "Envoi..."
+      sending: "Envoi...",
+      badge: "Demande de Projet",
+      trust_rapid: "Réponse Rapide",
+      trust_rapid_desc: "Évaluation de votre demande sous 24h.",
+      trust_secure: "Accompagnement",
+      trust_secure_desc: "Suivi personnalisé tout au long de votre projet.",
+      trust_quality: "Garantie Qualité",
+      trust_quality_desc: "Solutions robustes et performantes.",
     },
     contact: {
       badge: "Contact",
@@ -177,7 +184,14 @@ export const translations = {
       urgency: "Urgency",
       normal: "Normal",
       priority: "Priority",
-      sending: "Sending..."
+      sending: "Sending...",
+      badge: "Project Request",
+      trust_rapid: "Fast Response",
+      trust_rapid_desc: "Evaluation of your request within 24 hours.",
+      trust_secure: "Support",
+      trust_secure_desc: "Personalized follow-up throughout your project.",
+      trust_quality: "Quality Guarantee",
+      trust_quality_desc: "Robust and high-performance solutions.",
     },
     contact: {
       badge: "Contact",
@@ -294,7 +308,14 @@ export const translations = {
       urgency: "الاستعجال",
       normal: "عادي",
       priority: "أولوية",
-      sending: "جاري الإرسال..."
+      sending: "جاري الإرسال...",
+      badge: "طلب مشروع",
+      trust_rapid: "استجابة سريعة",
+      trust_rapid_desc: "تقييم طلبك في أقل من 24 ساعة.",
+      trust_secure: "مرافقة",
+      trust_secure_desc: "متابعة مخصصة طوال فترة مشروعك.",
+      trust_quality: "ضمان الجودة",
+      trust_quality_desc: "حلول قوية وعالية الأداء.",
     },
     contact: {
       badge: "اتصل بنا",
