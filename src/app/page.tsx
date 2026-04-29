@@ -6,6 +6,7 @@ import { useTranslation } from "@/components/LanguageProvider";
 
 export default function Home() {
   const { t } = useTranslation();
+
   const services = [
     {
       title: "Sites Vitrines",
@@ -37,17 +38,17 @@ export default function Home() {
     {
       name: "Ahmed Benali",
       role: "Gérant d'Entreprise",
-      content: "Une équipe très professionnelle. L'intervention a été rapide et le résultat est impeccable. Je recommande vivement leurs services.",
+      content: "Une équipe très professionnelle. L'intervention a été rapide et le résultat est impeccable.",
     },
     {
       name: "Sonia Mansouri",
       role: "Particulier",
-      content: "Service parfait de bout en bout. Ils ont été ponctuels, efficaces, et les tarifs sont transparents. Rien à redire !",
+      content: "Service parfait de bout en bout. Ils ont été ponctuels et efficaces.",
     },
     {
       name: "Karim Ziani",
       role: "Directeur Opérationnel",
-      content: "Réactivité et professionnalisme sont les maîtres mots. Nous avons externalisé plusieurs services chez eux avec une grande satisfaction.",
+      content: "Réactivité et professionnalisme sont les maîtres mots.",
     },
   ];
 
@@ -55,7 +56,6 @@ export default function Home() {
     <div className="flex flex-col">
       {/* --- HERO SECTION --- */}
       <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden bg-bg">
-        {/* Abstract Background Elements */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand/5 rounded-full blur-[120px] pointer-events-none"></div>
 
         <div className="container mx-auto px-6 relative z-10 text-center">
@@ -64,40 +64,44 @@ export default function Home() {
             <span className="text-xs font-bold text-text-sub tracking-[0.15em] uppercase">{t("hero.badge")}</span>
           </div>
           
+          <h1 className="text-5xl md:text-7xl lg:text-[5.5rem] font-display font-bold text-text mb-8 leading-[1.1] tracking-tight animate-fade-up-delay">
             {t("hero.title")}
+          </h1>
           
+          <p className="max-w-2xl mx-auto text-text-sub text-lg md:text-xl mb-12 leading-relaxed font-sans animate-fade-up-delay-2">
             {t("hero.subtitle")}
+          </p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-5 animate-fade-up-delay-2">
             <Link href="/order" className="btn-brand w-full sm:w-auto justify-center">
-              Demander un devis
+              {t("hero.cta_quote")}
             </Link>
             <Link href="/services" className="btn-ghost w-full sm:w-auto justify-center">
-              Découvrir nos services
+              {t("hero.cta_services")}
             </Link>
           </div>
         </div>
       </section>
 
-      {/* --- STATS LOGOS SECTION --- */}
+      {/* --- STATS SECTION --- */}
       <section className="py-12 border-y border-border bg-surface/50">
         <div className="container mx-auto px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 divide-x divide-border">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 divide-x divide-border rtl:divide-x-reverse">
             <div className="text-center px-4">
               <span className="block text-4xl font-display font-bold text-text mb-1">100+</span>
-              <span className="text-[10px] text-muted uppercase tracking-[0.2em] font-bold">Projets Livrés</span>
+              <span className="text-[10px] text-muted uppercase tracking-[0.2em] font-bold">Projets</span>
             </div>
             <div className="text-center px-4">
               <span className="block text-4xl font-display font-bold text-text mb-1">100%</span>
-              <span className="text-[10px] text-muted uppercase tracking-[0.2em] font-bold">Sur-mesure</span>
+              <span className="text-[10px] text-muted uppercase tracking-[0.2em] font-bold">Qualité</span>
             </div>
             <div className="text-center px-4">
               <span className="block text-4xl font-display font-bold text-text mb-1">&lt;24h</span>
-              <span className="text-[10px] text-muted uppercase tracking-[0.2em] font-bold">Premier Devis</span>
+              <span className="text-[10px] text-muted uppercase tracking-[0.2em] font-bold">Réponse</span>
             </div>
             <div className="text-center px-4">
               <span className="block text-4xl font-display font-bold text-text mb-1">DZ</span>
-              <span className="text-[10px] text-muted uppercase tracking-[0.2em] font-bold">Expertise Locale</span>
+              <span className="text-[10px] text-muted uppercase tracking-[0.2em] font-bold">Algérie</span>
             </div>
           </div>
         </div>
@@ -126,40 +130,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* --- WEB PACKS PREVIEW --- */}
-      <section className="py-24 bg-surface/30 relative">
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="text-center mb-16">
-            <span className="badge mb-6">Offres Digitales</span>
-            <h2 className="text-3xl md:text-5xl font-display font-bold text-text mb-6">Packs Création Web</h2>
-            <p className="text-text-sub text-lg max-w-2xl mx-auto">Boostez votre business avec un site web professionnel.</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              { name: "BASIC", price: "15,000 DA", tag: "1-3 Pages" },
-              { name: "STANDARD", price: "25,000 DA", tag: "Jusqu'à 5 Pages", popular: true },
-              { name: "PREMIUM", price: "45,000 DA", tag: "E-Commerce" }
-            ].map((pack, idx) => (
-              <div key={idx} className={`card p-8 flex flex-col border-border hover:border-brand/50 transition-all ${pack.popular ? 'ring-1 ring-brand/30' : ''}`}>
-                <h3 className="text-xl font-display font-bold text-text mb-2">PACK {pack.name}</h3>
-                <span className="text-brand font-bold text-2xl mb-4">{pack.price}</span>
-                <span className="text-text-sub text-sm mb-6 uppercase tracking-wider font-bold">{pack.tag}</span>
-                <Link href="/services" className="btn-ghost border border-border text-center justify-center py-3 text-xs">
-                  Détails du pack
-                </Link>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-
       {/* --- TESTIMONIALS --- */}
-      <section className="section relative">
+      <section className="section relative bg-surface/30">
         <div className="container mx-auto px-6 relative z-10">
           <div className="text-center mb-20">
-            <span className="badge mb-6">Avis Clients</span>
-            <h2 className="text-3xl md:text-5xl font-display font-bold text-text">Ils nous recommandent.</h2>
+            <h2 className="text-3xl md:text-5xl font-display font-bold text-text">Ils nous font confiance.</h2>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -170,14 +145,14 @@ export default function Home() {
                     <svg key={idx} xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                   ))}
                 </div>
-                <p className="text-text-sub font-sans leading-relaxed mb-8 grow">"{t.content}"</p>
+                <p className="text-text-sub font-sans leading-relaxed mb-8 grow italic">"{t.content}"</p>
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full bg-surface border border-border flex items-center justify-center text-text font-display font-bold">
+                  <div className="w-12 h-12 rounded-full bg-brand/10 border border-brand/20 flex items-center justify-center text-brand font-display font-bold">
                     {t.name.charAt(0)}
                   </div>
                   <div>
                     <h4 className="text-text font-bold font-display">{t.name}</h4>
-                    <span className="text-xs text-brand uppercase tracking-wider font-bold">{t.role}</span>
+                    <span className="text-[10px] text-brand uppercase tracking-wider font-bold">{t.role}</span>
                   </div>
                 </div>
               </div>
@@ -189,18 +164,13 @@ export default function Home() {
       {/* --- CTA SECTION --- */}
       <section className="py-24 relative overflow-hidden border-t border-border">
         <div className="absolute inset-0 bg-brand/5"></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl h-[2px] bg-linear-to-r from-transparent via-brand to-transparent opacity-30"></div>
-        
         <div className="container mx-auto px-6 relative z-10 text-center">
           <h2 className="text-4xl md:text-6xl font-display font-bold text-text mb-8">
             Prêt à lancer <br className="hidden md:block"/>votre projet ?
           </h2>
-          <p className="max-w-xl mx-auto text-text-sub font-sans text-lg mb-12">
-            Contactez-nous dès aujourd'hui pour obtenir un devis gratuit et personnalisé. Nos experts sont prêts à créer votre site.
-          </p>
           <div className="flex flex-col sm:flex-row justify-center gap-5">
             <Link href="/order" className="btn-brand">
-              Demander un devis
+              {t("hero.cta_quote")}
             </Link>
             <a href="https://wa.me/213555555555" className="btn-ghost bg-surface">
               Discuter sur WhatsApp

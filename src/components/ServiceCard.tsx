@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "./LanguageProvider";
 
 interface ServiceCardProps {
   title: string;
@@ -8,6 +9,14 @@ interface ServiceCardProps {
 }
 
 const ServiceCard = ({ title, description, icon, price }: ServiceCardProps) => {
+  const { language } = useTranslation();
+  
+  const fromText = {
+    fr: "À partir de",
+    en: "Starting from",
+    ar: "ابتداءً من"
+  }[language];
+
   return (
     <div className="card p-8 flex flex-col h-full group relative overflow-hidden">
       {/* Glow effect on hover */}
@@ -24,7 +33,7 @@ const ServiceCard = ({ title, description, icon, price }: ServiceCardProps) => {
       </p>
       
       <div className="pt-6 border-t border-border flex items-center justify-between mt-auto">
-        <span className="text-[10px] text-muted uppercase tracking-[0.2em] font-bold">À partir de</span>
+        <span className="text-[10px] text-muted uppercase tracking-[0.2em] font-bold">{fromText}</span>
         <span className="text-lg font-display font-bold text-text">{price}</span>
       </div>
     </div>

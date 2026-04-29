@@ -1,7 +1,7 @@
 import { verifySession } from '@/lib/session'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/utils/supabase/server'
-import { logoutAction, createProductAction, deleteProductAction, uploadImageAction } from '../actions'
+import { logoutAction } from '../actions'
 import DashboardClient from './DashboardClient'
 export const dynamic = 'force-dynamic';
 
@@ -13,32 +13,32 @@ export default async function AdminDashboard() {
   }
 
   const supabase = await createClient()
-  const { data: products, error } = await supabase
-    .from('products')
+  const { data: requests, error } = await supabase
+    .from('service_requests')
     .select('*')
     .order('created_at', { ascending: false })
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-black text-black dark:text-white font-sans transition-colors duration-300">
-      <header className="border-b border-black/10 dark:border-white/10 bg-white dark:bg-[#0f0f0f] px-6 py-4 flex items-center justify-between sticky top-0 z-50 transition-colors duration-300">
+    <div className="min-h-screen bg-bg text-text font-sans transition-colors duration-300">
+      <header className="border-b border-border glass px-6 py-4 flex items-center justify-between sticky top-0 z-50 transition-colors duration-300">
         <div className="flex items-center gap-4">
-          <h1 className="text-2xl font-heading uppercase tracking-tighter">
-            ADMIN <span className="text-[#39ff14]">DASHBOARD</span>
+          <h1 className="text-2xl font-display font-bold uppercase tracking-tighter">
+            AGENCY <span className="text-brand">DASHBOARD</span>
           </h1>
-          <span className="px-2 py-0.5 rounded bg-[#39ff14]/10 text-[#39ff14] text-[10px] font-bold uppercase tracking-widest border border-[#39ff14]/20">
-            Live
+          <span className="px-2 py-0.5 rounded bg-brand/10 text-brand text-[10px] font-bold uppercase tracking-widest border border-brand/20">
+            Live Leads
           </span>
         </div>
         
         <form action={logoutAction}>
-          <button className="text-xs font-bold text-gray-500 hover:text-black dark:text-[#a1a1aa] dark:hover:text-white uppercase tracking-widest transition-colors border border-black/10 hover:bg-black/5 dark:border-white/10 px-4 py-2 dark:hover:bg-white/5">
+          <button className="text-xs font-bold text-text-sub hover:text-brand uppercase tracking-widest transition-colors border border-border hover:bg-surface px-4 py-2 rounded-lg">
             Déconnexion
           </button>
         </form>
       </header>
 
       <main className="container mx-auto p-6">
-        <DashboardClient initialProducts={products || []} />
+        <DashboardClient initialRequests={requests || []} />
       </main>
 
       <footer className="border-t border-black/10 dark:border-white/5 py-8 mt-12 transition-colors duration-300">
