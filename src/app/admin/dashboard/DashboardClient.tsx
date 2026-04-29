@@ -127,9 +127,9 @@ export default function DashboardClient({ initialRequests }: { initialRequests: 
   })
 
   return (
-    <div className="min-h-screen bg-[#0a0f1c] text-white selection:bg-brand/30 selection:text-brand">
+    <div className="min-h-screen bg-bg text-text selection:bg-brand/30 selection:text-brand dark">
       {/* Top Navbar */}
-      <header className="fixed top-0 left-0 right-0 h-16 bg-[#0f172a]/80 backdrop-blur-md border-b border-white/5 z-[60] px-6 flex items-center justify-between">
+      <header className="fixed top-0 left-0 right-0 h-16 bg-surface/80 backdrop-blur-md border-b border-white/5 z-60 px-6 flex items-center justify-between">
         <div className="flex items-center gap-8">
            <div className="flex items-center gap-2">
              <div className="w-8 h-8 rounded-lg bg-brand flex items-center justify-center font-bold text-white shadow-lg shadow-brand/20">A</div>
@@ -146,7 +146,7 @@ export default function DashboardClient({ initialRequests }: { initialRequests: 
         <div className="flex items-center gap-4">
            <button className="w-10 h-10 rounded-xl hover:bg-white/5 flex items-center justify-center text-white/60 transition-colors relative">
              <Bell size={20} />
-             <div className="absolute top-2.5 right-2.5 w-2 h-2 bg-brand rounded-full border-2 border-[#0f172a]" />
+             <div className="absolute top-2.5 right-2.5 w-2 h-2 bg-brand rounded-full border-2 border-surface" />
            </button>
            <div className="h-6 w-px bg-white/10 mx-2" />
            <button onClick={handleLogout} className="flex items-center gap-2 px-4 py-2 rounded-xl bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white transition-all font-bold text-xs border border-red-500/20">
@@ -159,7 +159,7 @@ export default function DashboardClient({ initialRequests }: { initialRequests: 
       <div className="pt-16 flex h-screen overflow-hidden">
         
         {/* Sidebar Nav */}
-        <aside className="w-20 lg:w-64 border-r border-white/5 bg-[#0f172a]/50 p-4 flex flex-col justify-between">
+        <aside className="w-20 lg:w-64 border-r border-white/5 bg-surface/50 p-4 flex flex-col justify-between">
            <nav className="space-y-2">
              {[
                { id: 'requests', label: 'Demandes', icon: MessageSquare },
@@ -209,7 +209,7 @@ export default function DashboardClient({ initialRequests }: { initialRequests: 
                           <div className="flex items-center gap-3">
                              <div className="flex -space-x-2">
                                {[1,2,3].map(i => (
-                                 <div key={i} className="w-8 h-8 rounded-full border-2 border-[#0a0f1c] bg-surface flex items-center justify-center text-[10px] font-bold">
+                                 <div key={i} className="w-8 h-8 rounded-full border-2 border-bg bg-surface flex items-center justify-center text-[10px] font-bold">
                                    {String.fromCharCode(64 + i)}
                                  </div>
                                ))}
@@ -226,7 +226,7 @@ export default function DashboardClient({ initialRequests }: { initialRequests: 
                             { label: 'Terminés', val: requests.filter(r => r.status === 'completed').length, icon: CheckCircle2, color: 'emerald-500' },
                             { label: 'Revenue Est.', val: `${requests.reduce((acc, r) => acc + parseFloat(String(r.budget || '0').replace(/[^0-9.]/g, '')), 0).toLocaleString()} DA`, icon: DollarSign, color: 'brand' },
                           ].map((stat, i) => (
-                            <div key={i} className="bg-[#0f172a] p-6 rounded-2xl border border-white/5 flex items-center gap-4 hover:border-white/10 transition-colors group">
+                            <div key={i} className="bg-surface p-6 rounded-2xl border border-white/5 flex items-center gap-4 hover:border-white/10 transition-colors group">
                                <div className={`w-12 h-12 rounded-xl bg-${stat.color}/10 flex items-center justify-center text-${stat.color} group-hover:scale-110 transition-transform`}>
                                  <stat.icon size={24} />
                                </div>
@@ -239,7 +239,7 @@ export default function DashboardClient({ initialRequests }: { initialRequests: 
                        </div>
 
                        {/* Search & Filter */}
-                       <div className="flex flex-col md:flex-row gap-4 items-center bg-[#0f172a] p-2 rounded-2xl border border-white/5">
+                       <div className="flex flex-col md:flex-row gap-4 items-center bg-surface p-2 rounded-2xl border border-white/5">
                           <div className="relative flex-1 w-full">
                             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" size={18} />
                             <input 
@@ -271,7 +271,7 @@ export default function DashboardClient({ initialRequests }: { initialRequests: 
                               <div 
                                 key={request.id}
                                 onClick={() => setSelectedRequest(request)}
-                                className={`group p-5 cursor-pointer rounded-2xl transition-all border ${selectedRequest?.id === request.id ? 'bg-brand/10 border-brand shadow-lg shadow-brand/5' : 'bg-[#0f172a] border-white/5 hover:border-white/20'}`}
+                                className={`group p-5 cursor-pointer rounded-2xl transition-all border ${selectedRequest?.id === request.id ? 'bg-brand/10 border-brand shadow-lg shadow-brand/5' : 'bg-surface border-white/5 hover:border-white/20'}`}
                               >
                                 <div className="flex justify-between items-start mb-3">
                                   <h4 className="font-display font-bold text-base group-hover:text-brand transition-colors">{request.full_name}</h4>
@@ -297,7 +297,7 @@ export default function DashboardClient({ initialRequests }: { initialRequests: 
                               </div>
                             ))}
                             {filteredRequests.length === 0 && (
-                              <div className="text-center py-20 bg-[#0f172a] rounded-2xl border border-dashed border-white/10 text-white/20 italic">
+                              <div className="text-center py-20 bg-surface rounded-2xl border border-dashed border-white/10 text-white/20 italic">
                                  Aucune demande trouvée
                               </div>
                             )}
@@ -305,7 +305,7 @@ export default function DashboardClient({ initialRequests }: { initialRequests: 
 
                           <div className={`xl:col-span-7 ${selectedRequest ? 'block' : 'hidden xl:block'}`}>
                             {selectedRequest ? (
-                              <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} className="bg-[#0f172a] p-8 rounded-3xl sticky top-4 border border-brand/30 shadow-2xl shadow-brand/5 overflow-hidden">
+                              <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} className="bg-surface p-8 rounded-3xl sticky top-4 border border-brand/30 shadow-2xl shadow-brand/5 overflow-hidden">
                                 <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-brand/5 blur-[100px] -mr-20 -mt-20 pointer-events-none" />
                                 
                                 <div className="flex justify-between items-start mb-10 relative z-10">
@@ -392,13 +392,13 @@ export default function DashboardClient({ initialRequests }: { initialRequests: 
                                 </div>
                               </motion.div>
                             ) : (
-                              <div className="h-[600px] flex items-center justify-center bg-[#0f172a]/50 rounded-3xl border-2 border-dashed border-white/5">
+                              <div className="h-[600px] flex items-center justify-center bg-surface/50 rounded-3xl border-2 border-dashed border-white/5">
                                 <div className="text-center">
                                   <div className="w-24 h-24 rounded-full bg-brand/5 flex items-center justify-center mx-auto mb-8 text-brand/10">
                                     <MessageSquare size={48} />
                                   </div>
                                   <h3 className="text-xl font-display font-bold text-white/40">Détails de la demande</h3>
-                                  <p className="text-xs text-white/20 max-w-[250px] mx-auto mt-4 font-bold uppercase tracking-widest leading-loose">Sélectionnez une demande dans la liste pour visualiser les informations client.</p>
+                                  <p className="text-xs text-white/20 font-bold uppercase tracking-widest max-w-[250px] mx-auto mt-4 leading-loose">Sélectionnez une demande dans la liste pour visualiser les informations client.</p>
                                 </div>
                               </div>
                             )}
@@ -411,7 +411,7 @@ export default function DashboardClient({ initialRequests }: { initialRequests: 
                     <motion.div key="stats" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-8">
                        <h1 className="text-3xl font-display font-bold">Rapports & Statistiques</h1>
                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                          <div className="bg-[#0f172a] p-8 rounded-3xl border border-white/5">
+                          <div className="bg-surface p-8 rounded-3xl border border-white/5">
                              <h3 className="text-xl font-display font-bold mb-10 flex items-center gap-3">
                                 <div className="w-8 h-8 rounded-lg bg-brand/10 flex items-center justify-center text-brand">
                                    <TrendingUp size={18} />
@@ -432,7 +432,7 @@ export default function DashboardClient({ initialRequests }: { initialRequests: 
                                         <motion.div 
                                           initial={{ width: 0 }} 
                                           animate={{ width: `${percentage}%` }}
-                                          className="h-full bg-gradient-to-r from-brand to-brand-dark rounded-full shadow-[0_0_10px_rgba(37,99,235,0.3)]"
+                                          className="h-full bg-linear-to-r from-brand to-brand-dark rounded-full shadow-[0_0_10px_rgba(37,99,235,0.3)]"
                                         />
                                       </div>
                                     </div>
@@ -441,7 +441,7 @@ export default function DashboardClient({ initialRequests }: { initialRequests: 
                              </div>
                           </div>
                           
-                          <div className="bg-[#0f172a] p-8 rounded-3xl border border-white/5 flex flex-col items-center justify-center text-center">
+                          <div className="bg-surface p-8 rounded-3xl border border-white/5 flex flex-col items-center justify-center text-center">
                              <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mb-6 text-white/20">
                                 <BarChart3 size={32} />
                              </div>
@@ -454,7 +454,7 @@ export default function DashboardClient({ initialRequests }: { initialRequests: 
 
                  {activeTab === 'team' && (
                     <motion.div key="team" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-8">
-                       <div className="flex justify-between items-center bg-[#0f172a] p-8 rounded-3xl border border-white/5 shadow-xl">
+                       <div className="flex justify-between items-center bg-surface p-8 rounded-3xl border border-white/5 shadow-xl">
                          <div>
                             <h2 className="text-3xl font-display font-bold text-white">Équipe Administrative</h2>
                             <p className="text-white/40 text-sm mt-1">Gérez les accès de vos collaborateurs à la plateforme.</p>
@@ -466,7 +466,7 @@ export default function DashboardClient({ initialRequests }: { initialRequests: 
                        
                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                          {admins.map(admin => (
-                           <div key={admin.id} className="bg-[#0f172a] p-6 rounded-2xl border border-white/5 flex items-center justify-between group hover:border-brand/30 transition-all">
+                           <div key={admin.id} className="bg-surface p-6 rounded-2xl border border-white/5 flex items-center justify-between group hover:border-brand/30 transition-all">
                               <div className="flex items-center gap-4">
                                  <div className="w-12 h-12 rounded-2xl bg-brand/10 flex items-center justify-center text-brand group-hover:scale-110 transition-transform">
                                     <Shield size={24} />
@@ -475,7 +475,7 @@ export default function DashboardClient({ initialRequests }: { initialRequests: 
                                     <h4 className="font-display font-bold text-text uppercase tracking-tight">{admin.name}</h4>
                                     <div className="flex items-center gap-2 mt-1">
                                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                                       <p className="text-[9px] text-emerald-500/60 font-bold tracking-[0.1em] uppercase">Connecté</p>
+                                       <p className="text-[9px] text-emerald-500/60 font-bold tracking-widest uppercase">Connecté</p>
                                     </div>
                                  </div>
                               </div>
@@ -491,7 +491,7 @@ export default function DashboardClient({ initialRequests }: { initialRequests: 
                  {activeTab === 'settings' && (
                     <motion.div key="settings" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-8">
                        <h1 className="text-3xl font-display font-bold">Paramètres de l'Agence</h1>
-                       <div className="card p-8 bg-[#0f172a] border-white/5">
+                       <div className="card p-8 bg-surface border-white/5">
                           <p className="text-white/40 text-sm">Les paramètres de configuration de l'API et du site public seront bientôt disponibles ici.</p>
                        </div>
                     </motion.div>
@@ -504,9 +504,9 @@ export default function DashboardClient({ initialRequests }: { initialRequests: 
       {/* Admin Modal */}
       <AnimatePresence>
         {isAdminModalOpen && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+          <div className="fixed inset-0 z-100 flex items-center justify-center p-4">
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setIsAdminModalOpen(false)} className="absolute inset-0 bg-black/80 backdrop-blur-xl" />
-            <motion.div initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 20 }} className="w-full max-w-md bg-[#0f172a] border border-white/10 p-10 relative rounded-[2.5rem] shadow-[0_32px_64px_-16px_rgba(0,0,0,0.6)] overflow-hidden">
+            <motion.div initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 20 }} className="w-full max-w-md bg-surface border border-white/10 p-10 relative rounded-[2.5rem] shadow-[0_32px_64px_-16px_rgba(0,0,0,0.6)] overflow-hidden">
                <div className="absolute top-0 right-0 w-40 h-40 bg-brand/5 blur-[80px] -mr-10 -mt-10" />
                <h3 className="text-3xl font-display font-bold text-text mb-2 relative z-10">Accès Collaborateur</h3>
                <p className="text-white/40 text-sm mb-10 relative z-10">Créez un nouveau point d'accès sécurisé.</p>
