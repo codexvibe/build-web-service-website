@@ -3,25 +3,26 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTheme } from "next-themes";
+import { useTranslation } from "@/components/LanguageProvider";
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
 
+  const { theme, setTheme } = useTheme();
+  const { t, language, setLanguage } = useTranslation();
+  const [mounted, setMounted] = useState(false);
+
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    setMounted(true);
   }, []);
 
   const navLinks = [
-    { name: "Accueil", href: "/" },
-    { name: "Services", href: "/services" },
-    { name: "Portfolio", href: "/portfolio" },
-    { name: "Contact", href: "/contact" },
+    { name: t("nav.home"), href: "/" },
+    { name: t("nav.services"), href: "/services" },
+    { name: t("nav.contact"), href: "/contact" },
   ];
 
   return (
@@ -56,8 +57,38 @@ const Header = () => {
               {link.name}
             </Link>
           ))}
-          <Link href="/order" className="btn-brand py-2.5 px-6 ml-4">
-            Demander un devis
+
+          {/* Language Switcher */}
+          <div className="flex items-center gap-2 border-l border-border pl-6 ml-2">
+            {["fr", "en", "ar"].map((lang) => (
+              <button
+                key={lang}
+                onClick={() => setLanguage(lang as any)}
+                className={`text-[10px] font-bold uppercase w-8 h-8 rounded-lg border transition-all ${
+                  language === lang 
+                    ? "bg-brand border-brand text-white" 
+                    : "border-border text-text-sub hover:border-brand/50"
+                }`}
+              >
+                {lang}
+              </button>
+            ))}
+          </div>
+
+          {/* Theme Toggle */}
+          <button
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            className="w-10 h-10 rounded-xl bg-surface border border-border flex items-center justify-center text-text-sub hover:text-brand transition-all"
+          >
+            {mounted && theme === "dark" ? (
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+            ) : (
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            )}
+          </button>
+
+          <Link href="/order" className="btn-brand py-2.5 px-6">
+            {t("nav.quote")}
           </Link>
         </nav>
 
@@ -98,8 +129,47 @@ const Header = () => {
             className="btn-brand mt-4 text-lg px-8 py-4"
             onClick={() => setIsMobileMenuOpen(false)}
           >
-            Demander un devis
+            {t("nav.quote")}
           </Link>
+
+          {/* Mobile Theme & Lang */}
+          <div className="flex flex-col items-center gap-6 mt-12 pt-8 border-t border-border w-full max-w-xs">
+            <div className="flex gap-4">
+              {["fr", "en", "ar"].map((lang) => (
+                <button
+                  key={lang}
+                  onClick={() => {
+                    setLanguage(lang as any);
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className={`text-sm font-bold uppercase w-12 h-12 rounded-xl border transition-all ${
+                    language === lang 
+                      ? "bg-brand border-brand text-white" 
+                      : "border-border text-text hover:border-brand/50"
+                  }`}
+                >
+                  {lang}
+                </button>
+              ))}
+            </div>
+            
+            <button
+              onClick={() => {
+                setTheme(theme === "dark" ? "light" : "dark");
+                setIsMobileMenuOpen(false);
+              }}
+              className="flex items-center gap-3 text-text font-bold uppercase tracking-widest"
+            >
+              <div className="w-12 h-12 rounded-xl bg-surface border border-border flex items-center justify-center text-text hover:text-brand transition-all">
+                {mounted && theme === "dark" ? (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                ) : (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                )}
+              </div>
+              {theme === "dark" ? "Light Mode" : "Dark Mode"}
+            </button>
+          </div>
         </nav>
       </div>
     </header>

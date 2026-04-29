@@ -5,7 +5,7 @@ export default function ContactPage() {
         
         <div className="text-center mb-20 max-w-3xl mx-auto">
           <span className="badge mb-6 animate-fade-up">Contact</span>
-          <h1 className="text-4xl md:text-6xl font-display font-bold text-white mb-6 animate-fade-up-delay leading-tight">
+          <h1 className="text-4xl md:text-6xl font-display font-bold text-brand mb-6 animate-fade-up-delay leading-tight">
             Initialiser la <span className="text-brand-gradient">connexion.</span>
           </h1>
           <p className="text-gray-400 text-lg font-sans leading-relaxed animate-fade-up-delay-2">

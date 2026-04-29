@@ -1,7 +1,11 @@
+"use client";
+
 import Link from "next/link";
 import ServiceCard from "@/components/ServiceCard";
+import { useTranslation } from "@/components/LanguageProvider";
 
 export default function Home() {
+  const { t } = useTranslation();
   const services = [
     {
       title: "Sites Vitrines",
@@ -57,17 +61,12 @@ export default function Home() {
         <div className="container mx-auto px-6 relative z-10 text-center">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface border border-border mb-8 animate-fade-up">
             <span className="w-2 h-2 rounded-full bg-brand animate-glow"></span>
-            <span className="text-xs font-bold text-text-sub tracking-[0.15em] uppercase">Agence Digitale Premium</span>
+            <span className="text-xs font-bold text-text-sub tracking-[0.15em] uppercase">{t("hero.badge")}</span>
           </div>
           
-          <h1 className="text-5xl md:text-7xl lg:text-[5.5rem] font-display font-bold text-text mb-8 leading-[1.1] tracking-tight animate-fade-up-delay">
-            Propulsez votre <br className="hidden md:block" />
-            <span className="text-brand">Business en ligne.</span>
-          </h1>
+            {t("hero.title")}
           
-          <p className="max-w-2xl mx-auto text-text-sub text-lg md:text-xl mb-12 leading-relaxed font-sans animate-fade-up-delay-2">
-            Nous créons des sites web performants et des expériences digitales uniques pour transformer vos visiteurs en clients fidèles.
-          </p>
+            {t("hero.subtitle")}
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-5 animate-fade-up-delay-2">
             <Link href="/order" className="btn-brand w-full sm:w-auto justify-center">
@@ -109,12 +108,12 @@ export default function Home() {
         <div className="container mx-auto px-6 relative z-10">
           <div className="flex flex-col md:flex-row justify-between items-end gap-6 mb-16">
             <div className="max-w-2xl">
-              <span className="badge mb-6">Nos Prestations</span>
+              <span className="badge mb-6">{t("services.badge")}</span>
               <h2 className="text-3xl md:text-5xl font-display font-bold text-text mb-6">
-                Des solutions sur-mesure.
+                {t("services.title")}
               </h2>
               <p className="text-text-sub text-lg font-sans">
-                Que ce soit pour l'entretien, l'installation ou le conseil, nous avons l'expertise nécessaire pour vous accompagner.
+                {t("services.subtitle")}
               </p>
             </div>
           </div>
@@ -154,53 +153,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* --- PORTFOLIO HIGHLIGHT --- */}
-      <section className="section bg-surface border-y border-border relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand/5 rounded-full blur-[100px] pointer-events-none"></div>
-        
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="flex flex-col md:flex-row justify-between items-end gap-6 mb-16">
-            <div className="max-w-xl">
-              <span className="badge mb-6">Réalisations</span>
-              <h2 className="text-3xl md:text-5xl font-display font-bold text-text mb-4">Notre savoir-faire.</h2>
-            </div>
-            <Link href="/portfolio" className="text-brand font-bold text-sm tracking-wide uppercase flex items-center gap-2 hover:gap-3 transition-all">
-              Voir la galerie
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-            </Link>
-          </div>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div className="group relative overflow-hidden rounded-4xl aspect-4/3 card border-border">
-              <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/30 to-transparent z-10"></div>
-              <div className="absolute inset-0 bg-brand/10 group-hover:scale-105 transition-transform duration-700"></div>
-              
-              <div className="absolute bottom-10 left-10 right-10 z-20">
-                <div className="flex gap-2 mb-4">
-                  <span className="px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-white text-xs font-bold tracking-wider">E-COMMERCE</span>
-                  <span className="px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-white text-xs font-bold tracking-wider">RE-DESIGN</span>
-                </div>
-                <h3 className="text-3xl font-display font-bold text-white mb-2">Boutique de Mode</h3>
-                <p className="text-gray-200 font-sans text-sm max-w-md line-clamp-2">Refonte totale d'une plateforme de vente en ligne avec tunnel d'achat optimisé.</p>
-              </div>
-            </div>
-
-            <div className="group relative overflow-hidden rounded-4xl aspect-4/3 card border-border">
-              <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/30 to-transparent z-10"></div>
-              <div className="absolute inset-0 bg-emerald-500/10 group-hover:scale-105 transition-transform duration-700"></div>
-              
-              <div className="absolute bottom-10 left-10 right-10 z-20">
-                <div className="flex gap-2 mb-4">
-                  <span className="px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-white text-xs font-bold tracking-wider">VITRINE</span>
-                  <span className="px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-white text-xs font-bold tracking-wider">UX / UI</span>
-                </div>
-                <h3 className="text-3xl font-display font-bold text-white mb-2">Cabinet Médical</h3>
-                <p className="text-gray-200 font-sans text-sm max-w-md line-clamp-2">Site vitrine élégant avec système de prise de rendez-vous en ligne.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* --- TESTIMONIALS --- */}
       <section className="section relative">

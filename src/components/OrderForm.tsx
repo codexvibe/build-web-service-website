@@ -7,46 +7,61 @@ const OrderForm = () => {
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState({
-    fullName: "",
-    contactInfo: "",
-    serviceType: "nettoyage",
-    location: "",
-    description: "",
-    options: [] as string[],
-    preferredDate: "",
-    budget: "",
-    preferredTime: "",
+    formData: {
+      fullName: "",
+      contactInfo: "",
+      serviceType: "vitrine",
+      location: "",
+      description: "",
+      options: [] as string[],
+      preferredDate: "",
+      budget: "",
+      preferredTime: "normal",
+    }
   });
 
   const serviceTypes = [
-    { id: "vitrine", label: "Site Vitrine" },
-    { id: "ecommerce", label: "Boutique E-commerce" },
-    { id: "application", label: "Application Web / SaaS" },
-    { id: "seo", label: "SEO & Référencement" },
-    { id: "design", label: "UI/UX Design" },
-    { id: "autre", label: "Autre projet digital" },
+    { id: "vitrine", label: "Site Vitrine", price: 15000 },
+    { id: "ecommerce", label: "Boutique E-commerce", price: 45000 },
+    { id: "application", label: "Application Web / SaaS", price: 80000 },
+    { id: "seo", label: "SEO & Référencement", price: 10000 },
+    { id: "design", label: "UI/UX Design", price: 20000 },
+    { id: "autre", label: "Autre projet digital", price: 0 },
   ];
 
   const optionsList = [
-    "Design sur mesure",
-    "Paiement en ligne",
-    "Espace Client / Admin",
-    "Optimisation SEO",
-    "Multilingue (FR/AR/EN)",
-    "Maintenance mensuelle",
+    { label: "Design sur mesure", price: 5000 },
+    { label: "Paiement en ligne", price: 10000 },
+    { label: "Espace Client / Admin", price: 15000 },
+    { label: "Optimisation SEO", price: 5000 },
+    { label: "Multilingue (FR/AR/EN)", price: 8000 },
+    { label: "Maintenance mensuelle", price: 4000 },
   ];
+
+  const calculateTotal = () => {
+    const serviceBase = serviceTypes.find(t => t.id === formData.formData.serviceType)?.price || 0;
+    const optionsTotal = formData.formData.options.reduce((acc, optLabel) => {
+      const option = optionsList.find(o => o.label === optLabel);
+      return acc + (option?.price || 0);
+    }, 0);
+    const urgencyTotal = formData.formData.preferredTime === "prioritaire" ? 5000 : 0;
+    return serviceBase + optionsTotal + urgencyTotal;
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, formData: { ...prev.formData, [name]: value } }));
   };
 
-  const handleCheckboxChange = (option: string) => {
+  const handleCheckboxChange = (optionLabel: string) => {
     setFormData((prev) => ({
       ...prev,
-      options: prev.options.includes(option)
-        ? prev.options.filter((o) => o !== option)
-        : [...prev.options, option],
+      formData: {
+        ...prev.formData,
+        options: prev.formData.options.includes(optionLabel)
+          ? prev.formData.options.filter((o) => o !== optionLabel)
+          : [...prev.formData.options, optionLabel],
+      }
     }));
   };
 
@@ -57,14 +72,14 @@ const OrderForm = () => {
     try {
       const { error } = await supabase.from("service_requests").insert([
         {
-          full_name: formData.fullName,
-          contact_info: formData.contactInfo,
-          service_type: formData.serviceType,
-          location: formData.location,
-          description: formData.description,
-          urgency: formData.options.join(", "),
-          preferred_date: formData.preferredDate,
-          budget: formData.budget,
+          full_name: formData.formData.fullName,
+          contact_info: formData.formData.contactInfo,
+          service_type: formData.formData.serviceType,
+          location: formData.formData.location,
+          description: formData.formData.description,
+          urgency: formData.formData.options.join(", "),
+          preferred_date: formData.formData.preferredDate,
+          budget: `${calculateTotal()} DA`,
         },
       ]);
 
@@ -98,7 +113,7 @@ const OrderForm = () => {
             Nouvelle demande
           </button>
           <a 
-            href={`https://wa.me/213555555555?text=Bonjour, je viens de soumettre une demande d'intervention pour : ${formData.serviceType} à ${formData.location}`}
+            href={`https://wa.me/213555555555?text=Bonjour, je viens de soumettre une demande de projet pour : ${formData.formData.serviceType}. Total estimé : ${calculateTotal()} DA`}
             target="_blank"
             rel="noopener noreferrer"
             className="btn-brand"
@@ -131,7 +146,7 @@ const OrderForm = () => {
                 required
                 type="text"
                 name="fullName"
-                value={formData.fullName}
+                value={formData.formData.fullName}
                 onChange={handleChange}
                 className="input"
                 placeholder="Ex: Mohamed Ali"
@@ -143,7 +158,7 @@ const OrderForm = () => {
                 required
                 type="text"
                 name="contactInfo"
-                value={formData.contactInfo}
+                value={formData.formData.contactInfo}
                 onChange={handleChange}
                 className="input"
                 placeholder="Ex: 0555..."
@@ -164,7 +179,7 @@ const OrderForm = () => {
               <label className="text-xs font-bold text-text-sub uppercase tracking-wider">Type de prestation</label>
               <select
                 name="serviceType"
-                value={formData.serviceType}
+                value={formData.formData.serviceType}
                 onChange={handleChange}
                 className="input cursor-pointer appearance-none bg-surface"
                 style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'24\' height=\'24\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%2364748b\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'%3E%3Cpolyline points=\'6 9 12 15 18 9\'%3E%3C/polyline%3E%3C/svg%3E")', backgroundRepeat: 'no-repeat', backgroundPosition: 'right 1rem center', backgroundSize: '1.2em' }}
@@ -182,7 +197,7 @@ const OrderForm = () => {
                 required
                 type="text"
                 name="location"
-                value={formData.location}
+                value={formData.formData.location}
                 onChange={handleChange}
                 className="input"
                 placeholder="Ex: Hydra, Alger"
@@ -205,7 +220,7 @@ const OrderForm = () => {
             required
             name="description"
             rows={4}
-            value={formData.description}
+            value={formData.formData.description}
             onChange={handleChange}
             className="input resize-none"
             placeholder="Décrivez votre projet, vos objectifs et vos fonctionnalités souhaitées..."
@@ -217,9 +232,9 @@ const OrderForm = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {optionsList.map((option) => (
               <label
-                key={option}
+                key={option.label}
                 className={`flex items-center gap-3 p-4 rounded-xl border cursor-pointer transition-all ${
-                  formData.options.includes(option)
+                  formData.formData.options.includes(option.label)
                     ? "bg-brand/5 border-brand/50 text-brand shadow-sm"
                     : "bg-surface border-border text-text-sub hover:border-gray-400"
                 }`}
@@ -227,17 +242,20 @@ const OrderForm = () => {
                 <input
                   type="checkbox"
                   className="hidden"
-                  checked={formData.options.includes(option)}
-                  onChange={() => handleCheckboxChange(option)}
+                  checked={formData.formData.options.includes(option.label)}
+                  onChange={() => handleCheckboxChange(option.label)}
                 />
                 <div className={`w-5 h-5 rounded flex items-center justify-center border transition-colors ${
-                  formData.options.includes(option) ? "bg-brand border-brand" : "border-gray-400 bg-white"
+                  formData.formData.options.includes(option.label) ? "bg-brand border-brand" : "border-gray-400 bg-white"
                 }`}>
-                  {formData.options.includes(option) && (
+                  {formData.formData.options.includes(option.label) && (
                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                   )}
                 </div>
-                <span className="text-xs font-bold font-sans leading-tight text-text">{option}</span>
+                <div className="flex flex-col grow">
+                  <span className="text-xs font-bold font-sans leading-tight text-text">{option.label}</span>
+                  <span className="text-[10px] text-brand font-bold">+{option.price} DA</span>
+                </div>
               </label>
             ))}
           </div>
@@ -251,33 +269,37 @@ const OrderForm = () => {
           <input
             type="text"
             name="preferredDate"
-            value={formData.preferredDate}
+            value={formData.formData.preferredDate}
             onChange={handleChange}
             className="input"
             placeholder="Ex: Le plus tôt possible, Demain..."
           />
         </div>
         <div className="space-y-2">
-          <label className="text-xs font-bold text-text-sub uppercase tracking-wider">Heure de disponibilité</label>
-          <input
-            type="text"
-            name="preferredTime"
-            value={formData.preferredTime}
-            onChange={handleChange}
-            className="input"
-            placeholder="Ex: Matin (8h-12h)"
-          />
+          <label className="text-xs font-bold text-text-sub uppercase tracking-wider">Budget estimé</label>
+          <div className="relative">
+            <input
+              readOnly
+              type="text"
+              value={`${calculateTotal()} DA`}
+              className="input bg-brand/5 border-brand/30 text-brand font-bold text-xl"
+            />
+            <div className="absolute right-4 top-1/2 -translate-y-1/2 text-[10px] font-bold uppercase tracking-widest text-brand/60">
+              Total Estimé
+            </div>
+          </div>
         </div>
         <div className="space-y-2">
-          <label className="text-xs font-bold text-text-sub uppercase tracking-wider">Budget estimé (Optionnel)</label>
-          <input
-            type="text"
-            name="budget"
-            value={formData.budget}
+          <label className="text-xs font-bold text-text-sub uppercase tracking-wider">Urgence</label>
+          <select
+            name="preferredTime"
+            value={formData.formData.preferredTime}
             onChange={handleChange}
             className="input"
-            placeholder="Ex: 5000 DA"
-          />
+          >
+            <option value="normal">Normal</option>
+            <option value="prioritaire">Prioritaire (+5,000 DA)</option>
+          </select>
         </div>
       </div>
 

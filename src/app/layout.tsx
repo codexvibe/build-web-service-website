@@ -3,6 +3,8 @@ import { DM_Sans, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { ThemeProvider } from "@/components/ThemeProvider";
+import { LanguageProvider } from "@/components/LanguageProvider";
 
 const dmSans = DM_Sans({ subsets: ["latin"], variable: "--font-sans" });
 const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-display" });
@@ -17,9 +19,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="fr" className="scroll-smooth">
       <body className={`${dmSans.variable} ${spaceGrotesk.variable} antialiased`}>
-        <Header />
-        <main>{children}</main>
-        <Footer />
+        <LanguageProvider>
+          <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
+            <Header />
+            <main>{children}</main>
+            <Footer />
+          </ThemeProvider>
+        </LanguageProvider>
 
         {/* WhatsApp Floating Button */}
         <a
