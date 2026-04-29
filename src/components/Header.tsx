@@ -27,19 +27,19 @@ const Header = () => {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b border-transparent ${
-        isScrolled ? "glass py-4 border-white/10" : "bg-transparent py-6"
+        isScrolled ? "glass py-4" : "bg-transparent py-6"
       }`}
     >
       <div className="container mx-auto px-6 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-3 z-50">
           <div className="relative w-10 h-10 flex items-center justify-center">
             <div className="absolute inset-0 bg-brand opacity-20 blur-md rounded-full"></div>
-            <div className="relative w-full h-full bg-card border border-brand/50 rounded-xl flex items-center justify-center shadow-[0_0_15px_rgba(14,165,233,0.3)]">
-              <span className="text-brand font-display font-bold text-xl">W</span>
+            <div className="relative w-full h-full bg-surface border border-brand/50 rounded-xl flex items-center justify-center shadow-sm">
+              <span className="text-brand font-display font-bold text-xl">P</span>
             </div>
           </div>
-          <span className="text-2xl font-display font-bold text-white tracking-tight">
-            Web<span className="text-brand-gradient">Craft</span>
+          <span className="text-2xl font-display font-bold text-text tracking-tight">
+            Pro<span className="text-brand">Services</span>
           </span>
         </Link>
 
@@ -50,20 +50,20 @@ const Header = () => {
               key={link.name}
               href={link.href}
               className={`text-sm font-semibold tracking-wide uppercase transition-colors hover:text-brand ${
-                pathname === link.href ? "text-brand" : "text-gray-400"
+                pathname === link.href ? "text-brand" : "text-text-sub"
               }`}
             >
               {link.name}
             </Link>
           ))}
-          <Link href="/order" className="btn-brand py-2.5 px-6 ml-4 shadow-[0_0_20px_rgba(14,165,233,0.3)]">
-            Commander
+          <Link href="/order" className="btn-brand py-2.5 px-6 ml-4">
+            Demander un devis
           </Link>
         </nav>
 
         {/* Mobile Menu Toggle */}
         <button
-          className="md:hidden text-white p-2 z-50 relative"
+          className="md:hidden text-text p-2 z-50 relative"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
           {isMobileMenuOpen ? (
@@ -86,7 +86,7 @@ const Header = () => {
               key={link.name}
               href={link.href}
               className={`text-2xl font-display font-bold uppercase tracking-widest transition-colors hover:text-brand ${
-                pathname === link.href ? "text-brand" : "text-white"
+                pathname === link.href ? "text-brand" : "text-text"
               }`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
@@ -95,10 +95,10 @@ const Header = () => {
           ))}
           <Link
             href="/order"
-            className="btn-brand mt-4 text-lg px-8 py-4 shadow-[0_0_30px_rgba(14,165,233,0.4)]"
+            className="btn-brand mt-4 text-lg px-8 py-4"
             onClick={() => setIsMobileMenuOpen(false)}
           >
-            Commander un site
+            Demander un devis
           </Link>
         </nav>
       </div>
