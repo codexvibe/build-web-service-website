@@ -4,6 +4,12 @@ import Link from "next/link";
 export default function ServicesPage() {
   const allServices = [
     {
+      title: "Création de Sites Web",
+      description: "Sites vitrines, e-commerce et applications web sur mesure. Design moderne, performance optimisée et référencement naturel.",
+      price: "Dès 15 000 DA",
+      icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>,
+    },
+    {
       title: "Nettoyage Professionnel",
       description: "Entretien complet de vos locaux, bureaux ou domicile. Équipes qualifiées, produits écologiques et horaires flexibles.",
       price: "Sur Devis",
@@ -31,15 +37,40 @@ export default function ServicesPage() {
       title: "Consulting IT & Réseaux",
       description: "Audit de sécurité, installation de serveurs, câblage réseau et conseil en transformation digitale pour votre PME.",
       price: "Sur Devis",
-      icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>,
-    },
-    {
-      title: "Entretien d'Espaces Verts",
-      description: "Tonte, taille, plantation et création d'espaces paysagers. Nos jardiniers prennent soin de vos extérieurs toute l'année.",
-      price: "Sur Devis",
-      icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>,
+      icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>,
     },
   ];
+
+  const pricingPacks = [
+    {
+      name: "PACK BASIC",
+      price: "15,000 DA",
+      features: ["1 à 3 pages", "Design moderne", "Version mobile"],
+      tag: "CRÉATION"
+    },
+    {
+      name: "PACK STANDARD",
+      price: "25,000 DA",
+      features: ["Jusqu'à 5 pages", "Design professionnel", "SEO de base"],
+      tag: "PROFESSIONAL",
+      popular: true
+    },
+    {
+      name: "PACK PREMIUM",
+      price: "45,000 DA",
+      features: ["Site e-commerce", "Ajout de produits", "Design avancé"],
+      tag: "E-COMMERCE"
+    }
+  ];
+
+  const additionalOptions = [
+    { name: "Admin Dashboard", price: "+10,000 DA" },
+    { name: "Optimisation vitesse", price: "+5,000 DA" },
+    { name: "Logo simple", price: "+3,000 DA" },
+    { name: "Multilingue (AR / FR)", price: "+5,000 DA" },
+    { name: "Maintenance (1 mois)", price: "+4,000 DA" }
+  ];
+
 
   return (
     <div className="pt-32 pb-20 md:pt-48 md:pb-32 bg-bg min-h-screen">
@@ -63,6 +94,68 @@ export default function ServicesPage() {
           ))}
         </div>
         
+        {/* Pricing Packs Section */}
+        <div className="mt-32">
+          <div className="text-center mb-16">
+            <span className="badge mb-6">Nos Tarifs Web</span>
+            <h2 className="text-3xl md:text-5xl font-display font-bold text-text mb-6">
+              Des solutions adaptées à <span className="text-brand">votre budget.</span>
+            </h2>
+            <p className="text-text-sub text-lg max-w-2xl mx-auto">
+              Choisissez le pack qui correspond le mieux à vos besoins de développement web.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {pricingPacks.map((pack, idx) => (
+              <div 
+                key={idx} 
+                className={`card p-8 flex flex-col relative overflow-hidden transition-all duration-300 hover:-translate-y-2 ${
+                  pack.popular ? 'border-brand ring-1 ring-brand/50' : 'border-border'
+                }`}
+              >
+                {pack.popular && (
+                  <div className="absolute top-0 right-0 bg-brand text-bg text-[10px] font-bold px-3 py-1 rounded-bl-lg uppercase tracking-wider">
+                    Populaire
+                  </div>
+                )}
+                <span className="text-xs font-bold text-brand uppercase tracking-widest mb-4">{pack.tag}</span>
+                <h3 className="text-2xl font-display font-bold text-text mb-2">{pack.name}</h3>
+                <div className="flex items-baseline gap-1 mb-8">
+                  <span className="text-4xl font-bold text-text">{pack.price}</span>
+                </div>
+                <ul className="space-y-4 mb-10 flex-grow">
+                  {pack.features.map((feature, fIdx) => (
+                    <li key={fIdx} className="flex items-center gap-3 text-text-sub font-sans">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="text-brand shrink-0"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+                <Link href="/order" className={pack.popular ? "btn-brand w-full" : "btn-ghost border border-border w-full"}>
+                  Choisir ce pack
+                </Link>
+              </div>
+            ))}
+          </div>
+
+          {/* Additional Options */}
+          <div className="mt-16 card p-8 md:p-12 border-border bg-surface/50">
+            <h4 className="text-xl font-display font-bold text-text mb-8 flex items-center gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-brand"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+              Options Supplémentaires
+            </h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {additionalOptions.map((opt, idx) => (
+                <div key={idx} className="flex justify-between items-center p-4 rounded-xl bg-bg border border-border/50">
+                  <span className="text-text font-medium">{opt.name}</span>
+                  <span className="text-brand font-bold">{opt.price}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
         {/* Why choose us - Tech Focus */}
         <div className="mt-32">
           <div className="card p-10 md:p-16 overflow-hidden relative border-border bg-surface">

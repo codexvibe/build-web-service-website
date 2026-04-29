@@ -4,6 +4,12 @@ import ServiceCard from "@/components/ServiceCard";
 export default function Home() {
   const services = [
     {
+      title: "Création de Sites Web",
+      description: "Sites vitrines, e-commerce et applications sur mesure. Design premium et performance.",
+      price: "Dès 15 000 DA",
+      icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>,
+    },
+    {
       title: "Nettoyage Professionnel",
       description: "Des espaces impeccables pour vos bureaux ou votre domicile. Entretien régulier ou intervention ponctuelle.",
       price: "Sur Devis",
@@ -19,13 +25,7 @@ export default function Home() {
       title: "Consulting IT",
       description: "Optimisation de votre infrastructure, sécurité réseau et conseils en transformation digitale.",
       price: "Sur Devis",
-      icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>,
-    },
-    {
-      title: "Déménagement & Transport",
-      description: "Transport sécurisé de vos biens. Emballage, manutention et logistique de bout en bout.",
-      price: "Sur Devis",
-      icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>,
+      icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>,
     },
   ];
 
@@ -122,6 +122,33 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {services.map((service, index) => (
               <ServiceCard key={index} {...service} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* --- WEB PACKS PREVIEW --- */}
+      <section className="py-24 bg-surface/30 relative">
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="text-center mb-16">
+            <span className="badge mb-6">Offres Digitales</span>
+            <h2 className="text-3xl md:text-5xl font-display font-bold text-text mb-6">Packs Création Web</h2>
+            <p className="text-text-sub text-lg max-w-2xl mx-auto">Boostez votre business avec un site web professionnel.</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              { name: "BASIC", price: "15,000 DA", tag: "1-3 Pages" },
+              { name: "STANDARD", price: "25,000 DA", tag: "Jusqu'à 5 Pages", popular: true },
+              { name: "PREMIUM", price: "45,000 DA", tag: "E-Commerce" }
+            ].map((pack, idx) => (
+              <div key={idx} className={`card p-8 flex flex-col border-border hover:border-brand/50 transition-all ${pack.popular ? 'ring-1 ring-brand/30' : ''}`}>
+                <h3 className="text-xl font-display font-bold text-text mb-2">PACK {pack.name}</h3>
+                <span className="text-brand font-bold text-2xl mb-4">{pack.price}</span>
+                <span className="text-text-sub text-sm mb-6 uppercase tracking-wider font-bold">{pack.tag}</span>
+                <Link href="/services" className="btn-ghost border border-border text-center justify-center py-3 text-xs">
+                  Détails du pack
+                </Link>
+              </div>
             ))}
           </div>
         </div>
