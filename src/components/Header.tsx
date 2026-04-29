@@ -61,12 +61,16 @@ const Header = () => {
       }`}
     >
       <div className="max-w-[1400px] mx-auto px-6 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-3 z-50">
-          <div className="relative w-14 h-14 flex items-center justify-center">
-            <div className="absolute inset-0 bg-brand opacity-20 blur-md rounded-full"></div>
-            <img src="/logo.png" alt="ProServices" className="relative w-full h-full object-contain" />
+        <Link href="/" className="flex items-center gap-3 z-50 group">
+          <div className="relative flex items-center justify-center">
+            <div className="absolute inset-0 bg-brand opacity-20 blur-xl rounded-full group-hover:opacity-40 transition-opacity"></div>
+            <img 
+              src="/logo.png" 
+              alt="ProServices" 
+              className="relative w-12 h-12 md:w-16 md:h-16 object-contain drop-shadow-2xl transition-transform duration-500 group-hover:scale-110" 
+            />
           </div>
-          <span className="text-xl font-display font-bold text-text tracking-tight">
+          <span className="text-xl md:text-2xl font-display font-bold text-text tracking-tight">
             Pro<span className="text-brand">Services</span>
           </span>
         </Link>

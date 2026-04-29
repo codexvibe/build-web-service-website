@@ -43,7 +43,7 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage: handleSetLanguage, t, dir }}>
-      <div dir={dir} className={language === "ar" ? "font-sans-ar" : ""}>
+      <div dir={dir} className={language === "ar" ? "font-arabic" : ""}>
         {children}
       </div>
     </LanguageContext.Provider>

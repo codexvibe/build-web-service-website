@@ -301,12 +301,12 @@ export default function DashboardClient({ initialRequests }: { initialRequests: 
                         <h3 className="text-4xl font-display font-bold mb-2">Gestion d'Équipe</h3>
                         <p className="text-white/30 text-sm">Administrez les accès et rôles de votre équipe.</p>
                       </div>
-                      <button onClick={() => setIsAdminModalOpen(true)} className="btn-brand px-12 py-6 rounded-[1.5rem] flex items-center gap-4 text-lg active:scale-95 transition-all"><Plus size={24} /> Nouvel Administrateur</button>
+                      <button onClick={() => setIsAdminModalOpen(true)} className="btn-brand px-12 py-6 rounded-3xl flex items-center gap-4 text-lg active:scale-95 transition-all"><Plus size={24} /> Nouvel Administrateur</button>
                    </div>
                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                       {admins.map(admin => (
                         <div key={admin.id} className="bg-[#0f1117] p-10 rounded-3xl border border-white/5 flex flex-col items-center justify-center text-center group transition-all hover:border-brand/30 hover:shadow-2xl hover:shadow-brand/5">
-                           <div className="w-20 h-20 rounded-[2rem] bg-white/5 flex items-center justify-center text-white/20 group-hover:bg-brand group-hover:text-white transition-all duration-500 mb-6 shadow-xl"><Users size={32} /></div>
+                           <div className="w-20 h-20 rounded-4xl bg-white/5 flex items-center justify-center text-white/20 group-hover:bg-brand group-hover:text-white transition-all duration-500 mb-6 shadow-xl"><Users size={32} /></div>
                            <h5 className="font-display font-bold text-xl mb-1">{admin.name}</h5>
                            <p className="text-[10px] text-white/20 font-bold uppercase tracking-widest mb-8">Administrateur Senior</p>
                            <button onClick={() => handleDeleteAdmin(admin.id)} className="w-12 h-12 rounded-2xl bg-red-500/10 text-red-500 flex items-center justify-center hover:bg-red-500 hover:text-white transition-all border border-red-500/20"><Trash2 size={20} /></button>

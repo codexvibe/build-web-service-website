@@ -20,6 +20,7 @@
 
   --font-sans: 'Inter', system-ui, sans-serif;
   --font-display: 'Inter', system-ui, sans-serif;
+  --font-arabic: var(--font-arabic), 'Inter', system-ui, sans-serif;
 }
 
 /* Dark Mode Overrides */
