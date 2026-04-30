@@ -27,7 +27,7 @@ export default function Sidebar({ activeTab, setActiveTab, onLogout }: SidebarPr
           <img src="/logo.png" alt="ProServices" className="relative w-full h-full object-contain" />
         </div>
         <div className="hidden lg:block">
-          <h1 className="font-display font-bold text-xl tracking-tight">Agency<span className="text-brand">Hub</span></h1>
+          <h1 className="font-display font-bold text-xl tracking-tight">Pro<span className="text-brand">Services</span></h1>
           <p className="text-[10px] text-white/40 font-bold uppercase tracking-widest mt-0.5">Admin Control</p>
         </div>
       </div>

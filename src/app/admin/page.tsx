@@ -29,7 +29,7 @@ export default function AdminLoginPage() {
           <h1 className="text-3xl font-heading text-black dark:text-white uppercase tracking-tighter">
             ADMIN <span className="text-[#39ff14]">ZONE</span>
           </h1>
-          <p className="text-[#a1a1aa] mt-2 font-sans">Accès réservé au personnel HM.ZONEDZ</p>
+          <p className="text-[#a1a1aa] mt-2 font-sans">Accès réservé au personnel ProServices</p>
         </div>
 
         <form action={formAction} className="space-y-6">
@@ -72,9 +72,7 @@ export default function AdminLoginPage() {
           </button>
         </form>
 
-        <div className="mt-8 pt-6 border-t border-black/5 dark:border-white/5 text-center">
-          <p className="text-xs text-[#525252] uppercase tracking-[0.2em]">HM.ZONEDZ Control System v1.0</p>
-        </div>
+          <p className="text-xs text-[#525252] uppercase tracking-[0.2em]">ProServices Control System v1.0</p>
       </motion.div>
     </main>
   )
