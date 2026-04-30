@@ -39,8 +39,8 @@ export async function loginAction(prevState: any, formData: FormData) {
   }
 
   // 2. Fallback to Master Passcode (environment variable)
-  const masterPasscode = (process.env.ADMIN_PASSCODE || 'proservices2025').trim()
-  const isMasterPasscode = passcode === masterPasscode
+  const masterPasscode = (process.env.ADMIN_PASSCODE || 'PRO2005').trim()
+  const isMasterPasscode = passcode.toUpperCase() === masterPasscode.toUpperCase()
 
   if (adminMatch || isMasterPasscode) {
     await createSession('admin')
