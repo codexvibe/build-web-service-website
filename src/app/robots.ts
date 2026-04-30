@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/admin', '/api'],
     },
-    sitemap: 'https://proservices.dz/sitemap.xml',
+    sitemap: 'https://proservices-dz.vercel.app/sitemap.xml',
   };
 }

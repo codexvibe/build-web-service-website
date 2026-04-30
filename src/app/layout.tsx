@@ -16,7 +16,10 @@ const ibmPlexArabic = IBM_Plex_Sans_Arabic({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://proservices.dz'),
+  metadataBase: new URL('https://proservices-dz.vercel.app'),
+  verification: {
+    google: "tDci3rmROB-uxHjgeMrBauYgkM36MnEITANB3RURH7s",
+  },
   title: {
     default: "Création Site Web Algérie | Agence Web ProServices Alger",
     template: "%s | ProServices Algérie"
