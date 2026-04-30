@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DM_Sans, Space_Grotesk, IBM_Plex_Sans_Arabic } from "next/font/google";
+import { DM_Sans, Space_Grotesk, IBM_Plex_Sans_Arabic, Outfit } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -9,6 +9,7 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 
 const dmSans = DM_Sans({ subsets: ["latin"], variable: "--font-sans" });
 const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-display" });
+const outfit = Outfit({ subsets: ["latin"], variable: "--font-heading" });
 const ibmPlexArabic = IBM_Plex_Sans_Arabic({ 
   subsets: ["arabic"], 
   weight: ["400", "500", "600", "700"],
@@ -116,7 +117,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className={`${dmSans.variable} ${spaceGrotesk.variable} ${ibmPlexArabic.variable} antialiased`}>
+      <body className={`${dmSans.variable} ${spaceGrotesk.variable} ${outfit.variable} ${ibmPlexArabic.variable} antialiased`}>
         <LanguageProvider>
           <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
             <Header />
