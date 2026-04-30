@@ -4,9 +4,9 @@
 
 @theme {
   /* CLEAN CORPORATE COLOR SYSTEM */
-  --color-brand: #39ff14;       /* Cyber Neon Green */
-  --color-brand-dark: #2ecc11; 
-  --color-brand-glow: rgba(57, 255, 20, 0.15);
+  --color-brand: #3b82f6;       /* Premium Blue */
+  --color-brand-dark: #2563eb; 
+  --color-brand-glow: rgba(59, 130, 246, 0.15);
   
   --font-sans: 'Inter', system-ui, sans-serif;
   --font-display: 'Inter', system-ui, sans-serif;

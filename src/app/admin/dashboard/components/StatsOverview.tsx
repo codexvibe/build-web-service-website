@@ -65,7 +65,7 @@ export default function StatsOverview({ totalLeads, pendingLeads, completedLeads
               <stat.icon size={20} />
             </div>
             <div className={`flex items-center gap-1 text-[10px] font-bold px-2 py-1 rounded-full ${
-              stat.trendUp ? 'bg-emerald-500/10 text-emerald-500' : 'bg-red-500/10 text-red-500'
+              stat.trendUp ? 'bg-blue-500/10 text-blue-500' : 'bg-red-500/10 text-red-500'
             }`}>
               {stat.trendUp ? <ArrowUpRight size={10} /> : <ArrowDownRight size={10} />}
               {stat.trend}

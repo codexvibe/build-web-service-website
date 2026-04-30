@@ -64,11 +64,11 @@ const Header = () => {
       <div className="max-w-[1400px] mx-auto px-6 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-3 z-50 group">
           <div className="relative flex items-center justify-center">
-            <div className="absolute inset-0 bg-brand opacity-20 blur-xl rounded-full group-hover:opacity-40 transition-opacity"></div>
+            <div className="absolute inset-0 bg-brand/20 blur-xl rounded-full group-hover:bg-brand/40 transition-all"></div>
             <img 
               src="/logo.png" 
               alt="ProServices" 
-              className="relative w-12 h-12 md:w-16 md:h-16 object-contain drop-shadow-2xl transition-transform duration-500 group-hover:scale-110" 
+              className="relative w-12 h-12 md:w-16 md:h-16 object-contain transition-transform duration-500 group-hover:scale-110 drop-shadow-[0_0_15px_rgba(0,0,0,0.8)] dark:drop-shadow-[0_0_15px_rgba(255,255,255,0.8)]" 
             />
           </div>
           <span className="text-xl md:text-2xl font-display font-bold text-text tracking-tight">

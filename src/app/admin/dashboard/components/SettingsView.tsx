@@ -103,8 +103,8 @@ export default function SettingsView() {
                 <p className="text-white/20 text-[10px] font-bold uppercase tracking-widest">Couches de sécurité et authentification</p>
               </div>
 
-              <div className="bg-emerald-500/5 border border-emerald-500/10 p-6 rounded-2xl flex items-center gap-5">
-                 <div className="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-500">
+              <div className="bg-blue-500/5 border border-blue-500/10 p-6 rounded-2xl flex items-center gap-5">
+                 <div className="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-500">
                     <Fingerprint size={24} />
                  </div>
                  <div>

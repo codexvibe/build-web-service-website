@@ -33,26 +33,8 @@ const CHART_DATA = [
   { name: 'Dim', leads: 8, revenue: 4300 },
 ]
 
-interface ServiceRequest {
-  id: string
-  created_at: string
-  full_name: string
-  contact_info: string
-  service_type: string
-  location: string
-  description: string
-  preferred_date: string
-  preferred_time: string
-  urgency: string
-  budget: string
-  status: 'pending' | 'contacted' | 'in_progress' | 'completed' | 'cancelled'
-}
+import { ServiceRequest, AdminProfile } from '@/types'
 
-interface AdminProfile {
-  id: string
-  name: string
-  passcode: string
-}
 
 export default function DashboardClient({ initialRequests }: { initialRequests: any[] }) {
   const [activeTab, setActiveTab] = useState<'requests' | 'stats' | 'team' | 'settings' | 'services'>('requests')
@@ -164,7 +146,7 @@ export default function DashboardClient({ initialRequests }: { initialRequests: 
 
            <div className="flex items-center gap-4">
               <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-white/3 border border-white/5 rounded-lg">
-                 <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                 <div className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
                  <span className="text-[9px] font-bold text-white/40 uppercase tracking-widest">Live Cloud DZ</span>
               </div>
               <button className="p-2.5 rounded-xl hover:bg-white/5 text-white/40 transition-colors">
@@ -239,7 +221,7 @@ export default function DashboardClient({ initialRequests }: { initialRequests: 
                                   </div>
                                   <span className={`text-[8px] font-bold px-2 py-1 rounded-md uppercase tracking-wider ${
                                     req.status === 'pending' ? 'bg-amber-500/10 text-amber-500 border border-amber-500/10' :
-                                    req.status === 'completed' ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/10' :
+                                    req.status === 'completed' ? 'bg-blue-500/10 text-blue-500 border border-blue-500/10' :
                                     'bg-blue-500/10 text-blue-500 border border-blue-500/10'
                                   }`}>
                                     {req.status}
@@ -316,8 +298,8 @@ export default function DashboardClient({ initialRequests }: { initialRequests: 
                                <AreaChart data={CHART_DATA}>
                                   <defs>
                                      <linearGradient id="colorLeads" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="5%" stopColor="#39ff14" stopOpacity={0.3}/>
-                                        <stop offset="95%" stopColor="#39ff14" stopOpacity={0}/>
+                                        <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3}/>
+                                        <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
                                      </linearGradient>
                                   </defs>
                                   <CartesianGrid strokeDasharray="3 3" stroke="#ffffff05" vertical={false} />
@@ -325,9 +307,9 @@ export default function DashboardClient({ initialRequests }: { initialRequests: 
                                   <YAxis axisLine={false} tickLine={false} tick={{fill: '#ffffff20', fontSize: 10}} />
                                   <Tooltip 
                                     contentStyle={{ backgroundColor: '#09090b', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px' }}
-                                    itemStyle={{ color: '#39ff14', fontSize: '12px', fontWeight: 'bold' }}
+                                    itemStyle={{ color: '#3b82f6', fontSize: '12px', fontWeight: 'bold' }}
                                   />
-                                  <Area type="monotone" dataKey="leads" stroke="#39ff14" fillOpacity={1} fill="url(#colorLeads)" strokeWidth={3} />
+                                  <Area type="monotone" dataKey="leads" stroke="#3b82f6" fillOpacity={1} fill="url(#colorLeads)" strokeWidth={3} />
                                </AreaChart>
                             </ResponsiveContainer>
                          </div>
@@ -340,18 +322,18 @@ export default function DashboardClient({ initialRequests }: { initialRequests: 
                             <h4 className="text-[10px] font-bold text-white/20 uppercase tracking-[0.2em] mb-4">Taux de Conversion</h4>
                             <div className="flex items-center justify-between">
                                <h2 className="text-4xl font-heading font-bold">24.8%</h2>
-                               <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-emerald-500 border border-emerald-500/10 group-hover:scale-110 transition-transform">
+                               <div className="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center text-blue-500 border border-blue-500/10 group-hover:scale-110 transition-transform">
                                   <ArrowUpRight size={24} />
                                </div>
                             </div>
-                            <p className="text-[10px] text-emerald-500 font-bold mt-4">+2.4% <span className="text-white/20">vs mois dernier</span></p>
+                            <p className="text-[10px] text-blue-500 font-bold mt-4">+2.4% <span className="text-white/20">vs mois dernier</span></p>
                          </div>
 
                          <div className="bg-[#09090b] p-8 rounded-4xl border border-white/5 relative overflow-hidden group">
                             <h4 className="text-[10px] font-bold text-white/20 uppercase tracking-[0.2em] mb-6">Canaux de Trafic</h4>
                             <div className="space-y-4">
                                {[
-                                 { name: 'Recherche Google', p: 45, c: '#39ff14' },
+                                 { name: 'Recherche Google', p: 45, c: '#3b82f6' },
                                  { name: 'Instagram Ads', p: 30, c: '#3b82f6' },
                                  { name: 'Direct / Referral', p: 25, c: '#a855f7' }
                                ].map(c => (

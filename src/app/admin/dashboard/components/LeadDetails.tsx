@@ -7,9 +7,10 @@ import {
   Trash2, X, ExternalLink, Mail, Clock, CheckCircle2,
   ChevronRight, ArrowRight
 } from 'lucide-react'
+import { ServiceRequest } from '@/types'
 
 interface LeadDetailsProps {
-  lead: any
+  lead: ServiceRequest
   onDelete: (id: string) => void
   onClose: () => void
   onUpdateStatus: (id: string, status: string) => void
@@ -108,8 +109,8 @@ export default function LeadDetails({ lead, onDelete, onClose, onUpdateStatus }:
                {[
                  { id: 'pending', label: 'En attente', color: 'amber-500' },
                  { id: 'contacted', label: 'Contacté', color: 'blue-500' },
-                 { id: 'in_progress', label: 'En cours', color: '#39ff14' },
-                 { id: 'completed', label: 'Terminé', color: 'emerald-500' },
+                 { id: 'in_progress', label: 'En cours', color: '#3b82f6' },
+                 { id: 'completed', label: 'Terminé', color: 'blue-500' },
                ].map(st => (
                  <button 
                    key={st.id}
