@@ -26,16 +26,17 @@ export default function ServicesView() {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   return (
+  return (
     <div className="space-y-8 max-w-[1200px] mx-auto">
       {/* Header */}
-      <div className="bg-[#09090b] p-8 rounded-[2rem] border border-white/[0.05] flex flex-col md:flex-row justify-between items-center gap-6 shadow-2xl">
+      <div className="bg-[#09090b] p-8 rounded-4xl border border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 shadow-2xl">
         <div>
           <h3 className="text-2xl font-bold flex items-center gap-3 italic">
-            <Layout className="text-[#39ff14]" size={24} /> Catalogue de Services
+            <Layout className="text-brand" size={24} /> Catalogue de Services
           </h3>
           <p className="text-[10px] text-white/30 font-bold uppercase tracking-widest mt-1">Gérez vos offres et tarifs</p>
         </div>
-        <button onClick={() => setIsModalOpen(true)} className="px-6 py-3 bg-[#39ff14] text-black font-bold text-[11px] uppercase tracking-widest rounded-xl hover:bg-[#2ecc11] transition-all flex items-center gap-2 active:scale-95 shadow-lg shadow-[#39ff14]/10">
+        <button onClick={() => setIsModalOpen(true)} className="px-6 py-3 bg-brand text-black font-bold text-[11px] uppercase tracking-widest rounded-xl hover:bg-brand-dark transition-all flex items-center gap-2 active:scale-95 shadow-lg shadow-brand/10">
           <Plus size={16} /> Ajouter un Service
         </button>
       </div>
@@ -47,17 +48,17 @@ export default function ServicesView() {
             key={service.id}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-[#09090b] border border-white/[0.05] p-8 rounded-[2rem] hover:border-[#39ff14]/20 transition-all group flex flex-col relative overflow-hidden"
+            className="bg-[#09090b] border border-white/5 p-8 rounded-4xl hover:border-brand/20 transition-all group flex flex-col relative overflow-hidden"
           >
-            <div className="absolute top-0 right-0 w-24 h-24 bg-white/[0.02] rounded-bl-[4rem] flex items-center justify-center">
+            <div className="absolute top-0 right-0 w-24 h-24 bg-white/2 rounded-bl-[4rem] flex items-center justify-center">
               <Tag size={20} className="text-white/10" />
             </div>
 
             <div className="flex justify-between items-start mb-6">
-              <div className="w-12 h-12 rounded-2xl bg-white/[0.03] flex items-center justify-center text-[#39ff14]">
+              <div className="w-12 h-12 rounded-2xl bg-white/3 flex items-center justify-center text-brand">
                 {service.name.includes('Vitrine') ? <Globe size={24} /> : service.name.includes('E-commerce') ? <ShoppingCart size={24} /> : <Layout size={24} />}
               </div>
-              <div className={`px-3 py-1 rounded-full text-[8px] font-bold uppercase tracking-wider ${service.is_available ? 'bg-[#39ff14]/10 text-[#39ff14]' : 'bg-red-500/10 text-red-500'}`}>
+              <div className={`px-3 py-1 rounded-full text-[8px] font-bold uppercase tracking-wider ${service.is_available ? 'bg-brand/10 text-brand' : 'bg-red-500/10 text-red-500'}`}>
                 {service.is_available ? 'Disponible' : 'Indisponible'}
               </div>
             </div>
@@ -65,10 +66,10 @@ export default function ServicesView() {
             <h4 className="text-xl font-bold text-white mb-2">{service.name}</h4>
             <p className="text-xs text-white/30 leading-relaxed mb-8 flex-1">{service.description}</p>
 
-            <div className="space-y-4 pt-6 border-t border-white/[0.05]">
+            <div className="space-y-4 pt-6 border-t border-white/5">
               <div className="flex justify-between items-center text-[10px] font-bold uppercase tracking-widest text-white/40">
                 <span>Prix de base</span>
-                <span className="text-[#39ff14] text-sm">{service.price}</span>
+                <span className="text-brand text-sm">{service.price}</span>
               </div>
               <div className="flex justify-between items-center text-[10px] font-bold uppercase tracking-widest text-white/40">
                 <span>Délai moyen</span>

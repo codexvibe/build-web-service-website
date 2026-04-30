@@ -58,10 +58,10 @@ export default function StatsOverview({ totalLeads, pendingLeads, completedLeads
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: i * 0.1 }}
-          className="bg-[#09090b] p-6 rounded-2xl border border-white/[0.05] hover:border-white/[0.1] transition-all group"
+          className="bg-[#09090b] p-6 rounded-2xl border border-white/5 hover:border-white/10 transition-all group"
         >
           <div className="flex justify-between items-start mb-4">
-            <div className="w-10 h-10 rounded-xl bg-white/[0.03] border border-white/[0.05] flex items-center justify-center text-white/60 group-hover:text-[#39ff14] transition-colors">
+            <div className="w-10 h-10 rounded-xl bg-white/3 border border-white/5 flex items-center justify-center text-white/60 group-hover:text-brand transition-colors">
               <stat.icon size={20} />
             </div>
             <div className={`flex items-center gap-1 text-[10px] font-bold px-2 py-1 rounded-full ${
@@ -73,7 +73,7 @@ export default function StatsOverview({ totalLeads, pendingLeads, completedLeads
           </div>
           
           <div className="space-y-1">
-            <p className="text-[11px] font-bold text-white/30 uppercase tracking-[0.1em]">{stat.label}</p>
+            <p className="text-[11px] font-bold text-white/30 uppercase tracking-widest">{stat.label}</p>
             <div className="flex items-baseline gap-2">
               <h4 className="text-2xl font-heading font-bold text-white tracking-tight">{stat.val}</h4>
             </div>

@@ -13,8 +13,8 @@ export default function AdminLoginPage() {
     <main className="min-h-screen bg-black flex items-center justify-center p-6 relative overflow-hidden font-sans">
       {/* Dynamic Background */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-[#39ff14]/[0.03] rounded-full blur-[140px]" />
-        <div className="absolute bottom-[-20%] right-[-10%] w-[60%] h-[60%] bg-[#39ff14]/[0.02] rounded-full blur-[140px]" />
+        <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-brand/3 rounded-full blur-[140px]" />
+        <div className="absolute bottom-[-20%] right-[-10%] w-[60%] h-[60%] bg-brand/2 rounded-full blur-[140px]" />
         <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-50 contrast-150 pointer-events-none" />
       </div>
 
@@ -26,21 +26,21 @@ export default function AdminLoginPage() {
         {/* Decorative Badge */}
         <div className="flex justify-center mb-8">
            <div className="px-4 py-2 rounded-full bg-white/5 border border-white/10 flex items-center gap-2 backdrop-blur-md">
-              <div className="w-1.5 h-1.5 rounded-full bg-[#39ff14] animate-pulse" />
+              <div className="w-1.5 h-1.5 rounded-full bg-brand animate-pulse" />
               <span className="text-[9px] font-bold text-white/40 uppercase tracking-[0.3em]">Protocole de Sécurité Actif</span>
            </div>
         </div>
 
-        <div className="bg-[#09090b] border border-white/[0.08] p-10 lg:p-12 rounded-[2.5rem] shadow-2xl relative overflow-hidden">
+        <div className="bg-[#09090b] border border-white/8 p-10 lg:p-12 rounded-4xl shadow-2xl relative overflow-hidden">
            {/* Glass Effect */}
-           <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent pointer-events-none" />
+           <div className="absolute inset-0 bg-linear-to-b from-white/2 to-transparent pointer-events-none" />
            
            <div className="text-center mb-10 relative z-10">
-             <div className="w-16 h-16 rounded-2xl bg-white/[0.03] border border-white/[0.05] flex items-center justify-center mx-auto mb-6 shadow-inner group transition-all">
-               <Lock className="text-[#39ff14]" size={28} />
+             <div className="w-16 h-16 rounded-2xl bg-white/3 border border-white/5 flex items-center justify-center mx-auto mb-6 shadow-inner group transition-all">
+               <Lock className="text-brand" size={28} />
              </div>
              <h1 className="text-2xl font-bold tracking-tight text-white mb-2">
-               Admin <span className="text-[#39ff14]">Console</span>
+               Admin <span className="text-brand">Console</span>
              </h1>
              <p className="text-white/20 text-[10px] font-bold uppercase tracking-widest leading-relaxed">
                Accès restreint aux administrateurs autorisés de ProServices
@@ -62,7 +62,7 @@ export default function AdminLoginPage() {
                  required
                  autoFocus
                  placeholder="••••••••"
-                 className="w-full bg-white/[0.03] border border-white/[0.05] text-white px-6 py-5 rounded-2xl focus:outline-none focus:border-[#39ff14]/40 focus:bg-white/[0.05] transition-all text-center text-2xl tracking-[0.8em] placeholder:text-white/5 placeholder:tracking-normal"
+                 className="w-full bg-white/3 border border-white/5 text-white px-6 py-5 rounded-2xl focus:outline-none focus:border-brand/40 focus:bg-white/5 transition-all text-center text-2xl tracking-[0.8em] placeholder:text-white/5 placeholder:tracking-normal"
                />
              </div>
 
@@ -80,7 +80,7 @@ export default function AdminLoginPage() {
              <button
                type="submit"
                disabled={isPending}
-               className="w-full bg-white text-black font-bold text-xs py-5 rounded-2xl flex items-center justify-center gap-3 uppercase tracking-[0.2em] hover:bg-[#39ff14] transition-all group disabled:opacity-50 active:scale-[0.98] shadow-xl shadow-white/5"
+               className="w-full bg-white text-black font-bold text-xs py-5 rounded-2xl flex items-center justify-center gap-3 uppercase tracking-[0.2em] hover:bg-brand transition-all group disabled:opacity-50 active:scale-[0.98] shadow-xl shadow-white/5"
              >
                {isPending ? 'Identification...' : (
                  <>
@@ -96,7 +96,7 @@ export default function AdminLoginPage() {
            <p className="text-[9px] text-white/10 font-bold uppercase tracking-[0.4em] mb-4">ProServices Digital Intelligence — 2025</p>
            <div className="flex justify-center gap-1.5">
               <div className="w-1 h-1 rounded-full bg-white/5" />
-              <div className="w-1 h-1 rounded-full bg-[#39ff14]/20" />
+              <div className="w-1 h-1 rounded-full bg-brand/20" />
               <div className="w-1 h-1 rounded-full bg-white/5" />
            </div>
         </div>

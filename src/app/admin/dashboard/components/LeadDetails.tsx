@@ -24,20 +24,20 @@ export default function LeadDetails({ lead, onDelete, onClose, onUpdateStatus }:
   ]
 
   return (
-    <div className="bg-[#09090b] rounded-[2rem] border border-white/[0.05] p-8 lg:p-12 shadow-2xl relative overflow-hidden flex flex-col min-h-[750px]">
+    <div className="bg-[#09090b] rounded-4xl border border-white/5 p-8 lg:p-12 shadow-2xl relative overflow-hidden flex flex-col min-h-[750px]">
       {/* Decorative Glow */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#39ff14]/[0.02] blur-[120px] rounded-full -mr-32 -mt-32 pointer-events-none" />
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand/2 blur-[120px] rounded-full -mr-32 -mt-32 pointer-events-none" />
       
       {/* Header Section */}
       <div className="flex flex-col md:flex-row justify-between items-start gap-8 mb-12 relative z-10">
         <div className="space-y-4">
           <div className="flex items-center gap-2">
-            <div className="w-1.5 h-1.5 rounded-full bg-[#39ff14]" />
+            <div className="w-1.5 h-1.5 rounded-full bg-brand" />
             <span className="text-[10px] font-bold text-white/30 uppercase tracking-[0.2em]">Fiche Lead Détaillée</span>
           </div>
           <h3 className="text-4xl lg:text-5xl font-heading font-bold tracking-tight text-white">{lead.full_name}</h3>
           <div className="flex flex-wrap gap-2">
-            <div className="px-3 py-1.5 bg-[#39ff14]/10 text-[#39ff14] text-[9px] font-bold rounded-lg border border-[#39ff14]/10 uppercase tracking-widest">{lead.service_type}</div>
+            <div className="px-3 py-1.5 bg-brand/10 text-brand text-[9px] font-bold rounded-lg border border-brand/10 uppercase tracking-widest">{lead.service_type}</div>
             <div className="px-3 py-1.5 bg-white/5 text-white/40 text-[9px] font-bold rounded-lg border border-white/5 uppercase tracking-widest flex items-center gap-2">
               <Clock size={12} /> {new Date(lead.created_at).toLocaleDateString()}
             </div>
@@ -63,8 +63,8 @@ export default function LeadDetails({ lead, onDelete, onClose, onUpdateStatus }:
       {/* Stats Grid */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-12 relative z-10">
         {infoCards.map((info, i) => (
-          <div key={i} className="bg-white/[0.02] p-5 rounded-2xl border border-white/[0.05] hover:border-white/[0.1] transition-all group">
-             <div className="w-8 h-8 rounded-lg bg-white/[0.03] flex items-center justify-center text-white/20 mb-4 group-hover:text-[#39ff14] transition-colors">
+          <div key={i} className="bg-white/2 p-5 rounded-2xl border border-white/5 hover:border-white/10 transition-all group">
+             <div className="w-8 h-8 rounded-lg bg-white/3 flex items-center justify-center text-white/20 mb-4 group-hover:text-brand transition-colors">
                 <info.icon size={16} />
              </div>
              <p className="text-[9px] font-bold text-white/20 uppercase tracking-widest mb-1">{info.label}</p>
@@ -78,7 +78,7 @@ export default function LeadDetails({ lead, onDelete, onClose, onUpdateStatus }:
          <div className="space-y-6">
             <div className="space-y-3">
                <h4 className="text-[10px] font-bold text-white/20 uppercase tracking-widest flex items-center gap-2">
-                  <Zap size={12} className="text-[#39ff14]" /> Options & Urgence
+                  <Zap size={12} className="text-brand" /> Options & Urgence
                </h4>
                <div className="flex flex-wrap gap-2">
                   {lead.urgency ? lead.urgency.split(',').map((opt: string, i: number) => (
@@ -92,16 +92,16 @@ export default function LeadDetails({ lead, onDelete, onClose, onUpdateStatus }:
 
          <div className="space-y-3">
             <h4 className="text-[10px] font-bold text-white/20 uppercase tracking-widest flex items-center gap-2">
-               <FileText size={12} className="text-[#39ff14]" /> Description du Projet
+               <FileText size={12} className="text-brand" /> Description du Projet
             </h4>
-            <div className="bg-white/[0.02] p-6 rounded-2xl border border-white/[0.05] text-xs text-white/40 leading-relaxed min-h-[120px]">
+            <div className="bg-white/2 p-6 rounded-2xl border border-white/5 text-xs text-white/40 leading-relaxed min-h-[120px]">
                {lead.description}
             </div>
          </div>
       </div>
 
       {/* Footer Actions */}
-      <div className="mt-12 pt-8 border-t border-white/[0.05] flex flex-col md:flex-row justify-between items-center gap-8 relative z-10">
+      <div className="mt-12 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8 relative z-10">
          <div className="space-y-3 w-full md:w-auto">
             <p className="text-[9px] font-bold text-white/20 uppercase tracking-widest">Statut de la demande</p>
             <div className="flex flex-wrap gap-1.5">
@@ -129,7 +129,7 @@ export default function LeadDetails({ lead, onDelete, onClose, onUpdateStatus }:
          <a 
             href={`https://wa.me/${lead.contact_info.replace(/[^0-9]/g, '')}`} 
             target="_blank"
-            className="w-full md:w-auto px-8 py-4 bg-[#39ff14] text-black font-bold text-[11px] uppercase tracking-widest rounded-xl shadow-xl shadow-[#39ff14]/10 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-3"
+            className="w-full md:w-auto px-8 py-4 bg-brand text-black font-bold text-[11px] uppercase tracking-widest rounded-xl shadow-xl shadow-brand/10 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-3"
          >
             Ouvrir WhatsApp <ArrowRight size={16} />
          </a>

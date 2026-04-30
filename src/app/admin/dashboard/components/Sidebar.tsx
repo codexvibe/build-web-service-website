@@ -3,7 +3,8 @@
 import React from 'react'
 import { 
   LayoutDashboard, Users, MessageSquare, 
-  BarChart3, Settings, LogOut, ChevronRight
+  BarChart3, Settings, LogOut, ChevronRight,
+  Layout
 } from 'lucide-react'
 import { motion } from 'framer-motion'
 
@@ -23,15 +24,15 @@ export default function Sidebar({ activeTab, setActiveTab, onLogout }: SidebarPr
   ]
 
   return (
-    <aside className="w-full md:w-20 lg:w-72 bg-[#09090b] border-r border-white/[0.05] flex flex-col z-50 h-screen sticky top-0">
+    <aside className="w-full md:w-20 lg:w-72 bg-[#09090b] border-r border-white/5 flex flex-col z-50 h-screen sticky top-0">
       {/* Brand Header */}
       <div className="p-6 lg:p-8 flex items-center gap-4">
-        <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#39ff14] to-emerald-400 flex items-center justify-center shadow-[0_0_20px_rgba(57,255,20,0.2)]">
+        <div className="w-10 h-10 rounded-xl bg-linear-to-tr from-brand to-emerald-400 flex items-center justify-center shadow-[0_0_20px_rgba(57,255,20,0.2)]">
           <LayoutDashboard size={20} className="text-black" />
         </div>
         <div className="hidden lg:block overflow-hidden">
           <h1 className="font-heading font-bold text-lg tracking-tight text-white leading-none">
-            Pro<span className="text-[#39ff14]">Services</span>
+            Pro<span className="text-brand">Services</span>
           </h1>
           <p className="text-[10px] text-white/30 font-bold uppercase tracking-[0.2em] mt-1">Admin Panel</p>
         </div>
@@ -48,19 +49,19 @@ export default function Sidebar({ activeTab, setActiveTab, onLogout }: SidebarPr
               className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 relative group ${
                 isActive 
                 ? 'text-white' 
-                : 'text-white/40 hover:text-white/80 hover:bg-white/[0.03]'
+                : 'text-white/40 hover:text-white/80 hover:bg-white/3'
               }`}
             >
               {isActive && (
                 <motion.div 
                   layoutId="sidebar-active"
-                  className="absolute inset-0 bg-white/[0.05] border border-white/[0.08] rounded-xl"
+                  className="absolute inset-0 bg-white/5 border border-white/8 rounded-xl"
                   transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                 />
               )}
               
               <div className={`relative z-10 p-1.5 rounded-lg transition-colors ${
-                isActive ? 'bg-[#39ff14]/10 text-[#39ff14]' : 'group-hover:text-white/80'
+                isActive ? 'bg-brand/10 text-brand' : 'group-hover:text-white/80'
               }`}>
                 <item.icon size={18} />
               </div>
@@ -75,7 +76,7 @@ export default function Sidebar({ activeTab, setActiveTab, onLogout }: SidebarPr
                   animate={{ opacity: 1, scale: 1 }}
                   className="hidden lg:block ml-auto relative z-10"
                 >
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#39ff14] shadow-[0_0_8px_rgba(57,255,20,0.5)]" />
+                  <div className="w-1.5 h-1.5 rounded-full bg-brand shadow-[0_0_8px_rgba(57,255,20,0.5)]" />
                 </motion.div>
               )}
             </button>
@@ -84,7 +85,7 @@ export default function Sidebar({ activeTab, setActiveTab, onLogout }: SidebarPr
       </nav>
 
       {/* Footer Actions */}
-      <div className="p-4 mt-auto border-t border-white/[0.05]">
+      <div className="p-4 mt-auto border-t border-white/5">
         <button 
           onClick={onLogout}
           className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-white/40 hover:text-red-400 hover:bg-red-500/5 transition-all group"
@@ -98,3 +99,4 @@ export default function Sidebar({ activeTab, setActiveTab, onLogout }: SidebarPr
     </aside>
   )
 }
+
