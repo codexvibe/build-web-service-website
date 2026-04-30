@@ -77,3 +77,25 @@ FOR INSERT WITH CHECK (true);
 -- Allow authenticated users (admin) to read all orders
 CREATE POLICY "Allow authenticated read for service_requests" ON service_requests
 FOR SELECT USING (auth.role() = 'authenticated');
+
+-- ============================================
+-- Admins Table
+-- ============================================
+
+CREATE TABLE IF NOT EXISTS admins (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
+    name TEXT NOT NULL,
+    passcode TEXT NOT NULL
+);
+
+ALTER TABLE admins ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Allow anonymous read for admins" ON admins;
+DROP POLICY IF EXISTS "Allow authenticated all for admins" ON admins;
+
+CREATE POLICY "Allow anonymous read for admins" ON admins
+FOR SELECT USING (true);
+
+CREATE POLICY "Allow authenticated all for admins" ON admins
+FOR ALL USING (auth.role() = 'authenticated') WITH CHECK (auth.role() = 'authenticated');

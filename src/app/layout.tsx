@@ -16,9 +16,77 @@ const ibmPlexArabic = IBM_Plex_Sans_Arabic({
 });
 
 export const metadata: Metadata = {
-  title: "ProServices | Agence Création de Sites Web & Digital",
-  description: "Agence digitale en Algérie spécialisée dans la création de sites web vitrines, e-commerce et applications sur mesure. Design premium et performance.",
-  keywords: ["création site web", "agence digitale alger", "développement web", "ecommerce algerie", "seo algerie"],
+  metadataBase: new URL('https://proservices.dz'),
+  title: {
+    default: "Création Site Web Algérie | Agence Web ProServices Alger",
+    template: "%s | ProServices Algérie"
+  },
+  description: "Expert en création de sites web en Algérie. Sites vitrines, e-commerce & SEO à Alger. Boostez votre visibilité avec ProServices. Devis gratuit !",
+  keywords: ["création site web Algérie", "site e-commerce Algérie", "développeur web Algérie", "agence web Alger", "SEO Algérie", "digital marketing DZ"],
+  authors: [{ name: "ProServices" }],
+  viewport: "width=device-width, initial-scale=1",
+  robots: "index, follow",
+  openGraph: {
+    title: "ProServices | Agence Web Algérie",
+    description: "Création de sites web professionnels et e-commerce en Algérie. Performance et design premium.",
+    url: 'https://proservices.dz',
+    siteName: 'ProServices Algérie',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'ProServices Algérie - Agence Web'
+      },
+    ],
+    locale: 'fr_DZ',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'ProServices | Agence Web Algérie',
+    description: 'Expert en création de sites web et SEO en Algérie.',
+    images: ['/og-image.png'],
+  },
+  alternates: {
+    canonical: '/',
+  }
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "ProServices",
+  "image": "https://proservices.dz/logo.png",
+  "url": "https://proservices.dz",
+  "telephone": "+213555555555",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Centre Ville",
+    "addressLocality": "Alger",
+    "addressCountry": "DZ"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 36.7525,
+    "longitude": 3.0420
+  },
+  "areaServed": {
+    "@type": "Country",
+    "name": "Algeria"
+  },
+  "service": [
+    {
+      "@type": "Service",
+      "name": "Création site web vitrine",
+      "description": "Conception de sites web professionnels pour entreprises en Algérie."
+    },
+    {
+      "@type": "Service",
+      "name": "Développement E-commerce",
+      "description": "Création de boutiques en ligne avec paiement et gestion de stock."
+    }
+  ]
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -36,6 +104,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             } catch (e) {}
           })();
         ` }} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
       </head>
       <body className={`${dmSans.variable} ${spaceGrotesk.variable} ${ibmPlexArabic.variable} antialiased`}>
         <LanguageProvider>

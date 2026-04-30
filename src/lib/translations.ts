@@ -3,6 +3,7 @@ export const translations = {
     nav: {
       home: "Accueil",
       services: "Services",
+      portfolio: "Portfolio",
       contact: "Contact",
       quote: "Demander un devis",
     },
@@ -28,8 +29,12 @@ export const translations = {
         desc: "Présentez votre activité avec un design élégant et professionnel. Idéal pour les artisans et PME."
       },
       ecommerce: {
-        title: "E-commerce",
-        desc: "Vendez vos produits en ligne avec une boutique performante, sécurisée et facile à gérer."
+        title: "Pack Business",
+        desc: "E-commerce, Immobilier, Plateformes de Gestion, Réservations... Des solutions sur mesure pour booster votre activité."
+      },
+      agency: {
+        title: "Pack Agence",
+        desc: "Solution Premium pour Agences : Site haute performance, SEO Local, Intégration CRM et Support VIP dédié."
       },
       seo: {
         title: "SEO & Visibilité",
@@ -127,6 +132,7 @@ export const translations = {
     nav: {
       home: "Home",
       services: "Services",
+      portfolio: "Portfolio",
       contact: "Contact",
       quote: "Get a Quote",
     },
@@ -152,8 +158,12 @@ export const translations = {
         desc: "Present your activity with an elegant and professional design. Ideal for artisans and SMEs."
       },
       ecommerce: {
-        title: "E-commerce",
-        desc: "Sell your products online with a high-performance, secure and easy-to-manage store."
+        title: "Business Pack",
+        desc: "E-commerce, Real Estate, Management Platforms, Bookings... Custom solutions to boost your activity."
+      },
+      agency: {
+        title: "Agency Pack",
+        desc: "Premium Solution for Agencies: High-performance site, Local SEO, CRM Integration and Dedicated VIP Support."
       },
       seo: {
         title: "SEO & Visibility",
@@ -251,6 +261,7 @@ export const translations = {
     nav: {
       home: "الرئيسية",
       services: "خدماتنا",
+      portfolio: "أعمالنا",
       contact: "اتصل بنا",
       quote: "طلب عرض سعر",
     },
@@ -276,8 +287,12 @@ export const translations = {
         desc: "اعرض نشاطك بتصميم أنيق واحترافي. مثالي للحرفيين والشركات الصغيرة والمتوسطة."
       },
       ecommerce: {
-        title: "التجارة الإلكترونية",
-        desc: "بع منتجاتك عبر الإنترنت بمتجر عالي الأداء وآمن وسهل الإدارة."
+        title: "باقة الأعمال",
+        desc: "متاجر إلكترونية، عقارات، منصات تسيير، حجوزات... حلول مخصصة لتعزيز نشاطك."
+      },
+      agency: {
+        title: "باقة الوكالات",
+        desc: "حل بريميوم للوكالات: موقع عالي الأداء، سيو محلي، ربط CRM ودعم فني VIP مخصص."
       },
       seo: {
         title: "SEO والظهور",

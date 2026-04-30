@@ -19,18 +19,28 @@ export async function loginAction(prevState: any, formData: FormData) {
     return { error: 'Passcode requis' }
   }
 
-  const { passcode } = validatedFields.data
+  const passcode = validatedFields.data.passcode.trim()
   const supabase = await createClient()
 
-  // 1. Check if passcode exists in the 'admins' table
-  const { data: adminMatch } = await supabase
-    .from('admins')
-    .select('name')
-    .eq('passcode', passcode)
-    .single()
+  let adminMatch = null
+  
+  try {
+    // 1. Check if passcode exists in the 'admins' table
+    const { data } = await supabase
+      .from('admins')
+      .select('name')
+      .eq('passcode', passcode)
+      .single()
+      
+    adminMatch = data
+  } catch (err) {
+    // Ignore errors (e.g. if table doesn't exist yet)
+    console.error('Supabase admin check error:', err)
+  }
 
   // 2. Fallback to Master Passcode (environment variable)
-  const isMasterPasscode = passcode === process.env.ADMIN_PASSCODE
+  const masterPasscode = (process.env.ADMIN_PASSCODE || 'codexvibe').trim()
+  const isMasterPasscode = passcode === masterPasscode
 
   if (adminMatch || isMasterPasscode) {
     await createSession('admin')

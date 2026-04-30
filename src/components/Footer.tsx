@@ -21,7 +21,7 @@ const Footer = () => {
             <Link href="/" className="flex items-center gap-3 mb-6">
               <div className="relative w-20 h-20 flex items-center justify-center">
                 <div className="absolute inset-0 bg-brand opacity-20 blur-md rounded-full"></div>
-                <img src="/logo.png" alt="ProServices" className="relative w-full h-full object-contain" />
+                <img src="/logo.png" alt="ProServices - Agence de création de sites web en Algérie" className="relative w-full h-full object-contain" />
               </div>
               <span className="text-2xl font-display font-bold text-text tracking-tight">
                 Pro<span className="text-brand">Services</span>

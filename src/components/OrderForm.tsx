@@ -21,8 +21,9 @@ const OrderForm = () => {
 
   const serviceTypes = [
     { id: "vitrine", label: { fr: "Site Vitrine", en: "Showcase Site", ar: "موقع تعريفي" }[language], price: 15000 },
-    { id: "ecommerce", label: { fr: "Boutique E-commerce", en: "E-commerce Store", ar: "متجر إلكتروني" }[language], price: 45000 },
-    { id: "application", label: { fr: "Application Web / SaaS", en: "Web App / SaaS", ar: "تطبيق ويب / SaaS" }[language], price: 80000 },
+    { id: "ecommerce", label: { fr: "Pack Business (Immobilier, Gestion, E-comm...)", en: "Business Pack (Real Estate, MGMT, E-comm...)", ar: "باقة الأعمال (عقارات، تسيير، تجارة...)" }[language], price: 45000 },
+    { id: "agency", label: { fr: "Pack Agence Premium", en: "Premium Agency Pack", ar: "باقة الوكالات المميزة" }[language], price: 85000 },
+    { id: "application", label: { fr: "Application Web / SaaS", en: "Web App / SaaS", ar: "تطبيق ويب / SaaS" }[language], price: 120000 },
     { id: "seo", label: { fr: "SEO & Référencement", en: "SEO & Visibility", ar: "سيو وتحسين محركات البحث" }[language], price: 10000 },
     { id: "design", label: { fr: "UI/UX Design", en: "UI/UX Design", ar: "تصميم واجهة وتجربة المستخدم" }[language], price: 20000 },
     { id: "autre", label: { fr: "Autre projet digital", en: "Other digital project", ar: "مشروع رقمي آخر" }[language], price: 0 },
