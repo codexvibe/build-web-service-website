@@ -21,7 +21,7 @@ export const viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://proservices-dz.vercel.app'),
+  metadataBase: new URL('https://build-web-service-website.vercel.app'),
   verification: {
     google: "tDci3rmROB-uxHjgeMrBauYgkM36MnEITANB3RURH7s",
   },
