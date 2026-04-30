@@ -15,6 +15,11 @@ const ibmPlexArabic = IBM_Plex_Sans_Arabic({
   variable: "--font-arabic" 
 });
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL('https://proservices-dz.vercel.app'),
   verification: {
@@ -27,7 +32,6 @@ export const metadata: Metadata = {
   description: "Expert en création de sites web en Algérie. Sites vitrines, e-commerce & SEO à Alger. Boostez votre visibilité avec ProServices. Devis gratuit !",
   keywords: ["création site web Algérie", "site e-commerce Algérie", "développeur web Algérie", "agence web Alger", "SEO Algérie", "digital marketing DZ"],
   authors: [{ name: "ProServices" }],
-  viewport: "width=device-width, initial-scale=1",
   robots: "index, follow",
   openGraph: {
     title: "ProServices | Agence Web Algérie",
