@@ -17,6 +17,7 @@ import Sidebar from './components/Sidebar'
 import StatsOverview from './components/StatsOverview'
 import LeadDetails from './components/LeadDetails'
 import SettingsView from './components/SettingsView'
+import ServicesView from './components/ServicesView'
 import { 
   AreaChart, Area, XAxis, YAxis, CartesianGrid, 
   Tooltip, ResponsiveContainer, BarChart, Bar, Cell 
@@ -54,7 +55,7 @@ interface AdminProfile {
 }
 
 export default function DashboardClient({ initialRequests }: { initialRequests: any[] }) {
-  const [activeTab, setActiveTab] = useState<'requests' | 'stats' | 'team' | 'settings'>('requests')
+  const [activeTab, setActiveTab] = useState<'requests' | 'stats' | 'team' | 'settings' | 'services'>('requests')
   const [requests, setRequests] = useState<ServiceRequest[]>(initialRequests)
   const [admins, setAdmins] = useState<AdminProfile[]>([])
   const [stats, setStats] = useState<any>(null)
@@ -152,6 +153,7 @@ export default function DashboardClient({ initialRequests }: { initialRequests: 
               <div>
                 <h2 className="text-lg font-bold tracking-tight">
                   {activeTab === 'requests' && 'Management des Leads'}
+                  {activeTab === 'services' && 'Catalogue des Offres'}
                   {activeTab === 'stats' && 'Performance Analytics'}
                   {activeTab === 'team' && 'Équipe Administrative'}
                   {activeTab === 'settings' && 'Paramètres Système'}
@@ -279,6 +281,12 @@ export default function DashboardClient({ initialRequests }: { initialRequests: 
                        </AnimatePresence>
                     </div>
                   </div>
+                </motion.div>
+              )}
+
+              {activeTab === 'services' && (
+                <motion.div key="services" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="max-w-[1600px] mx-auto w-full">
+                   <ServicesView />
                 </motion.div>
               )}
 

@@ -16,6 +16,7 @@ interface SidebarProps {
 export default function Sidebar({ activeTab, setActiveTab, onLogout }: SidebarProps) {
   const menuItems = [
     { id: 'requests', label: 'Demandes', icon: MessageSquare },
+    { id: 'services', label: 'Catalogue', icon: Layout },
     { id: 'stats', label: 'Analytiques', icon: BarChart3 },
     { id: 'team', label: 'Équipe', icon: Users },
     { id: 'settings', label: 'Paramètres', icon: Settings },
