@@ -26,7 +26,6 @@ export default function ServicesView() {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   return (
-  return (
     <div className="space-y-8 max-w-[1200px] mx-auto">
       {/* Header */}
       <div className="bg-[#09090b] p-8 rounded-4xl border border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 shadow-2xl">
