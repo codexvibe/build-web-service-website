@@ -39,7 +39,7 @@ export async function loginAction(prevState: any, formData: FormData) {
   }
 
   // 2. Fallback to Master Passcode (environment variable)
-  const masterPasscode = (process.env.ADMIN_PASSCODE || 'codexvibe').trim()
+  const masterPasscode = (process.env.ADMIN_PASSCODE || 'proservices2025').trim()
   const isMasterPasscode = passcode === masterPasscode
 
   if (adminMatch || isMasterPasscode) {
