@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
 import { useTranslation } from "./LanguageProvider";
 
@@ -19,7 +19,22 @@ const OrderForm = () => {
     preferredTime: "normal",
   });
 
-  const serviceTypes = [
+  const [dbServices, setDbServices] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchServices = async () => {
+      const { data } = await supabase.from('services').select('*').order('created_at', { ascending: true });
+      if (data) {
+        setDbServices(data);
+        if (data.length > 0 && formData.serviceType === "vitrine") {
+          setFormData(prev => ({ ...prev, serviceType: data[0].id }));
+        }
+      }
+    };
+    fetchServices();
+  }, []);
+
+  const defaultServiceTypes = [
     { id: "vitrine", label: { fr: "Site Vitrine", en: "Showcase Site", ar: "موقع تعريفي" }[language], price: 15000 },
     { id: "ecommerce", label: { fr: "Pack Business (Immobilier, Gestion, E-comm...)", en: "Business Pack (Real Estate, MGMT, E-comm...)", ar: "باقة الأعمال (عقارات، تسيير، تجارة...)" }[language], price: 45000 },
     { id: "agency", label: { fr: "Pack Agence Premium", en: "Premium Agency Pack", ar: "باقة الوكالات المميزة" }[language], price: 85000 },
@@ -28,6 +43,10 @@ const OrderForm = () => {
     { id: "design", label: { fr: "UI/UX Design", en: "UI/UX Design", ar: "تصميم واجهة وتجربة المستخدم" }[language], price: 20000 },
     { id: "autre", label: { fr: "Autre projet digital", en: "Other digital project", ar: "مشروع رقمي آخر" }[language], price: 0 },
   ];
+
+  const serviceTypes = dbServices.length > 0 
+    ? dbServices.map(s => ({ id: s.id, label: s.name, price: parseInt((s.price || "0").replace(/[^0-9]/g, "")) || 0 }))
+    : defaultServiceTypes;
 
   const optionsList = [
     { label: { fr: "Design sur mesure", en: "Custom Design", ar: "تصميم مخصص" }[language], price: 5000 },

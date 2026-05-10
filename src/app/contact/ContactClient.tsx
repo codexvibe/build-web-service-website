@@ -12,10 +12,10 @@ export default function ContactClient() {
         <div className="text-center mb-20 max-w-3xl mx-auto">
           <span className="badge mb-6">{t("contact.badge")}</span>
           <h1 className="text-4xl md:text-6xl font-display font-bold text-text mb-6 leading-tight">
-            Contactez nos experts en création web à Alger
+            {t("contact.title")}
           </h1>
           <p className="text-text-sub text-lg font-sans leading-relaxed">
-            Vous avez un projet de <strong>création de site web en Algérie</strong> ? L'équipe de ProServices est à votre entière disposition à <strong>Alger</strong> pour discuter de vos besoins.
+            {t("contact.subtitle")}
           </p>
         </div>
 
@@ -50,26 +50,26 @@ export default function ContactClient() {
 
           {/* Contact Form */}
           <div className="lg:col-span-8 card p-8 md:p-12 relative overflow-hidden bg-surface border-border">
-            <h2 className="text-2xl font-display font-bold text-text mb-8 relative z-10">Demandez votre devis gratuit pour votre projet en Algérie</h2>
+            <h2 className="text-2xl font-display font-bold text-text mb-8 relative z-10">{t("order.badge")}</h2>
             
             <form className="space-y-6 relative z-10">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="text-xs font-bold text-text-sub uppercase tracking-wider">{t("order.form_name")}</label>
-                  <input type="text" className="input" placeholder="John Doe" />
+                  <input type="text" className="input text-start" placeholder={t("order.form_name")} />
                 </div>
                 <div className="space-y-2">
                   <label className="text-xs font-bold text-text-sub uppercase tracking-wider">{t("contact.info_email")}</label>
-                  <input type="email" className="input" placeholder="john@entreprise.com" />
+                  <input type="email" className="input text-start" placeholder={t("contact.info_email")} />
                 </div>
               </div>
               <div className="space-y-2">
                 <label className="text-xs font-bold text-text-sub uppercase tracking-wider">{t("contact.form_subject")}</label>
-                <input type="text" className="input" placeholder="..." />
+                <input type="text" className="input text-start" placeholder={t("contact.form_subject")} />
               </div>
               <div className="space-y-2">
                 <label className="text-xs font-bold text-text-sub uppercase tracking-wider">{t("contact.form_message")}</label>
-                <textarea rows={6} className="input resize-none" placeholder="..." />
+                <textarea rows={6} className="input resize-none text-start" placeholder={t("contact.form_message")} />
               </div>
               <div className="pt-4">
                 <button type="submit" className="btn-brand w-full md:w-auto px-10">
@@ -83,9 +83,9 @@ export default function ContactClient() {
 
         {/* SEO Content Section */}
         <div className="mt-24 max-w-4xl mx-auto prose prose-invert text-center">
-          <h3 className="text-2xl font-display font-bold text-text mb-6">Un accompagnement personnalisé pour votre succès</h3>
+          <h3 className="text-2xl font-display font-bold text-text mb-6">{t("order.trust_secure")}</h3>
           <p className="text-text-sub leading-relaxed max-w-2xl mx-auto">
-            En tant qu'<strong>agence web de référence à Alger</strong>, nous comprenons les enjeux du marché local. Remplissez notre formulaire en ligne pour obtenir un <strong>devis site web en Algérie</strong> personnalisé en moins de 24 heures.
+            {t("order.trust_secure_desc")}
           </p>
         </div>
       </div>

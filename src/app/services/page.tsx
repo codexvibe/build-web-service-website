@@ -7,6 +7,11 @@ export const metadata: Metadata = {
   keywords: ["Services digitaux Algérie", "Site vitrine Alger", "e-commerce Algérie", "application web sur mesure", "audit SEO Algérie", "marketing digital Alger"],
 };
 
-export default function ServicesPage() {
-  return <ServicesClient />;
+import { createClient } from "@/utils/supabase/server";
+
+export default async function ServicesPage() {
+  const supabase = await createClient();
+  const { data: services } = await supabase.from('services').select('*').order('created_at', { ascending: true });
+
+  return <ServicesClient dbServices={services || []} />;
 }

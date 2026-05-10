@@ -57,8 +57,8 @@ const Header = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled ? "glass py-3 shadow-sm" : "bg-transparent py-6"
+      className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${
+        isScrolled ? "glass py-2 shadow-lg" : "bg-bg/50 backdrop-blur-sm py-4"
       }`}
     >
       <div className="max-w-[1400px] mx-auto px-6 flex items-center justify-between">
@@ -68,17 +68,17 @@ const Header = () => {
             <img 
               src="/logo.png" 
               alt="ProServices" 
-              className="relative w-12 h-12 md:w-16 md:h-16 object-contain transition-transform duration-500 group-hover:scale-110 drop-shadow-[0_0_15px_rgba(0,0,0,0.8)] dark:drop-shadow-[0_0_15px_rgba(255,255,255,0.8)]" 
+              className="relative w-10 h-10 md:w-14 md:h-14 object-contain transition-transform duration-500 group-hover:scale-110 drop-shadow-[0_0_15px_rgba(0,0,0,0.5)] dark:drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]" 
             />
           </div>
-          <span className="text-xl md:text-2xl font-display font-bold text-text tracking-tight">
+          <span className="text-lg md:text-xl font-display font-bold text-text tracking-tight">
             Pro<span className="text-brand">Services</span>
           </span>
         </Link>
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-7">
-          <div className="flex items-center gap-6 mr-4">
+          <div className="flex items-center gap-6 me-4">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
@@ -113,7 +113,7 @@ const Header = () => {
                   initial={{ opacity: 0, y: 10, scale: 0.95 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                  className="absolute top-full mt-2 right-0 w-40 bg-surface border border-border rounded-2xl shadow-xl p-2 z-60 overflow-hidden"
+                  className="absolute top-full mt-2 end-0 w-40 bg-surface border border-border rounded-2xl shadow-xl p-2 z-60 overflow-hidden"
                 >
                   {languages.map((lang) => (
                     <button
@@ -173,9 +173,9 @@ const Header = () => {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, x: "100%" }}
+            initial={{ opacity: 0, x: language === 'ar' ? "-100%" : "100%" }}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: "100%" }}
+            exit={{ opacity: 0, x: language === 'ar' ? "-100%" : "100%" }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
             className="fixed inset-0 bg-bg/98 backdrop-blur-2xl z-40 flex flex-col items-center justify-center"
           >

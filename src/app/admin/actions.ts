@@ -138,3 +138,59 @@ export async function deleteAdminAction(id: string) {
   revalidatePath('/admin/dashboard')
   return { success: true }
 }
+
+// ============================================
+// Services Management Actions
+// ============================================
+export async function getServicesAction() {
+  const supabase = await createClient()
+  const { data, error } = await supabase.from('services').select('*').order('created_at', { ascending: true })
+  if (error) return { error: error.message }
+  return { data }
+}
+
+export async function addServiceAction(service: any) {
+  const supabase = await createClient()
+  const { error } = await supabase.from('services').insert([service])
+  if (error) return { error: error.message }
+  revalidatePath('/admin/dashboard')
+  revalidatePath('/services')
+  return { success: true }
+}
+
+export async function updateServiceAction(id: string, service: any) {
+  const supabase = await createClient()
+  const { error } = await supabase.from('services').update(service).eq('id', id)
+  if (error) return { error: error.message }
+  revalidatePath('/admin/dashboard')
+  revalidatePath('/services')
+  return { success: true }
+}
+
+export async function deleteServiceAction(id: string) {
+  const supabase = await createClient()
+  const { error } = await supabase.from('services').delete().eq('id', id)
+  if (error) return { error: error.message }
+  revalidatePath('/admin/dashboard')
+  revalidatePath('/services')
+  return { success: true }
+}
+
+// ============================================
+// Agency Settings Actions
+// ============================================
+export async function getSettingsAction() {
+  const supabase = await createClient()
+  const { data, error } = await supabase.from('agency_settings').select('*')
+  if (error) return { error: error.message }
+  return { data }
+}
+
+export async function updateSettingAction(key: string, value: string) {
+  const supabase = await createClient()
+  const { error } = await supabase.from('agency_settings').upsert({ key, value }, { onConflict: 'key' })
+  if (error) return { error: error.message }
+  revalidatePath('/admin/dashboard')
+  revalidatePath('/', 'layout')
+  return { success: true }
+}

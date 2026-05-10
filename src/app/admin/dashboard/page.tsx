@@ -13,10 +13,20 @@ export default async function AdminDashboard() {
   }
 
   const supabase = await createClient()
-  const { data: requests } = await supabase
-    .from('service_requests')
-    .select('*')
-    .order('created_at', { ascending: false })
+  
+  const [
+    { data: requests },
+    { data: services },
+    { data: settings }
+  ] = await Promise.all([
+    supabase.from('service_requests').select('*').order('created_at', { ascending: false }),
+    supabase.from('services').select('*').order('created_at', { ascending: true }),
+    supabase.from('agency_settings').select('*')
+  ])
 
-  return <DashboardClient initialRequests={requests || []} />
+  return <DashboardClient 
+    initialRequests={requests || []} 
+    initialServices={services || []} 
+    initialSettings={settings || []} 
+  />
 }

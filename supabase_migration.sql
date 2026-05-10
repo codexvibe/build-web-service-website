@@ -99,3 +99,79 @@ FOR SELECT USING (true);
 
 CREATE POLICY "Allow authenticated all for admins" ON admins
 FOR ALL USING (auth.role() = 'authenticated') WITH CHECK (auth.role() = 'authenticated');
+
+-- ============================================
+-- Services Table
+-- ============================================
+
+CREATE TABLE IF NOT EXISTS services (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
+    name TEXT NOT NULL,
+    description TEXT NOT NULL,
+    price TEXT NOT NULL,
+    delivery_time TEXT NOT NULL,
+    is_available BOOLEAN DEFAULT true
+);
+
+ALTER TABLE services ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Allow anonymous read for services" ON services;
+DROP POLICY IF EXISTS "Allow authenticated all for services" ON services;
+
+CREATE POLICY "Allow anonymous read for services" ON services
+FOR SELECT USING (true);
+
+CREATE POLICY "Allow authenticated all for services" ON services
+FOR ALL USING (auth.role() = 'authenticated') WITH CHECK (auth.role() = 'authenticated');
+
+-- Insert initial dummy data for services if empty
+INSERT INTO services (name, description, price, delivery_time, is_available)
+SELECT 'Site Vitrine Pro', 'Idéal pour les entreprises et indépendants.', '45,000 DA', '7-10 jours', true
+WHERE NOT EXISTS (SELECT 1 FROM services LIMIT 1);
+
+INSERT INTO services (name, description, price, delivery_time, is_available)
+SELECT 'E-commerce Complet', 'Boutique en ligne avec gestion de stock.', '85,000 DA', '15-20 jours', true
+WHERE NOT EXISTS (SELECT 1 FROM services WHERE name = 'E-commerce Complet');
+
+INSERT INTO services (name, description, price, delivery_time, is_available)
+SELECT 'Landing Page High-Conv', 'Optimisé pour vos campagnes publicitaires.', '25,000 DA', '3-5 jours', true
+WHERE NOT EXISTS (SELECT 1 FROM services WHERE name = 'Landing Page High-Conv');
+
+-- ============================================
+-- Agency Settings Table
+-- ============================================
+
+CREATE TABLE IF NOT EXISTS agency_settings (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    key TEXT UNIQUE NOT NULL,
+    value TEXT NOT NULL
+);
+
+ALTER TABLE agency_settings ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Allow anonymous read for agency_settings" ON agency_settings;
+DROP POLICY IF EXISTS "Allow authenticated all for agency_settings" ON agency_settings;
+
+CREATE POLICY "Allow anonymous read for agency_settings" ON agency_settings
+FOR SELECT USING (true);
+
+CREATE POLICY "Allow authenticated all for agency_settings" ON agency_settings
+FOR ALL USING (auth.role() = 'authenticated') WITH CHECK (auth.role() = 'authenticated');
+
+-- Insert default settings
+INSERT INTO agency_settings (key, value)
+VALUES ('agency_name', 'ProServices Digital')
+ON CONFLICT (key) DO NOTHING;
+
+INSERT INTO agency_settings (key, value)
+VALUES ('admin_email', 'admin@proservices.dz')
+ON CONFLICT (key) DO NOTHING;
+
+INSERT INTO agency_settings (key, value)
+VALUES ('agency_bio', 'Solutions digitales premium basées en Algérie.')
+ON CONFLICT (key) DO NOTHING;
+
+INSERT INTO agency_settings (key, value)
+VALUES ('brand_color', '#D4FF00')
+ON CONFLICT (key) DO NOTHING;

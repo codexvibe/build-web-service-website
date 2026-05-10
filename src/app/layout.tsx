@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { LanguageProvider } from "@/components/LanguageProvider";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import { createClient } from "@/utils/supabase/server";
 
 const dmSans = DM_Sans({ subsets: ["latin"], variable: "--font-sans" });
 const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-display" });
@@ -97,9 +98,21 @@ const jsonLd = {
   ]
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  let brandColor = "#D4FF00"; // default brand color
+
+  try {
+    const supabase = await createClient();
+    const { data } = await supabase.from('agency_settings').select('*').eq('key', 'brand_color').single();
+    if (data && data.value) {
+      brandColor = data.value;
+    }
+  } catch (error) {
+    console.error("Failed to fetch brand_color", error);
+  }
+
   return (
-    <html lang="fr" className="scroll-smooth" suppressHydrationWarning>
+    <html lang="fr" className="scroll-smooth" suppressHydrationWarning style={{ '--color-brand': brandColor } as React.CSSProperties}>
       <head>
         <script dangerouslySetInnerHTML={{ __html: `
           (function() {

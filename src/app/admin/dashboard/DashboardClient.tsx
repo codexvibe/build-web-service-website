@@ -36,7 +36,7 @@ const CHART_DATA = [
 import { ServiceRequest, AdminProfile } from '@/types'
 
 
-export default function DashboardClient({ initialRequests }: { initialRequests: any[] }) {
+export default function DashboardClient({ initialRequests, initialServices, initialSettings }: { initialRequests: any[], initialServices: any[], initialSettings: any[] }) {
   const [activeTab, setActiveTab] = useState<'requests' | 'stats' | 'team' | 'settings' | 'services'>('requests')
   const [requests, setRequests] = useState<ServiceRequest[]>(initialRequests)
   const [admins, setAdmins] = useState<AdminProfile[]>([])
@@ -190,11 +190,11 @@ export default function DashboardClient({ initialRequests }: { initialRequests: 
                                onChange={e => setFilterStatus(e.target.value)}
                                className="flex-1 bg-white/3 border border-white/5 rounded-xl py-3 px-4 text-xs font-bold text-white/40 focus:outline-none focus:border-brand/50 transition-all appearance-none cursor-pointer"
                              >
-                               <option value="all">Tous les Statuts</option>
-                               <option value="pending">⏳ En Attente</option>
-                               <option value="contacted">📞 Contacté</option>
-                               <option value="in_progress">⚙️ En Cours</option>
-                               <option value="completed">✅ Terminé</option>
+                               <option value="all" className="bg-[#09090b] text-white">Tous les Statuts</option>
+                               <option value="pending" className="bg-[#09090b] text-white">⏳ En Attente</option>
+                               <option value="contacted" className="bg-[#09090b] text-white">📞 Contacté</option>
+                               <option value="in_progress" className="bg-[#09090b] text-white">⚙️ En Cours</option>
+                               <option value="completed" className="bg-[#09090b] text-white">✅ Terminé</option>
                              </select>
                              <button className="p-3 bg-white/3 border border-white/5 rounded-xl text-white/40 hover:text-white transition-colors">
                                 <Download size={16} />
@@ -207,7 +207,7 @@ export default function DashboardClient({ initialRequests }: { initialRequests: 
                             <button
                               key={req.id}
                               onClick={() => setSelectedRequest(req)}
-                              className={`w-full text-left p-5 rounded-2xl transition-all duration-300 border relative overflow-hidden group ${
+                              className={`w-full text-start p-5 rounded-2xl transition-all duration-300 border relative overflow-hidden group ${
                                 selectedRequest?.id === req.id 
                                 ? 'bg-brand/5 border-brand/30' 
                                 : 'bg-[#09090b] border-white/3 hover:border-white/10 hover:bg-white/2'
@@ -268,7 +268,7 @@ export default function DashboardClient({ initialRequests }: { initialRequests: 
 
               {activeTab === 'services' && (
                 <motion.div key="services" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="max-w-[1600px] mx-auto w-full">
-                   <ServicesView />
+                   <ServicesView initialServices={initialServices} />
                 </motion.div>
               )}
 
@@ -384,7 +384,7 @@ export default function DashboardClient({ initialRequests }: { initialRequests: 
 
               {activeTab === 'settings' && (
                 <motion.div key="settings" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="max-w-[1000px] mx-auto w-full">
-                   <SettingsView />
+                   <SettingsView initialSettings={initialSettings} />
                 </motion.div>
               )}
            </AnimatePresence>

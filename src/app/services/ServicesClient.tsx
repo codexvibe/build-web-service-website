@@ -5,9 +5,21 @@ import Link from "next/link";
 import { useTranslation } from "@/components/LanguageProvider";
 import { getServicesData } from "@/lib/data";
 
-export default function ServicesClient() {
+export default function ServicesClient({ dbServices = [] }: { dbServices?: any[] }) {
   const { t, language } = useTranslation();
-  const services = getServicesData(t);
+  const staticServices = getServicesData(t);
+
+  const services = dbServices.length > 0 ? dbServices.map((dbS: any, index: number) => ({
+    id: dbS.id,
+    title: dbS.name,
+    description: dbS.description,
+    price: {
+      fr: dbS.price,
+      en: dbS.price,
+      ar: dbS.price
+    },
+    icon: staticServices[index % staticServices.length]?.icon || staticServices[0].icon
+  })) : staticServices;
 
   const pricingPacks = [
     {
