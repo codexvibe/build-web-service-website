@@ -16,11 +16,25 @@ interface Service {
   delivery_time: string
   category: string
   is_available: boolean
+  discount_percent: number
+  original_price: string
 }
 
-export default function ServicesView({ initialServices = [] }: { initialServices?: Service[] }) {
+export default function ServicesView({ initialServices = [], initialSettings = [] }: { initialServices?: Service[], initialSettings?: any[] }) {
   const [services, setServices] = useState<Service[]>(initialServices)
   const [isPending, startTransition] = useTransition()
+  
+  const getSetting = (key: string) => initialSettings.find(s => s.key === key)?.value || ''
+  const [globalPromo, setGlobalPromo] = useState(getSetting('global_discount_percent'))
+  const [promoSaveStatus, setPromoSaveStatus] = useState<'idle'|'success'|'error'>('idle')
+
+  const calculateDiscount = (priceStr: string, percent: number) => {
+    const num = parseInt(priceStr.replace(/[^0-9]/g, ''))
+    if (isNaN(num)) return priceStr
+    const discounted = Math.round(num * (1 - percent / 100))
+    // Format back to DA (simple version)
+    return discounted.toLocaleString().replace(/,/g, ' ') + ' DA'
+  }
 
   useEffect(() => {
     setServices(initialServices)
@@ -34,7 +48,9 @@ export default function ServicesView({ initialServices = [] }: { initialServices
     price: '',
     delivery_time: '',
     category: 'Web',
-    is_available: true
+    is_available: true,
+    discount_percent: 0,
+    original_price: ''
   })
 
   const handleAdd = () => {
@@ -45,7 +61,9 @@ export default function ServicesView({ initialServices = [] }: { initialServices
       price: '',
       delivery_time: '',
       category: 'Web',
-      is_available: true
+      is_available: true,
+      discount_percent: 0,
+      original_price: ''
     })
     setIsModalOpen(true)
   }
@@ -58,7 +76,9 @@ export default function ServicesView({ initialServices = [] }: { initialServices
       price: service.price,
       delivery_time: service.delivery_time,
       category: service.category || 'Web',
-      is_available: service.is_available
+      is_available: service.is_available,
+      discount_percent: service.discount_percent || 0,
+      original_price: service.original_price || ''
     })
     setIsModalOpen(true)
   }
@@ -86,6 +106,19 @@ export default function ServicesView({ initialServices = [] }: { initialServices
     })
   }
 
+  const handleSaveGlobalPromo = async () => {
+    startTransition(async () => {
+      const result = await updateSettingAction('global_discount_percent', globalPromo)
+      await updateSettingAction('global_discount_enabled', parseInt(globalPromo) > 0 ? 'true' : 'false')
+      if (result.success) {
+        setPromoSaveStatus('success')
+        setTimeout(() => setPromoSaveStatus('idle'), 3000)
+      } else {
+        setPromoSaveStatus('error')
+      }
+    })
+  }
+
   const handleDelete = (id: string) => {
     if (!confirm('Voulez-vous vraiment supprimer ce service ?')) return
     startTransition(async () => {
@@ -106,9 +139,36 @@ export default function ServicesView({ initialServices = [] }: { initialServices
           </h3>
           <p className="text-[10px] text-white/30 font-bold uppercase tracking-widest mt-1">Gérez vos offres et tarifs</p>
         </div>
+
         <button onClick={handleAdd} disabled={isPending} className="px-6 py-3 bg-brand text-black font-bold text-[11px] uppercase tracking-widest rounded-xl hover:bg-brand-dark transition-all flex items-center gap-2 active:scale-95 shadow-lg shadow-brand/10 disabled:opacity-50">
           <Plus size={16} /> Ajouter un Service
         </button>
+      </div>
+
+      <div className="flex flex-col md:flex-row justify-between items-center gap-6 bg-brand/5 p-8 rounded-4xl border border-brand/20">
+        <div>
+          <h3 className="text-xl font-bold flex items-center gap-2 italic"><Tag size={20} className="text-brand" /> Gestion des Promotions</h3>
+          <p className="text-[10px] text-white/30 font-bold uppercase tracking-widest mt-1">Configurez des réductions globales ou par service</p>
+        </div>
+        <div className="flex gap-4">
+           <div className="bg-black/40 px-6 py-3 rounded-2xl border border-white/5 flex items-center gap-4">
+              <span className="text-[10px] font-bold text-white/40 uppercase">Promo Globale (%)</span>
+              <input 
+                type="number" 
+                value={globalPromo} 
+                onChange={e => setGlobalPromo(e.target.value)}
+                placeholder="0" 
+                className="w-16 bg-white/5 border border-white/10 rounded-lg py-1 px-2 text-xs text-brand font-bold outline-none focus:border-brand" 
+              />
+              <button 
+                onClick={handleSaveGlobalPromo}
+                disabled={isPending}
+                className="p-2 bg-brand text-black rounded-lg hover:scale-105 transition-all"
+              >
+                {promoSaveStatus === 'success' ? <Check size={14} /> : <Tag size={14} />}
+              </button>
+           </div>
+        </div>
       </div>
 
       {/* Services Grid */}
@@ -250,6 +310,37 @@ export default function ServicesView({ initialServices = [] }: { initialServices
                       placeholder="ex: Web, SEO, Marketing"
                     />
                   </div>
+                  <div>
+                    <label className="block text-[10px] font-bold uppercase tracking-widest text-white/40 mb-2">Remise (%)</label>
+                    <input
+                      type="number"
+                      value={formData.discount_percent}
+                      onChange={(e) => {
+                        const pct = parseInt(e.target.value) || 0
+                        const oldPrice = formData.original_price || formData.price
+                        const newPrice = calculateDiscount(oldPrice, pct)
+                        setFormData({
+                          ...formData, 
+                          discount_percent: pct,
+                          original_price: oldPrice,
+                          price: newPrice
+                        })
+                      }}
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-brand font-bold focus:outline-none focus:border-brand/50 transition-colors"
+                      placeholder="0"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                   <label className="block text-[10px] font-bold uppercase tracking-widest text-white/40 mb-2">Note sur le prix (ex: "Au lieu de 20 000 DA")</label>
+                   <input
+                     type="text"
+                     value={formData.original_price}
+                     onChange={(e) => setFormData({...formData, original_price: e.target.value})}
+                     className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white/60 focus:outline-none focus:border-brand/50 transition-colors"
+                     placeholder="Laissez vide si pas de promo"
+                   />
                 </div>
 
                 <div className="flex items-center gap-3 pt-2">

@@ -117,8 +117,16 @@ CREATE TABLE IF NOT EXISTS services (
     price TEXT NOT NULL,
     delivery_time TEXT NOT NULL,
     category TEXT DEFAULT 'Web',
-    is_available BOOLEAN DEFAULT true
+    is_available BOOLEAN DEFAULT true,
+    discount_percent INTEGER DEFAULT 0,
+    original_price TEXT
 );
+
+-- SETTINGS FOR GLOBAL PROMOTION
+INSERT INTO agency_settings (key, value) VALUES 
+('global_discount_enabled', 'false'),
+('global_discount_percent', '0')
+ON CONFLICT (key) DO NOTHING;
 
 ALTER TABLE services ENABLE ROW LEVEL SECURITY;
 

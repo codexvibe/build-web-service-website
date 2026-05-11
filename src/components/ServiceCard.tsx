@@ -6,9 +6,11 @@ interface ServiceCardProps {
   description: string;
   icon: React.ReactNode;
   price: string;
+  discount_percent?: number;
+  original_price?: string;
 }
 
-const ServiceCard = ({ title, description, icon, price }: ServiceCardProps) => {
+const ServiceCard = ({ title, description, icon, price, discount_percent, original_price }: ServiceCardProps) => {
   const { language } = useTranslation();
   
   const fromText = {
@@ -33,8 +35,18 @@ const ServiceCard = ({ title, description, icon, price }: ServiceCardProps) => {
       </p>
       
       <div className="pt-6 border-t border-border flex items-center justify-between mt-auto">
-        <span className="text-[10px] text-muted uppercase tracking-[0.2em] font-bold">{fromText}</span>
-        <span className="text-lg font-display font-bold text-text">{price}</span>
+        <div className="flex flex-col">
+          <span className="text-[10px] text-muted uppercase tracking-[0.2em] font-bold">{fromText}</span>
+          {original_price && (
+            <span className="text-[10px] text-muted/50 line-through font-mono">{original_price}</span>
+          )}
+        </div>
+        <div className="flex flex-col items-end">
+          {discount_percent ? (
+            <span className="text-xs font-bold text-brand bg-brand/10 px-2 py-0.5 rounded-md mb-1">-{discount_percent}%</span>
+          ) : null}
+          <span className="text-lg font-display font-bold text-text">{price}</span>
+        </div>
       </div>
     </div>
   );

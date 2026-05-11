@@ -269,7 +269,7 @@ export default function DashboardClient({ initialRequests, initialServices, init
 
               {activeTab === 'services' && (
                 <motion.div key="services" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="max-w-[1600px] mx-auto w-full">
-                   <ServicesView initialServices={initialServices} />
+                   <ServicesView initialServices={initialServices} initialSettings={initialSettings} />
                 </motion.div>
               )}
 

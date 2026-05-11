@@ -218,15 +218,21 @@ export default function SettingsView({ initialSettings = [], mode = 'full' }: { 
   }
 
   const sections = [
-    { id: 'general', label: 'Général', icon: Info },
+    { id: 'general', label: 'Informations Agence', icon: Info },
     { id: 'header', label: 'En-tête & Top', icon: MousePointer2 },
     { id: 'hero', label: 'Section Hero', icon: Layout },
     { id: 'sections', label: 'Sections & CTA', icon: MousePointer2 },
-    { id: 'appearance', label: 'Apparence', icon: Palette },
+    { id: 'appearance', label: 'Apparence & Couleurs', icon: Palette },
     { id: 'footer', label: 'Pied de page', icon: Mail },
     { id: 'advanced', label: 'Activation/Désactivation', icon: Shield },
-    { id: 'security', label: 'Sécurité', icon: Lock },
-  ].filter(s => mode === 'full' || ['header', 'hero', 'sections', 'appearance', 'footer', 'advanced'].includes(s.id))
+    { id: 'security', label: 'Sécurité & Accès', icon: Lock },
+  ].filter(s => {
+    if (mode === 'editor') {
+      return ['header', 'hero', 'sections', 'appearance', 'footer', 'advanced'].includes(s.id)
+    }
+    // Full mode (Paramètres)
+    return ['general', 'security'].includes(s.id)
+  })
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 min-h-[600px]">
