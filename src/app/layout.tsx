@@ -102,11 +102,14 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   let brandLight = "#3b82f6"; // default light mode color (blue)
   let brandDark = "#ffffff";  // default dark mode color (white)
 
+  let allSettings: any[] = [];
+
   try {
     const supabase = await createClient();
-    const { data } = await supabase.from('agency_settings').select('*').in('key', ['brand_color_light', 'brand_color_dark']);
+    const { data } = await supabase.from('agency_settings').select('*');
     
     if (data) {
+      allSettings = data;
       const lightSetting = data.find(s => s.key === 'brand_color_light');
       const darkSetting = data.find(s => s.key === 'brand_color_dark');
       
@@ -114,7 +117,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       if (darkSetting?.value) brandDark = darkSetting.value;
     }
   } catch (error) {
-    console.error("Failed to fetch brand colors", error);
+    console.error("Failed to fetch settings", error);
   }
 
   return (
@@ -139,9 +142,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body className={`${dmSans.variable} ${spaceGrotesk.variable} ${outfit.variable} ${ibmPlexArabic.variable} antialiased`}>
         <LanguageProvider>
           <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
-            <Header />
+            <Header dbSettings={allSettings} />
             {children}
-            <Footer />
+            <Footer dbSettings={allSettings} />
           </ThemeProvider>
         </LanguageProvider>
 

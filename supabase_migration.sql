@@ -116,6 +116,7 @@ CREATE TABLE IF NOT EXISTS services (
     description TEXT NOT NULL,
     price TEXT NOT NULL,
     delivery_time TEXT NOT NULL,
+    category TEXT DEFAULT 'Web',
     is_available BOOLEAN DEFAULT true
 );
 
@@ -193,4 +194,25 @@ ON CONFLICT (key) DO NOTHING;
 
 INSERT INTO agency_settings (key, value)
 VALUES ('brand_color_dark', '#ffffff')
+ON CONFLICT (key) DO NOTHING;
+
+-- HERO SETTINGS
+INSERT INTO agency_settings (key, value) VALUES 
+('hero_badge', 'AGENCE DIGITALE PREMIUM'),
+('hero_title', 'Propulsez votre Business en ligne.'),
+('hero_subtitle', 'Nous créons des sites web performants et des expériences digitales uniques pour transformer vos visiteurs en clients fidèles.'),
+('hero_cta_primary', 'Dévis Gratuit'),
+('hero_cta_secondary', 'Découvrir nos services'),
+('show_hero_glow', 'true')
+ON CONFLICT (key) DO NOTHING;
+
+-- FOOTER & CONTACT SETTINGS
+INSERT INTO agency_settings (key, value) VALUES 
+('footer_desc', 'Solutions digitales premium basées en Algérie. Nous transformons vos idées en succès numérique avec des technologies de pointe.'),
+('contact_phone', '+213 555 55 55 55'),
+('contact_email', 'contact@proservices.dz'),
+('contact_address', 'Alger, Algérie'),
+('social_facebook', 'https://facebook.com'),
+('social_instagram', 'https://instagram.com'),
+('social_linkedin', 'https://linkedin.com')
 ON CONFLICT (key) DO NOTHING;

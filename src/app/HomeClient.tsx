@@ -5,7 +5,7 @@ import ServiceCard from "@/components/ServiceCard";
 import { useTranslation } from "@/components/LanguageProvider";
 import { getServicesData } from "@/lib/data";
 
-export default function HomeClient({ dbServices = [] }: { dbServices?: any[] }) {
+export default function HomeClient({ dbServices = [], dbSettings = [] }: { dbServices?: any[], dbSettings?: any[] }) {
   const { t, language } = useTranslation();
   const staticServices = getServicesData(t);
 
@@ -18,37 +18,47 @@ export default function HomeClient({ dbServices = [] }: { dbServices?: any[] }) 
       en: dbS.price,
       ar: dbS.price
     },
+    category: dbS.category || 'Web',
     icon: staticServices[index % staticServices.length]?.icon || staticServices[0].icon
-  })) : staticServices;
+  })) : staticServices;  const getSetting = (key: string, fallback: string) => {
+    const s = dbSettings.find(item => item.key === key);
+    return s ? s.value : fallback;
+  };
 
-
-
+  const heroBadge = getSetting('hero_badge', t("hero.badge"));
+  const heroTitle = getSetting('hero_title', t("hero.title"));
+  const heroSubtitle = getSetting('hero_subtitle', t("hero.subtitle"));
+  const heroCtaPrimary = getSetting('hero_cta_primary', t("hero.cta_quote"));
+  const heroCtaSecondary = getSetting('hero_cta_secondary', t("hero.cta_services"));
+  const showHeroGlow = getSetting('show_hero_glow', 'true') === 'true';
   return (
     <div className="flex flex-col">
       {/* --- HERO SECTION --- */}
       <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden bg-bg">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand/5 rounded-full blur-[120px] pointer-events-none"></div>
+        {showHeroGlow && (
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand/5 rounded-full blur-[120px] pointer-events-none"></div>
+        )}
 
         <div className="container mx-auto px-6 relative z-10 text-center">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface border border-border mb-8 animate-fade-up">
             <span className="w-2 h-2 rounded-full bg-brand animate-glow"></span>
-            <span className="text-xs font-bold text-text-sub tracking-[0.15em] uppercase">{t("hero.badge")}</span>
+            <span className="text-xs font-bold text-text-sub tracking-[0.15em] uppercase">{heroBadge}</span>
           </div>
           
           <h1 className="text-5xl md:text-7xl lg:text-[5.5rem] font-display font-bold text-text mb-8 leading-[1.1] tracking-tight animate-fade-up-delay">
-            {t("hero.title")}
+            {heroTitle}
           </h1>
           
           <p className="max-w-2xl mx-auto text-text-sub text-lg md:text-xl mb-12 leading-relaxed font-sans animate-fade-up-delay-2">
-            {t("hero.subtitle")}
+            {heroSubtitle}
           </p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-5 animate-fade-up-delay-2">
             <Link href="/order" className="btn-brand w-full sm:w-auto justify-center">
-              {t("hero.cta_quote")}
+              {heroCtaPrimary}
             </Link>
             <Link href="/services" className="btn-ghost w-full sm:w-auto justify-center">
-              {t("hero.cta_services")}
+              {heroCtaSecondary}
             </Link>
           </div>
         </div>
@@ -90,11 +100,15 @@ export default function HomeClient({ dbServices = [] }: { dbServices?: any[] }) 
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {services.map((service, index) => (
-              <ServiceCard 
-                key={index} 
-                {...service} 
-                price={service.price[language as keyof typeof service.price]} 
-              />
+              <div key={index} className="relative group">
+                <div className="absolute top-4 right-4 z-20">
+                   <span className="text-[8px] font-bold px-2 py-1 bg-brand/10 text-brand rounded-md uppercase tracking-widest">{service.category}</span>
+                </div>
+                <ServiceCard 
+                  {...service} 
+                  price={service.price[language as keyof typeof service.price]} 
+                />
+              </div>
             ))}
           </div>
         </div>

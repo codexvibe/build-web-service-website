@@ -12,6 +12,7 @@ import { createClient } from "@/utils/supabase/server";
 export default async function Home() {
   const supabase = await createClient();
   const { data: services } = await supabase.from('services').select('*').order('created_at', { ascending: true });
+  const { data: settings } = await supabase.from('agency_settings').select('*');
 
-  return <HomeClient dbServices={services || []} />;
+  return <HomeClient dbServices={services || []} dbSettings={settings || []} />;
 }

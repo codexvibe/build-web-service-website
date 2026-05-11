@@ -7,7 +7,7 @@ import { useTheme } from "next-themes";
 import { useTranslation } from "@/components/LanguageProvider";
 import { motion, AnimatePresence } from "framer-motion";
 
-const Header = () => {
+const Header = ({ dbSettings = [] }: { dbSettings?: any[] }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
@@ -53,6 +53,13 @@ const Header = () => {
 
   const currentLangName = languages.find(l => l.code === language)?.name || "Français";
 
+  const getSetting = (key: string, fallback: string) => {
+    const s = dbSettings.find(item => item.key === key);
+    return s ? s.value : fallback;
+  };
+
+  const agencyName = getSetting('agency_name', 'ProServices');
+
   if (pathname.startsWith('/admin')) return null;
 
   return (
@@ -72,7 +79,7 @@ const Header = () => {
             />
           </div>
           <span className="text-lg md:text-xl font-display font-bold text-text tracking-tight">
-            Pro<span className="text-brand">Services</span>
+            {agencyName.split(' ')[0]}<span className="text-brand">{agencyName.split(' ').slice(1).join(' ') || 'Services'}</span>
           </span>
         </Link>
 

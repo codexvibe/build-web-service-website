@@ -6,7 +6,8 @@ import { getSettingsAction, updateSettingAction } from '../../actions'
 import {
   Shield, Globe, Bell, Palette, Database, Lock,
   User, Mail, Phone, Save, RefreshCw, ChevronRight,
-  Fingerprint, Key, Eye, EyeOff
+  Fingerprint, Key, Eye, EyeOff, Check, Layout, Info,
+  Facebook, Instagram, Linkedin, MapPin, Type
 } from 'lucide-react'
 
 export default function SettingsView({ initialSettings = [] }: { initialSettings?: any[] }) {
@@ -25,7 +26,24 @@ export default function SettingsView({ initialSettings = [] }: { initialSettings
     admin_email: getInitialValue('admin_email', 'admin@proservices.dz'),
     agency_bio: getInitialValue('agency_bio', 'Solutions digitales premium basées en Algérie.'),
     brand_color_light: getInitialValue('brand_color_light', '#3b82f6'),
-    brand_color_dark: getInitialValue('brand_color_dark', '#ffffff')
+    brand_color_dark: getInitialValue('brand_color_dark', '#ffffff'),
+    
+    // Hero
+    hero_badge: getInitialValue('hero_badge', 'AGENCE DIGITALE PREMIUM'),
+    hero_title: getInitialValue('hero_title', 'Propulsez votre Business en ligne.'),
+    hero_subtitle: getInitialValue('hero_subtitle', 'Nous créons des sites web performants...'),
+    hero_cta_primary: getInitialValue('hero_cta_primary', 'Dévis Gratuit'),
+    hero_cta_secondary: getInitialValue('hero_cta_secondary', 'Découvrir nos services'),
+    show_hero_glow: getInitialValue('show_hero_glow', 'true'),
+
+    // Footer & Contact
+    footer_desc: getInitialValue('footer_desc', 'Solutions digitales premium basées en Algérie...'),
+    contact_phone: getInitialValue('contact_phone', '+213 555 55 55 55'),
+    contact_email: getInitialValue('contact_email', 'contact@proservices.dz'),
+    contact_address: getInitialValue('contact_address', 'Alger, Algérie'),
+    social_facebook: getInitialValue('social_facebook', ''),
+    social_instagram: getInitialValue('social_instagram', ''),
+    social_linkedin: getInitialValue('social_linkedin', ''),
   })
 
   useEffect(() => {
@@ -67,11 +85,49 @@ export default function SettingsView({ initialSettings = [] }: { initialSettings
     })
   }
 
+  const handleSaveHero = () => {
+    setSaveStatus('idle')
+    startTransition(async () => {
+      try {
+        await updateSettingAction('hero_badge', formData.hero_badge)
+        await updateSettingAction('hero_title', formData.hero_title)
+        await updateSettingAction('hero_subtitle', formData.hero_subtitle)
+        await updateSettingAction('hero_cta_primary', formData.hero_cta_primary)
+        await updateSettingAction('hero_cta_secondary', formData.hero_cta_secondary)
+        await updateSettingAction('show_hero_glow', formData.show_hero_glow)
+        setSaveStatus('success')
+        setTimeout(() => setSaveStatus('idle'), 3000)
+      } catch (e) {
+        setSaveStatus('error')
+      }
+    })
+  }
+
+  const handleSaveFooter = () => {
+    setSaveStatus('idle')
+    startTransition(async () => {
+      try {
+        await updateSettingAction('footer_desc', formData.footer_desc)
+        await updateSettingAction('contact_phone', formData.contact_phone)
+        await updateSettingAction('contact_email', formData.contact_email)
+        await updateSettingAction('contact_address', formData.contact_address)
+        await updateSettingAction('social_facebook', formData.social_facebook)
+        await updateSettingAction('social_instagram', formData.social_instagram)
+        await updateSettingAction('social_linkedin', formData.social_linkedin)
+        setSaveStatus('success')
+        setTimeout(() => setSaveStatus('idle'), 3000)
+      } catch (e) {
+        setSaveStatus('error')
+      }
+    })
+  }
+
   const sections = [
-    { id: 'general', label: 'Général', icon: Globe },
-    { id: 'security', label: 'Sécurité', icon: Shield },
-    { id: 'billing', label: 'Abonnement', icon: Key },
+    { id: 'general', label: 'Général', icon: Info },
+    { id: 'hero', label: 'Section Hero', icon: Layout },
     { id: 'appearance', label: 'Apparence', icon: Palette },
+    { id: 'footer', label: 'Pied de page', icon: Mail },
+    { id: 'security', label: 'Sécurité', icon: Shield },
   ]
 
   return (
@@ -231,6 +287,136 @@ export default function SettingsView({ initialSettings = [] }: { initialSettings
                     Voir les factures
                   </button>
                 </div>
+              </div>
+            </motion.div>
+          )}
+
+          {activeSection === 'hero' && (
+            <motion.div
+              key="hero"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="space-y-10 relative z-10"
+            >
+              <div>
+                <h3 className="text-2xl font-bold mb-1">Configuration du Hero</h3>
+                <p className="text-white/20 text-[10px] font-bold uppercase tracking-widest">Gérez le contenu principal de votre accueil</p>
+              </div>
+
+              <div className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-bold text-white/20 uppercase tracking-[0.2em] ml-2">Texte du Badge</label>
+                    <input type="text" value={formData.hero_badge} onChange={(e) => setFormData(p => ({ ...p, hero_badge: e.target.value }))} className="w-full bg-white/3 border border-white/5 rounded-xl py-4 px-6 text-sm text-white focus:border-brand/50 transition-all outline-none" />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-bold text-white/20 uppercase tracking-[0.2em] ml-2">Titre Principal</label>
+                    <input type="text" value={formData.hero_title} onChange={(e) => setFormData(p => ({ ...p, hero_title: e.target.value }))} className="w-full bg-white/3 border border-white/5 rounded-xl py-4 px-6 text-sm text-white focus:border-brand/50 transition-all outline-none" />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-[10px] font-bold text-white/20 uppercase tracking-[0.2em] ml-2">Sous-titre</label>
+                  <textarea rows={3} value={formData.hero_subtitle} onChange={(e) => setFormData(p => ({ ...p, hero_subtitle: e.target.value }))} className="w-full bg-white/3 border border-white/5 rounded-xl py-4 px-6 text-sm text-white focus:border-brand/50 transition-all outline-none resize-none" />
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-bold text-white/20 uppercase tracking-[0.2em] ml-2">CTA Primaire (Bouton)</label>
+                    <input type="text" value={formData.hero_cta_primary} onChange={(e) => setFormData(p => ({ ...p, hero_cta_primary: e.target.value }))} className="w-full bg-white/3 border border-white/5 rounded-xl py-4 px-6 text-sm text-white focus:border-brand/50 transition-all outline-none" />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-bold text-white/20 uppercase tracking-[0.2em] ml-2">CTA Secondaire (Lien)</label>
+                    <input type="text" value={formData.hero_cta_secondary} onChange={(e) => setFormData(p => ({ ...p, hero_cta_secondary: e.target.value }))} className="w-full bg-white/3 border border-white/5 rounded-xl py-4 px-6 text-sm text-white focus:border-brand/50 transition-all outline-none" />
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-4 p-5 rounded-2xl bg-white/2 border border-white/5">
+                  <div className={`w-12 h-6 rounded-full transition-all relative cursor-pointer ${formData.show_hero_glow === 'true' ? 'bg-brand' : 'bg-white/10'}`} onClick={() => setFormData(p => ({ ...p, show_hero_glow: p.show_hero_glow === 'true' ? 'false' : 'true' }))}>
+                    <div className={`absolute top-1 w-4 h-4 rounded-full bg-white transition-all ${formData.show_hero_glow === 'true' ? 'right-1' : 'left-1'}`} />
+                  </div>
+                  <div>
+                    <h5 className="text-xs font-bold">Activer l'Effet Glow</h5>
+                    <p className="text-[10px] text-white/20">Affiche un halo de couleur derrière le texte du Hero.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-6 border-t border-white/5">
+                <button onClick={handleSaveHero} disabled={isPending} className="px-8 py-4 bg-white text-black font-bold text-[11px] uppercase tracking-widest rounded-xl hover:bg-brand transition-all flex items-center gap-2 disabled:opacity-50">
+                  {isPending ? <RefreshCw className="animate-spin" size={14} /> : saveStatus === 'success' ? <Check className="text-green-600" size={14} /> : <Save size={14} />}
+                  {isPending ? 'Enregistrement...' : saveStatus === 'success' ? 'Enregistré !' : 'Mettre à jour le Hero'}
+                </button>
+              </div>
+            </motion.div>
+          )}
+
+          {activeSection === 'footer' && (
+            <motion.div
+              key="footer"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="space-y-10 relative z-10"
+            >
+              <div>
+                <h3 className="text-2xl font-bold mb-1">Pied de Page & Contact</h3>
+                <p className="text-white/20 text-[10px] font-bold uppercase tracking-widest">Coordonnées et informations légales</p>
+              </div>
+
+              <div className="space-y-6">
+                <div className="space-y-2">
+                  <label className="text-[10px] font-bold text-white/20 uppercase tracking-[0.2em] ml-2">Description du Footer</label>
+                  <textarea rows={3} value={formData.footer_desc} onChange={(e) => setFormData(p => ({ ...p, footer_desc: e.target.value }))} className="w-full bg-white/3 border border-white/5 rounded-xl py-4 px-6 text-sm text-white focus:border-brand/50 transition-all outline-none resize-none" />
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-bold text-white/20 uppercase tracking-[0.2em] ml-2">Téléphone</label>
+                    <div className="relative">
+                      <Phone size={14} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" />
+                      <input type="text" value={formData.contact_phone} onChange={(e) => setFormData(p => ({ ...p, contact_phone: e.target.value }))} className="w-full bg-white/3 border border-white/5 rounded-xl py-4 pl-12 pr-6 text-sm text-white focus:border-brand/50 transition-all outline-none" />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-bold text-white/20 uppercase tracking-[0.2em] ml-2">Email</label>
+                    <div className="relative">
+                      <Mail size={14} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" />
+                      <input type="text" value={formData.contact_email} onChange={(e) => setFormData(p => ({ ...p, contact_email: e.target.value }))} className="w-full bg-white/3 border border-white/5 rounded-xl py-4 pl-12 pr-6 text-sm text-white focus:border-brand/50 transition-all outline-none" />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-[10px] font-bold text-white/20 uppercase tracking-[0.2em] ml-2">Adresse Physique</label>
+                  <div className="relative">
+                    <MapPin size={14} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" />
+                    <input type="text" value={formData.contact_address} onChange={(e) => setFormData(p => ({ ...p, contact_address: e.target.value }))} className="w-full bg-white/3 border border-white/5 rounded-xl py-4 pl-12 pr-6 text-sm text-white focus:border-brand/50 transition-all outline-none" />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                   <div className="relative">
+                     <Facebook size={14} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" />
+                     <input type="text" placeholder="Facebook URL" value={formData.social_facebook} onChange={(e) => setFormData(p => ({ ...p, social_facebook: e.target.value }))} className="w-full bg-white/3 border border-white/5 rounded-xl py-3 pl-12 pr-4 text-[11px] text-white focus:border-brand/50 transition-all outline-none" />
+                   </div>
+                   <div className="relative">
+                     <Instagram size={14} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" />
+                     <input type="text" placeholder="Instagram URL" value={formData.social_instagram} onChange={(e) => setFormData(p => ({ ...p, social_instagram: e.target.value }))} className="w-full bg-white/3 border border-white/5 rounded-xl py-3 pl-12 pr-4 text-[11px] text-white focus:border-brand/50 transition-all outline-none" />
+                   </div>
+                   <div className="relative">
+                     <Linkedin size={14} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" />
+                     <input type="text" placeholder="LinkedIn URL" value={formData.social_linkedin} onChange={(e) => setFormData(p => ({ ...p, social_linkedin: e.target.value }))} className="w-full bg-white/3 border border-white/5 rounded-xl py-3 pl-12 pr-4 text-[11px] text-white focus:border-brand/50 transition-all outline-none" />
+                   </div>
+                </div>
+              </div>
+
+              <div className="pt-6 border-t border-white/5">
+                <button onClick={handleSaveFooter} disabled={isPending} className="px-8 py-4 bg-white text-black font-bold text-[11px] uppercase tracking-widest rounded-xl hover:bg-brand transition-all flex items-center gap-2 disabled:opacity-50">
+                  {isPending ? <RefreshCw className="animate-spin" size={14} /> : saveStatus === 'success' ? <Check className="text-green-600" size={14} /> : <Save size={14} />}
+                  {isPending ? 'Enregistrement...' : saveStatus === 'success' ? 'Enregistré !' : 'Mettre à jour le Footer'}
+                </button>
               </div>
             </motion.div>
           )}

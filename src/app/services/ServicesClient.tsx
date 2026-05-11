@@ -18,6 +18,7 @@ export default function ServicesClient({ dbServices = [] }: { dbServices?: any[]
       en: dbS.price,
       ar: dbS.price
     },
+    category: dbS.category || 'Web',
     icon: staticServices[index % staticServices.length]?.icon || staticServices[0].icon
   })) : staticServices;
 
@@ -73,11 +74,15 @@ export default function ServicesClient({ dbServices = [] }: { dbServices?: any[]
         {/* Services Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {services.map((service, index) => (
-            <ServiceCard 
-              key={index} 
-              {...service} 
-              price={service.price[language as keyof typeof service.price]} 
-            />
+            <div key={index} className="relative group">
+              <div className="absolute top-4 right-4 z-20">
+                 <span className="text-[8px] font-bold px-2 py-1 bg-brand/10 text-brand rounded-md uppercase tracking-widest">{service.category}</span>
+              </div>
+              <ServiceCard 
+                {...service} 
+                price={service.price[language as keyof typeof service.price]} 
+              />
+            </div>
           ))}
         </div>
         

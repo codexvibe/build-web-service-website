@@ -14,6 +14,7 @@ interface Service {
   description: string
   price: string
   delivery_time: string
+  category: string
   is_available: boolean
 }
 
@@ -32,6 +33,7 @@ export default function ServicesView({ initialServices = [] }: { initialServices
     description: '',
     price: '',
     delivery_time: '',
+    category: 'Web',
     is_available: true
   })
 
@@ -42,6 +44,7 @@ export default function ServicesView({ initialServices = [] }: { initialServices
       description: '',
       price: '',
       delivery_time: '',
+      category: 'Web',
       is_available: true
     })
     setIsModalOpen(true)
@@ -54,6 +57,7 @@ export default function ServicesView({ initialServices = [] }: { initialServices
       description: service.description,
       price: service.price,
       delivery_time: service.delivery_time,
+      category: service.category || 'Web',
       is_available: service.is_available
     })
     setIsModalOpen(true)
@@ -228,6 +232,17 @@ export default function ServicesView({ initialServices = [] }: { initialServices
                       onChange={(e) => setFormData({...formData, delivery_time: e.target.value})}
                       className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand/50 transition-colors"
                       placeholder="ex: 7-10 jours"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-bold uppercase tracking-widest text-white/40 mb-2">Catégorie</label>
+                    <input
+                      type="text"
+                      required
+                      value={formData.category}
+                      onChange={(e) => setFormData({...formData, category: e.target.value})}
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand/50 transition-colors"
+                      placeholder="ex: Web, SEO, Marketing"
                     />
                   </div>
                 </div>
