@@ -100,6 +100,11 @@ FOR SELECT USING (true);
 CREATE POLICY "Allow authenticated all for admins" ON admins
 FOR ALL USING (auth.role() = 'authenticated') WITH CHECK (auth.role() = 'authenticated');
 
+-- Insert initial admin
+INSERT INTO admins (name, passcode)
+SELECT 'Super Admin', 'codexvibe'
+WHERE NOT EXISTS (SELECT 1 FROM admins WHERE name = 'Super Admin');
+
 -- ============================================
 -- Services Table
 -- ============================================
