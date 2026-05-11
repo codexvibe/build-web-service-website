@@ -4,7 +4,7 @@ import React from 'react'
 import { 
   LayoutDashboard, Users, MessageSquare, 
   BarChart3, Settings, LogOut, ChevronRight,
-  Layout
+  Layout, Palette
 } from 'lucide-react'
 import { motion } from 'framer-motion'
 
