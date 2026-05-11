@@ -40,10 +40,12 @@ export default function HomeClient({ dbServices = [], dbSettings = [] }: { dbSer
         )}
 
         <div className="container mx-auto px-6 relative z-10 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface border border-border mb-8 animate-fade-up">
-            <span className="w-2 h-2 rounded-full bg-brand animate-glow"></span>
-            <span className="text-xs font-bold text-text-sub tracking-[0.15em] uppercase">{heroBadge}</span>
-          </div>
+          {getSetting('show_hero_badge', 'true') === 'true' && (
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface border border-border mb-8 animate-fade-up">
+              <span className="w-2 h-2 rounded-full bg-brand animate-glow"></span>
+              <span className="text-xs font-bold text-text-sub tracking-[0.15em] uppercase">{heroBadge}</span>
+            </div>
+          )}
           
           <h1 className="text-5xl md:text-7xl lg:text-[5.5rem] font-display font-bold text-text mb-8 leading-[1.1] tracking-tight animate-fade-up-delay">
             {heroTitle}
@@ -54,12 +56,16 @@ export default function HomeClient({ dbServices = [], dbSettings = [] }: { dbSer
           </p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-5 animate-fade-up-delay-2">
-            <Link href="/order" className="btn-brand w-full sm:w-auto justify-center">
-              {heroCtaPrimary}
-            </Link>
-            <Link href="/services" className="btn-ghost w-full sm:w-auto justify-center">
-              {heroCtaSecondary}
-            </Link>
+            {getSetting('show_hero_cta_primary', 'true') === 'true' && (
+              <Link href="/order" className="btn-brand w-full sm:w-auto justify-center">
+                {heroCtaPrimary}
+              </Link>
+            )}
+            {getSetting('show_hero_cta_secondary', 'true') === 'true' && (
+              <Link href="/services" className="btn-ghost w-full sm:w-auto justify-center">
+                {heroCtaSecondary}
+              </Link>
+            )}
           </div>
         </div>
       </section>
@@ -84,67 +90,85 @@ export default function HomeClient({ dbServices = [], dbSettings = [] }: { dbSer
       </section>
 
       {/* --- SERVICES SECTION --- */}
-      <section id="services" className="py-24 md:py-32 relative">
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="flex flex-col md:flex-row justify-between items-end gap-6 mb-16">
-            <div className="max-w-2xl">
-              <span className="badge mb-6">{t("services.badge")}</span>
-              <h2 className="text-3xl md:text-5xl font-display font-bold text-text mb-6">
-                {t("services.title")}
-              </h2>
-              <p className="text-text-sub text-lg font-sans leading-relaxed">
-                {t("services.subtitle")}
+      {getSetting('show_services_section', 'true') === 'true' && (
+        <section id="services" className="py-24 md:py-32 relative">
+          <div className="container mx-auto px-6 relative z-10">
+            <div className="flex flex-col md:flex-row justify-between items-end gap-6 mb-16">
+              <div className="max-w-2xl">
+                <span className="badge mb-6">{t("services.badge")}</span>
+                <h2 className="text-3xl md:text-5xl font-display font-bold text-text mb-6">
+                  {t("services.title")}
+                </h2>
+                <p className="text-text-sub text-lg font-sans leading-relaxed">
+                  {t("services.subtitle")}
+                </p>
+              </div>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {services && services.length > 0 && services.map((service: any, index: number) => (
+                <div key={service.id || index} className="relative group">
+                  <div className="absolute top-4 right-4 z-20">
+                     <span className="text-[8px] font-bold px-2 py-1 bg-brand/10 text-brand rounded-md uppercase tracking-widest">
+                       {service.category || 'Web'}
+                     </span>
+                  </div>
+                  <ServiceCard 
+                    {...service} 
+                    price={service.price[language as keyof typeof service.price]} 
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* SEO Content Section */}
+      {getSetting('show_about_section', 'true') === 'true' && (
+        <section className="py-24 bg-surface/30 border-t border-border">
+          <div className="container mx-auto px-6">
+            <div className="max-w-4xl mx-auto prose prose-invert text-center">
+              <h3 className="text-2xl font-display font-bold text-text mb-6">{getSetting('about_title', t("order.trust_quality"))}</h3>
+              <p className="text-text-sub leading-relaxed mb-8">
+                {getSetting('about_desc', t("order.trust_quality_desc"))}
               </p>
             </div>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {services && services.length > 0 && services.map((service: any, index: number) => (
-              <div key={service.id || index} className="relative group">
-                <div className="absolute top-4 right-4 z-20">
-                   <span className="text-[8px] font-bold px-2 py-1 bg-brand/10 text-brand rounded-md uppercase tracking-widest">
-                     {service.category || 'Web'}
-                   </span>
-                </div>
-                <ServiceCard 
-                  {...service} 
-                  price={service.price[language as keyof typeof service.price]} 
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* SEO Content Section */}
-      <section className="py-24 bg-surface/30 border-t border-border">
-        <div className="container mx-auto px-6">
-          <div className="max-w-4xl mx-auto prose prose-invert text-center">
-            <h3 className="text-2xl font-display font-bold text-text mb-6">{getSetting('about_title', t("order.trust_quality"))}</h3>
-            <p className="text-text-sub leading-relaxed mb-8">
-              {getSetting('about_desc', t("order.trust_quality_desc"))}
-            </p>
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* --- CTA SECTION --- */}
-      <section className="py-24 relative overflow-hidden border-t border-border">
-        <div className="absolute inset-0 bg-brand/5"></div>
-        <div className="container mx-auto px-6 relative z-10 text-center">
-          <h2 className="text-4xl md:text-6xl font-display font-bold text-text mb-8">
-            {getSetting('cta_title', t("cta.title"))}
-          </h2>
-          <div className="flex flex-col sm:flex-row justify-center gap-5">
-            <Link href="/order" className="btn-brand">
-              {getSetting('hero_cta_primary', t("hero.cta_quote"))}
-            </Link>
-            <a href={`https://wa.me/${getSetting('contact_whatsapp', '213555555555')}`} className="btn-ghost bg-surface">
-              {t("cta.whatsapp")}
-            </a>
+      {getSetting('show_cta_section', 'true') === 'true' && (
+        <section className="py-24 relative overflow-hidden border-t border-border">
+          <div className="absolute inset-0 bg-brand/5"></div>
+          <div className="container mx-auto px-6 relative z-10 text-center">
+            <h2 className="text-4xl md:text-6xl font-display font-bold text-text mb-8">
+              {getSetting('cta_title', t("cta.title"))}
+            </h2>
+            <div className="flex flex-col sm:flex-row justify-center gap-5">
+              <Link href="/order" className="btn-brand">
+                {getSetting('hero_cta_primary', t("hero.cta_quote"))}
+              </Link>
+              <a href={`https://wa.me/${getSetting('contact_whatsapp', '213555555555')}`} className="btn-ghost bg-surface">
+                {t("cta.whatsapp")}
+              </a>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
+
+      {/* WhatsApp Floating Button */}
+      {getSetting('show_whatsapp_button', 'true') === 'true' && (
+        <a 
+          href={`https://wa.me/${getSetting('contact_whatsapp', '213555555555')}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="fixed bottom-8 right-8 z-[90] w-14 h-14 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-2xl hover:scale-110 active:scale-95 transition-all group animate-bounce-subtle"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 1 1-7.6-14h.8A8.38 8.38 0 0 1 21 11.5Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+        </a>
+      )}
     </div>
   );
 }

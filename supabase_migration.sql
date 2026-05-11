@@ -215,6 +215,39 @@ INSERT INTO agency_settings (key, value) VALUES
 ('show_announcement', 'true'),
 ('announcement_text', '🚀 Promotion Exceptionnelle : -20% sur tous les sites vitrines jusqu''à la fin du mois !'),
 ('announcement_link', '/services')
+ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value;
+
+-- FEATURE FLAGS & SECTION TOGGLES
+INSERT INTO agency_settings (key, value) VALUES 
+('show_hero_badge', 'true'),
+('show_hero_cta_primary', 'true'),
+('show_hero_cta_secondary', 'true'),
+('show_about_section', 'true'),
+('show_services_section', 'true'),
+('show_pricing_section', 'true'),
+('show_cta_section', 'true'),
+('show_whatsapp_button', 'true'),
+('show_lang_switcher', 'true'),
+('show_theme_switcher', 'true'),
+('show_footer_desc', 'true'),
+('show_contact_phone', 'true'),
+('show_contact_email', 'true'),
+('show_contact_address', 'true'),
+('show_social_fb', 'true'),
+('show_social_ig', 'true'),
+('show_social_li', 'true')
+ON CONFLICT (key) DO NOTHING;
+
+-- ADDITIONAL CONTENT
+INSERT INTO agency_settings (key, value) VALUES 
+('agency_slogan', 'Votre partenaire digital en Algérie'),
+('office_hours', 'Samedi - Jeudi: 09:00 - 18:00'),
+('copyright_text', 'Tous droits réservés.'),
+('google_maps_link', 'https://maps.google.com'),
+('hero_video_url', ''), 
+('pricing_basic_title', 'Pack Débutant'),
+('pricing_standard_title', 'Pack Business'),
+('pricing_premium_title', 'Pack Enterprise')
 ON CONFLICT (key) DO NOTHING;
 
 -- FOOTER & CONTACT SETTINGS

@@ -56,6 +56,33 @@ export default function SettingsView({ initialSettings = [], mode = 'full' }: { 
     announcement_text: getInitialValue('announcement_text', '🚀 Promotion Exceptionnelle...'),
     announcement_link: getInitialValue('announcement_link', '/services'),
     header_cta: getInitialValue('header_cta', 'Démarrer'),
+
+    // Toggles
+    show_hero_badge: getInitialValue('show_hero_badge', 'true'),
+    show_hero_cta_primary: getInitialValue('show_hero_cta_primary', 'true'),
+    show_hero_cta_secondary: getInitialValue('show_hero_cta_secondary', 'true'),
+    show_about_section: getInitialValue('show_about_section', 'true'),
+    show_services_section: getInitialValue('show_services_section', 'true'),
+    show_pricing_section: getInitialValue('show_pricing_section', 'true'),
+    show_cta_section: getInitialValue('show_cta_section', 'true'),
+    show_whatsapp_button: getInitialValue('show_whatsapp_button', 'true'),
+    show_lang_switcher: getInitialValue('show_lang_switcher', 'true'),
+    show_theme_switcher: getInitialValue('show_theme_switcher', 'true'),
+    
+    // Footer Detail Toggles
+    show_footer_desc: getInitialValue('show_footer_desc', 'true'),
+    show_contact_phone: getInitialValue('show_contact_phone', 'true'),
+    show_contact_email: getInitialValue('show_contact_email', 'true'),
+    show_contact_address: getInitialValue('show_contact_address', 'true'),
+    show_social_fb: getInitialValue('show_social_fb', 'true'),
+    show_social_ig: getInitialValue('show_social_ig', 'true'),
+    show_social_li: getInitialValue('show_social_li', 'true'),
+
+    // Additional Content
+    agency_slogan: getInitialValue('agency_slogan', 'Votre partenaire digital en Algérie'),
+    office_hours: getInitialValue('office_hours', 'Samedi - Jeudi: 09:00 - 18:00'),
+    copyright_text: getInitialValue('copyright_text', 'Tous droits réservés.'),
+    google_maps_link: getInitialValue('google_maps_link', 'https://maps.google.com'),
   })
 
   useEffect(() => {
@@ -166,15 +193,40 @@ export default function SettingsView({ initialSettings = [], mode = 'full' }: { 
     })
   }
 
+  const handleSaveAdvanced = () => {
+    setSaveStatus('idle')
+    startTransition(async () => {
+      try {
+        const keys = [
+          'show_hero_badge', 'show_hero_cta_primary', 'show_hero_cta_secondary',
+          'show_about_section', 'show_services_section', 'show_pricing_section',
+          'show_cta_section', 'show_whatsapp_button', 'show_lang_switcher',
+          'show_theme_switcher', 'show_footer_desc', 'show_contact_phone',
+          'show_contact_email', 'show_contact_address', 'show_social_fb',
+          'show_social_ig', 'show_social_li', 'agency_slogan', 'office_hours',
+          'copyright_text', 'google_maps_link'
+        ]
+        for (const key of keys) {
+          await updateSettingAction(key, (formData as any)[key])
+        }
+        setSaveStatus('success')
+        setTimeout(() => setSaveStatus('idle'), 3000)
+      } catch (e) {
+        setSaveStatus('error')
+      }
+    })
+  }
+
   const sections = [
     { id: 'general', label: 'Général', icon: Info },
-    { id: 'header', label: 'En-tête & Top', icon: MousePointer2 }, // Use an icon for header
+    { id: 'header', label: 'En-tête & Top', icon: MousePointer2 },
     { id: 'hero', label: 'Section Hero', icon: Layout },
     { id: 'sections', label: 'Sections & CTA', icon: MousePointer2 },
     { id: 'appearance', label: 'Apparence', icon: Palette },
     { id: 'footer', label: 'Pied de page', icon: Mail },
-    { id: 'security', label: 'Sécurité', icon: Shield },
-  ].filter(s => mode === 'full' || ['header', 'hero', 'sections', 'appearance', 'footer'].includes(s.id))
+    { id: 'advanced', label: 'Activation/Désactivation', icon: Shield },
+    { id: 'security', label: 'Sécurité', icon: Lock },
+  ].filter(s => mode === 'full' || ['header', 'hero', 'sections', 'appearance', 'footer', 'advanced'].includes(s.id))
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 min-h-[600px]">
@@ -286,6 +338,104 @@ export default function SettingsView({ initialSettings = [], mode = 'full' }: { 
                     <div className="space-y-2">
                       <label className="text-[10px] font-bold text-white/20 uppercase tracking-[0.2em] ml-2">Numéro WhatsApp (Format: 213555...)</label>
                       <input type="text" value={formData.contact_whatsapp} onChange={(e) => setFormData(p => ({ ...p, contact_whatsapp: e.target.value }))} className="w-full bg-white/3 border border-white/5 rounded-xl py-3 px-4 text-xs text-white focus:border-brand/50 transition-all outline-none" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+
+          {activeSection === 'advanced' && (
+            <motion.div key="advanced" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="space-y-10 relative z-10">
+              <div className="flex justify-between items-center">
+                <div>
+                  <h3 className="text-2xl font-bold mb-1">Activation / Désactivation</h3>
+                  <p className="text-white/20 text-[10px] font-bold uppercase tracking-widest">Contrôlez la visibilité de chaque élément</p>
+                </div>
+                <button onClick={handleSaveAdvanced} disabled={isPending} className="px-6 py-3 bg-brand text-black font-bold text-[10px] uppercase tracking-widest rounded-xl hover:scale-105 transition-all flex items-center gap-2 active:scale-95 disabled:opacity-50">
+                   {saveStatus === 'success' ? <Check size={14} /> : <Save size={14} />}
+                   {saveStatus === 'success' ? 'Enregistré !' : 'Enregistrer'}
+                </button>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Hero Controls */}
+                <div className="bg-white/2 p-6 rounded-3xl border border-white/5 space-y-4">
+                  <h4 className="text-[10px] font-bold text-brand uppercase tracking-widest mb-4">Section Hero</h4>
+                  {[
+                    { id: 'show_hero_badge', label: 'Badge Hero' },
+                    { id: 'show_hero_cta_primary', label: 'Bouton Primaire' },
+                    { id: 'show_hero_cta_secondary', label: 'Bouton Secondaire' },
+                  ].map(item => (
+                    <div key={item.id} className="flex items-center justify-between">
+                      <span className="text-xs text-white/60">{item.label}</span>
+                      <button onClick={() => setFormData(p => ({ ...p, [item.id]: (p as any)[item.id] === 'true' ? 'false' : 'true' }))} className={`w-10 h-5 rounded-full relative transition-all ${(formData as any)[item.id] === 'true' ? 'bg-brand' : 'bg-white/10'}`}>
+                        <div className={`absolute top-0.5 w-4 h-4 rounded-full bg-white transition-all ${(formData as any)[item.id] === 'true' ? 'left-5.5' : 'left-0.5'}`} />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Content Sections */}
+                <div className="bg-white/2 p-6 rounded-3xl border border-white/5 space-y-4">
+                  <h4 className="text-[10px] font-bold text-brand uppercase tracking-widest mb-4">Blocs de contenu</h4>
+                  {[
+                    { id: 'show_about_section', label: 'Section "A propos"' },
+                    { id: 'show_services_section', label: 'Grille des Services' },
+                    { id: 'show_cta_section', label: 'Bannière de contact' },
+                    { id: 'show_whatsapp_button', label: 'Bouton WhatsApp flottant' },
+                  ].map(item => (
+                    <div key={item.id} className="flex items-center justify-between">
+                      <span className="text-xs text-white/60">{item.label}</span>
+                      <button onClick={() => setFormData(p => ({ ...p, [item.id]: (p as any)[item.id] === 'true' ? 'false' : 'true' }))} className={`w-10 h-5 rounded-full relative transition-all ${(formData as any)[item.id] === 'true' ? 'bg-brand' : 'bg-white/10'}`}>
+                        <div className={`absolute top-0.5 w-4 h-4 rounded-full bg-white transition-all ${(formData as any)[item.id] === 'true' ? 'left-5.5' : 'left-0.5'}`} />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Footer Controls */}
+                <div className="bg-white/2 p-6 rounded-3xl border border-white/5 space-y-4">
+                  <h4 className="text-[10px] font-bold text-brand uppercase tracking-widest mb-4">Pied de page & Social</h4>
+                  {[
+                    { id: 'show_footer_desc', label: 'Description Footer' },
+                    { id: 'show_contact_phone', label: 'Téléphone' },
+                    { id: 'show_contact_email', label: 'Email' },
+                    { id: 'show_social_fb', label: 'Facebook' },
+                    { id: 'show_social_ig', label: 'Instagram' },
+                    { id: 'show_social_li', label: 'LinkedIn' },
+                  ].map(item => (
+                    <div key={item.id} className="flex items-center justify-between">
+                      <span className="text-xs text-white/60">{item.label}</span>
+                      <button onClick={() => setFormData(p => ({ ...p, [item.id]: (p as any)[item.id] === 'true' ? 'false' : 'true' }))} className={`w-10 h-5 rounded-full relative transition-all ${(formData as any)[item.id] === 'true' ? 'bg-brand' : 'bg-white/10'}`}>
+                        <div className={`absolute top-0.5 w-4 h-4 rounded-full bg-white transition-all ${(formData as any)[item.id] === 'true' ? 'left-5.5' : 'left-0.5'}`} />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Navigation & Extra */}
+                <div className="bg-white/2 p-6 rounded-3xl border border-white/5 space-y-4">
+                  <h4 className="text-[10px] font-bold text-brand uppercase tracking-widest mb-4">Navigation & Plus</h4>
+                  {[
+                    { id: 'show_lang_switcher', label: 'Sélecteur de langue' },
+                    { id: 'show_theme_switcher', label: 'Bouton Light/Dark' },
+                  ].map(item => (
+                    <div key={item.id} className="flex items-center justify-between">
+                      <span className="text-xs text-white/60">{item.label}</span>
+                      <button onClick={() => setFormData(p => ({ ...p, [item.id]: (p as any)[item.id] === 'true' ? 'false' : 'true' }))} className={`w-10 h-5 rounded-full relative transition-all ${(formData as any)[item.id] === 'true' ? 'bg-brand' : 'bg-white/10'}`}>
+                        <div className={`absolute top-0.5 w-4 h-4 rounded-full bg-white transition-all ${(formData as any)[item.id] === 'true' ? 'left-5.5' : 'left-0.5'}`} />
+                      </button>
+                    </div>
+                  ))}
+                  <div className="pt-4 border-t border-white/5 space-y-4">
+                    <div className="space-y-2">
+                       <label className="text-[10px] font-bold text-white/20 uppercase tracking-[0.2em]">Slogan de l'agence</label>
+                       <input type="text" value={formData.agency_slogan} onChange={(e) => setFormData(p => ({ ...p, agency_slogan: e.target.value }))} className="w-full bg-white/3 border border-white/5 rounded-xl py-3 px-4 text-xs text-white focus:border-brand/50 transition-all outline-none" />
+                    </div>
+                    <div className="space-y-2">
+                       <label className="text-[10px] font-bold text-white/20 uppercase tracking-[0.2em]">Horaires de bureau</label>
+                       <input type="text" value={formData.office_hours} onChange={(e) => setFormData(p => ({ ...p, office_hours: e.target.value }))} className="w-full bg-white/3 border border-white/5 rounded-xl py-3 px-4 text-xs text-white focus:border-brand/50 transition-all outline-none" />
                     </div>
                   </div>
                 </div>
