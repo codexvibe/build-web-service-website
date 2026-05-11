@@ -59,15 +59,30 @@ const Header = ({ dbSettings = [] }: { dbSettings?: any[] }) => {
   };
 
   const agencyName = getSetting('agency_name', 'ProServices');
+  const showAnnouncement = getSetting('show_announcement', 'true') === 'true';
+  const announcementText = getSetting('announcement_text', '');
+  const announcementLink = getSetting('announcement_link', '/');
+  const headerCtaText = getSetting('header_cta', t("nav.quote"));
 
   if (pathname.startsWith('/admin')) return null;
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${
-        isScrolled ? "glass py-2 shadow-lg" : "bg-bg/50 backdrop-blur-sm py-4"
-      }`}
-    >
+    <>
+      {showAnnouncement && announcementText && (
+        <div className="fixed top-0 left-0 right-0 z-[110] bg-brand text-black py-2 px-4 text-center overflow-hidden">
+          <Link href={announcementLink} className="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] hover:underline flex items-center justify-center gap-2">
+            {announcementText}
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </Link>
+        </div>
+      )}
+      <header
+        className={`fixed left-0 right-0 z-[100] transition-all duration-300 ${
+          showAnnouncement ? 'top-8 md:top-10' : 'top-0'
+        } ${
+          isScrolled ? "glass py-2 shadow-lg" : "bg-bg/50 backdrop-blur-sm py-4"
+        }`}
+      >
       <div className="max-w-[1400px] mx-auto px-6 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-3 z-50 group">
           <div className="relative flex items-center justify-center">
@@ -159,7 +174,7 @@ const Header = ({ dbSettings = [] }: { dbSettings?: any[] }) => {
           </button>
 
           <Link href="/order" className="btn-brand py-2.5 px-6 rounded-full text-[12px] uppercase tracking-widest">
-            {t("nav.quote")}
+            {headerCtaText}
           </Link>
         </nav>
 
@@ -204,7 +219,7 @@ const Header = ({ dbSettings = [] }: { dbSettings?: any[] }) => {
                 className="btn-brand mt-4 text-sm px-10 py-4 w-full justify-center rounded-full"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                {t("nav.quote")}
+                {headerCtaText}
               </Link>
 
               {/* Mobile Theme & Lang */}
@@ -249,7 +264,8 @@ const Header = ({ dbSettings = [] }: { dbSettings?: any[] }) => {
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+      </header>
+    </>
   );
 };
 

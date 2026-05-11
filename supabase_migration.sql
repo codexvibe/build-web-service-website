@@ -210,6 +210,13 @@ INSERT INTO agency_settings (key, value) VALUES
 ('contact_whatsapp', '213555555555')
 ON CONFLICT (key) DO NOTHING;
 
+-- TOP ANNOUNCEMENT SETTINGS
+INSERT INTO agency_settings (key, value) VALUES 
+('show_announcement', 'true'),
+('announcement_text', '🚀 Promotion Exceptionnelle : -20% sur tous les sites vitrines jusqu''à la fin du mois !'),
+('announcement_link', '/services')
+ON CONFLICT (key) DO NOTHING;
+
 -- FOOTER & CONTACT SETTINGS
 INSERT INTO agency_settings (key, value) VALUES 
 ('footer_desc', 'Solutions digitales premium basées en Algérie. Nous transformons vos idées en succès numérique avec des technologies de pointe.'),

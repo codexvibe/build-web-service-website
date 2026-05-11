@@ -50,6 +50,12 @@ export default function SettingsView({ initialSettings = [], mode = 'full' }: { 
     about_desc: getInitialValue('about_desc', 'Nous nous engageons à fournir...'),
     cta_title: getInitialValue('cta_title', 'Prêt à lancer votre projet ?'),
     contact_whatsapp: getInitialValue('contact_whatsapp', '213555555555'),
+
+    // Announcement
+    show_announcement: getInitialValue('show_announcement', 'true'),
+    announcement_text: getInitialValue('announcement_text', '🚀 Promotion Exceptionnelle...'),
+    announcement_link: getInitialValue('announcement_link', '/services'),
+    header_cta: getInitialValue('header_cta', 'Démarrer'),
   })
 
   useEffect(() => {
@@ -144,14 +150,31 @@ export default function SettingsView({ initialSettings = [], mode = 'full' }: { 
     })
   }
 
+  const handleSaveHeader = () => {
+    setSaveStatus('idle')
+    startTransition(async () => {
+      try {
+        await updateSettingAction('show_announcement', formData.show_announcement)
+        await updateSettingAction('announcement_text', formData.announcement_text)
+        await updateSettingAction('announcement_link', formData.announcement_link)
+        await updateSettingAction('header_cta', formData.header_cta)
+        setSaveStatus('success')
+        setTimeout(() => setSaveStatus('idle'), 3000)
+      } catch (e) {
+        setSaveStatus('error')
+      }
+    })
+  }
+
   const sections = [
     { id: 'general', label: 'Général', icon: Info },
+    { id: 'header', label: 'En-tête & Top', icon: MousePointer2 }, // Use an icon for header
     { id: 'hero', label: 'Section Hero', icon: Layout },
     { id: 'sections', label: 'Sections & CTA', icon: MousePointer2 },
     { id: 'appearance', label: 'Apparence', icon: Palette },
     { id: 'footer', label: 'Pied de page', icon: Mail },
     { id: 'security', label: 'Sécurité', icon: Shield },
-  ].filter(s => mode === 'full' || ['hero', 'sections', 'appearance', 'footer'].includes(s.id))
+  ].filter(s => mode === 'full' || ['header', 'hero', 'sections', 'appearance', 'footer'].includes(s.id))
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 min-h-[600px]">
@@ -354,6 +377,56 @@ export default function SettingsView({ initialSettings = [], mode = 'full' }: { 
                   <button className="px-6 py-3 bg-white/5 text-white/60 hover:text-white font-bold text-[11px] uppercase tracking-widest rounded-xl hover:bg-white/10 transition-all border border-white/5">
                     Voir les factures
                   </button>
+                </div>
+              </div>
+            </motion.div>
+          )}
+
+          {activeSection === 'header' && (
+            <motion.div key="header" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="space-y-10 relative z-10">
+              <div className="flex justify-between items-center">
+                <div>
+                  <h3 className="text-2xl font-bold mb-1">En-tête & Barre Top</h3>
+                  <p className="text-white/20 text-[10px] font-bold uppercase tracking-widest">Gérez la partie supérieure du site</p>
+                </div>
+                <button onClick={handleSaveHeader} disabled={isPending} className="px-6 py-3 bg-brand text-black font-bold text-[10px] uppercase tracking-widest rounded-xl hover:scale-105 transition-all flex items-center gap-2 active:scale-95 disabled:opacity-50">
+                   {saveStatus === 'success' ? <Check size={14} /> : <Save size={14} />}
+                   {saveStatus === 'success' ? 'Enregistré !' : 'Enregistrer'}
+                </button>
+              </div>
+
+              <div className="grid grid-cols-1 gap-8">
+                <div className="bg-white/2 p-8 rounded-3xl border border-white/5 space-y-6">
+                  <h4 className="text-sm font-bold flex items-center gap-2 italic"><Bell size={16} className="text-brand" /> Barre d'Annonce (Tout en haut)</h4>
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between p-4 bg-white/3 rounded-xl border border-white/5">
+                      <div className="space-y-1">
+                        <p className="text-xs font-bold text-white">Afficher la barre</p>
+                        <p className="text-[10px] text-white/20">Affiche une barre de promotion tout en haut</p>
+                      </div>
+                      <button onClick={() => setFormData(p => ({ ...p, show_announcement: p.show_announcement === 'true' ? 'false' : 'true' }))} className={`w-12 h-6 rounded-full relative transition-all ${formData.show_announcement === 'true' ? 'bg-brand' : 'bg-white/10'}`}>
+                        <div className={`absolute top-1 w-4 h-4 rounded-full bg-white transition-all ${formData.show_announcement === 'true' ? 'left-7' : 'left-1'}`} />
+                      </button>
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-bold text-white/20 uppercase tracking-[0.2em] ml-2">Texte de l'annonce</label>
+                      <input type="text" value={formData.announcement_text} onChange={(e) => setFormData(p => ({ ...p, announcement_text: e.target.value }))} className="w-full bg-white/3 border border-white/5 rounded-xl py-3 px-4 text-xs text-white focus:border-brand/50 transition-all outline-none" />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-bold text-white/20 uppercase tracking-[0.2em] ml-2">Lien de l'annonce</label>
+                      <input type="text" value={formData.announcement_link} onChange={(e) => setFormData(p => ({ ...p, announcement_link: e.target.value }))} className="w-full bg-white/3 border border-white/5 rounded-xl py-3 px-4 text-xs text-white focus:border-brand/50 transition-all outline-none" />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-white/2 p-8 rounded-3xl border border-white/5 space-y-6">
+                  <h4 className="text-sm font-bold flex items-center gap-2 italic"><Layout size={16} className="text-brand" /> Menu de Navigation</h4>
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-bold text-white/20 uppercase tracking-[0.2em] ml-2">Texte du bouton Header</label>
+                      <input type="text" value={formData.header_cta} onChange={(e) => setFormData(p => ({ ...p, header_cta: e.target.value }))} className="w-full bg-white/3 border border-white/5 rounded-xl py-3 px-4 text-xs text-white focus:border-brand/50 transition-all outline-none" />
+                    </div>
+                  </div>
                 </div>
               </div>
             </motion.div>
