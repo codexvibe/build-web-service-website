@@ -206,6 +206,14 @@ INSERT INTO agency_settings (key, value) VALUES
 ('show_hero_glow', 'true')
 ON CONFLICT (key) DO NOTHING;
 
+-- ABOUT & CTA SETTINGS
+INSERT INTO agency_settings (key, value) VALUES 
+('about_title', 'Expertise et Qualité'),
+('about_desc', 'Nous nous engageons à fournir des solutions digitales de haute qualité qui répondent aux besoins spécifiques de nos clients en Algérie.'),
+('cta_title', 'Prêt à lancer votre projet ?'),
+('contact_whatsapp', '213555555555')
+ON CONFLICT (key) DO NOTHING;
+
 -- FOOTER & CONTACT SETTINGS
 INSERT INTO agency_settings (key, value) VALUES 
 ('footer_desc', 'Solutions digitales premium basées en Algérie. Nous transformons vos idées en succès numérique avec des technologies de pointe.'),

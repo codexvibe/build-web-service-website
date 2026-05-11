@@ -7,7 +7,7 @@ import {
   Shield, Globe, Bell, Palette, Database, Lock,
   User, Mail, Phone, Save, RefreshCw, ChevronRight,
   Fingerprint, Key, Eye, EyeOff, Check, Layout, Info,
-  MapPin, Type, Share2
+  MapPin, Type, Share2, MousePointer2
 } from 'lucide-react'
 
 export default function SettingsView({ initialSettings = [], mode = 'full' }: { initialSettings?: any[], mode?: 'full' | 'editor' }) {
@@ -44,6 +44,12 @@ export default function SettingsView({ initialSettings = [], mode = 'full' }: { 
     social_facebook: getInitialValue('social_facebook', ''),
     social_instagram: getInitialValue('social_instagram', ''),
     social_linkedin: getInitialValue('social_linkedin', ''),
+    
+    // Sections
+    about_title: getInitialValue('about_title', 'Expertise et Qualité'),
+    about_desc: getInitialValue('about_desc', 'Nous nous engageons à fournir...'),
+    cta_title: getInitialValue('cta_title', 'Prêt à lancer votre projet ?'),
+    contact_whatsapp: getInitialValue('contact_whatsapp', '213555555555'),
   })
 
   useEffect(() => {
@@ -122,13 +128,30 @@ export default function SettingsView({ initialSettings = [], mode = 'full' }: { 
     })
   }
 
+  const handleSaveSections = () => {
+    setSaveStatus('idle')
+    startTransition(async () => {
+      try {
+        await updateSettingAction('about_title', formData.about_title)
+        await updateSettingAction('about_desc', formData.about_desc)
+        await updateSettingAction('cta_title', formData.cta_title)
+        await updateSettingAction('contact_whatsapp', formData.contact_whatsapp)
+        setSaveStatus('success')
+        setTimeout(() => setSaveStatus('idle'), 3000)
+      } catch (e) {
+        setSaveStatus('error')
+      }
+    })
+  }
+
   const sections = [
     { id: 'general', label: 'Général', icon: Info },
     { id: 'hero', label: 'Section Hero', icon: Layout },
+    { id: 'sections', label: 'Sections & CTA', icon: MousePointer2 },
     { id: 'appearance', label: 'Apparence', icon: Palette },
     { id: 'footer', label: 'Pied de page', icon: Mail },
     { id: 'security', label: 'Sécurité', icon: Shield },
-  ].filter(s => mode === 'full' || ['hero', 'appearance', 'footer'].includes(s.id))
+  ].filter(s => mode === 'full' || ['hero', 'sections', 'appearance', 'footer'].includes(s.id))
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 min-h-[600px]">
@@ -198,6 +221,51 @@ export default function SettingsView({ initialSettings = [], mode = 'full' }: { 
                   {isPending ? <RefreshCw className="animate-spin" size={14} /> : saveStatus === 'success' ? <Check className="text-green-600" size={14} /> : <Save size={14} />}
                   {isPending ? 'Enregistrement...' : saveStatus === 'success' ? 'Enregistré !' : 'Mettre à jour'}
                 </button>
+              </div>
+            </motion.div>
+          )}
+
+          {activeSection === 'sections' && (
+            <motion.div key="sections" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="space-y-10 relative z-10">
+              <div className="flex justify-between items-center">
+                <div>
+                  <h3 className="text-2xl font-bold mb-1">Sections de la Page</h3>
+                  <p className="text-white/20 text-[10px] font-bold uppercase tracking-widest">Gérez le contenu des blocs secondaires</p>
+                </div>
+                <button onClick={handleSaveSections} disabled={isPending} className="px-6 py-3 bg-brand text-black font-bold text-[10px] uppercase tracking-widest rounded-xl hover:scale-105 transition-all flex items-center gap-2 active:scale-95 disabled:opacity-50">
+                   {saveStatus === 'success' ? <Check size={14} /> : <Save size={14} />}
+                   {saveStatus === 'success' ? 'Enregistré !' : 'Enregistrer'}
+                </button>
+              </div>
+
+              <div className="grid grid-cols-1 gap-8">
+                <div className="bg-white/2 p-8 rounded-3xl border border-white/5 space-y-6">
+                  <h4 className="text-sm font-bold flex items-center gap-2 italic"><Info size={16} className="text-brand" /> Section "Qui sommes-nous"</h4>
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-bold text-white/20 uppercase tracking-[0.2em] ml-2">Titre de la section</label>
+                      <input type="text" value={formData.about_title} onChange={(e) => setFormData(p => ({ ...p, about_title: e.target.value }))} className="w-full bg-white/3 border border-white/5 rounded-xl py-3 px-4 text-xs text-white focus:border-brand/50 transition-all outline-none" />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-bold text-white/20 uppercase tracking-[0.2em] ml-2">Description longue</label>
+                      <textarea rows={4} value={formData.about_desc} onChange={(e) => setFormData(p => ({ ...p, about_desc: e.target.value }))} className="w-full bg-white/3 border border-white/5 rounded-xl py-3 px-4 text-xs text-white focus:border-brand/50 transition-all outline-none resize-none" />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-white/2 p-8 rounded-3xl border border-white/5 space-y-6">
+                  <h4 className="text-sm font-bold flex items-center gap-2 italic"><MousePointer2 size={16} className="text-brand" /> Section CTA (Appel à l'action)</h4>
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-bold text-white/20 uppercase tracking-[0.2em] ml-2">Titre de l'appel à l'action</label>
+                      <input type="text" value={formData.cta_title} onChange={(e) => setFormData(p => ({ ...p, cta_title: e.target.value }))} className="w-full bg-white/3 border border-white/5 rounded-xl py-3 px-4 text-xs text-white focus:border-brand/50 transition-all outline-none" />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-bold text-white/20 uppercase tracking-[0.2em] ml-2">Numéro WhatsApp (Format: 213555...)</label>
+                      <input type="text" value={formData.contact_whatsapp} onChange={(e) => setFormData(p => ({ ...p, contact_whatsapp: e.target.value }))} className="w-full bg-white/3 border border-white/5 rounded-xl py-3 px-4 text-xs text-white focus:border-brand/50 transition-all outline-none" />
+                    </div>
+                  </div>
+                </div>
               </div>
             </motion.div>
           )}

@@ -120,13 +120,9 @@ export default function HomeClient({ dbServices = [], dbSettings = [] }: { dbSer
       <section className="py-24 bg-surface/30 border-t border-border">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto prose prose-invert text-center">
-            <h3 className="text-2xl font-display font-bold text-text mb-6">{t("order.trust_quality")}</h3>
+            <h3 className="text-2xl font-display font-bold text-text mb-6">{getSetting('about_title', t("order.trust_quality"))}</h3>
             <p className="text-text-sub leading-relaxed mb-8">
-              {t("order.trust_quality_desc")}
-            </p>
-            <h3 className="text-2xl font-display font-bold text-text mb-6">{t("order.trust_rapid")}</h3>
-            <p className="text-text-sub leading-relaxed">
-              {t("order.trust_rapid_desc")}
+              {getSetting('about_desc', t("order.trust_quality_desc"))}
             </p>
           </div>
         </div>
@@ -137,13 +133,13 @@ export default function HomeClient({ dbServices = [], dbSettings = [] }: { dbSer
         <div className="absolute inset-0 bg-brand/5"></div>
         <div className="container mx-auto px-6 relative z-10 text-center">
           <h2 className="text-4xl md:text-6xl font-display font-bold text-text mb-8">
-            {t("cta.title")}
+            {getSetting('cta_title', t("cta.title"))}
           </h2>
           <div className="flex flex-col sm:flex-row justify-center gap-5">
             <Link href="/order" className="btn-brand">
-              {t("hero.cta_quote")}
+              {getSetting('hero_cta_primary', t("hero.cta_quote"))}
             </Link>
-            <a href="https://wa.me/213555555555" className="btn-ghost bg-surface">
+            <a href={`https://wa.me/${getSetting('contact_whatsapp', '213555555555')}`} className="btn-ghost bg-surface">
               {t("cta.whatsapp")}
             </a>
           </div>
