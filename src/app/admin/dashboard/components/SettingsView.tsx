@@ -7,7 +7,7 @@ import {
   Shield, Globe, Bell, Palette, Database, Lock,
   User, Mail, Phone, Save, RefreshCw, ChevronRight,
   Fingerprint, Key, Eye, EyeOff, Check, Layout, Info,
-  Facebook, Instagram, Linkedin, MapPin, Type
+  MapPin, Type, Share2
 } from 'lucide-react'
 
 export default function SettingsView({ initialSettings = [] }: { initialSettings?: any[] }) {
@@ -398,15 +398,15 @@ export default function SettingsView({ initialSettings = [] }: { initialSettings
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                    <div className="relative">
-                     <Facebook size={14} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" />
+                     <Share2 size={14} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" />
                      <input type="text" placeholder="Facebook URL" value={formData.social_facebook} onChange={(e) => setFormData(p => ({ ...p, social_facebook: e.target.value }))} className="w-full bg-white/3 border border-white/5 rounded-xl py-3 pl-12 pr-4 text-[11px] text-white focus:border-brand/50 transition-all outline-none" />
                    </div>
                    <div className="relative">
-                     <Instagram size={14} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" />
+                     <Share2 size={14} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" />
                      <input type="text" placeholder="Instagram URL" value={formData.social_instagram} onChange={(e) => setFormData(p => ({ ...p, social_instagram: e.target.value }))} className="w-full bg-white/3 border border-white/5 rounded-xl py-3 pl-12 pr-4 text-[11px] text-white focus:border-brand/50 transition-all outline-none" />
                    </div>
                    <div className="relative">
-                     <Linkedin size={14} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" />
+                     <Share2 size={14} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" />
                      <input type="text" placeholder="LinkedIn URL" value={formData.social_linkedin} onChange={(e) => setFormData(p => ({ ...p, social_linkedin: e.target.value }))} className="w-full bg-white/3 border border-white/5 rounded-xl py-3 pl-12 pr-4 text-[11px] text-white focus:border-brand/50 transition-all outline-none" />
                    </div>
                 </div>

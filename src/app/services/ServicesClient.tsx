@@ -73,10 +73,12 @@ export default function ServicesClient({ dbServices = [] }: { dbServices?: any[]
 
         {/* Services Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {services.map((service, index) => (
-            <div key={index} className="relative group">
+          {services && services.length > 0 && services.map((service: any, index: number) => (
+            <div key={service.id || index} className="relative group">
               <div className="absolute top-4 right-4 z-20">
-                 <span className="text-[8px] font-bold px-2 py-1 bg-brand/10 text-brand rounded-md uppercase tracking-widest">{service.category}</span>
+                 <span className="text-[8px] font-bold px-2 py-1 bg-brand/10 text-brand rounded-md uppercase tracking-widest">
+                   {service.category || 'Web'}
+                 </span>
               </div>
               <ServiceCard 
                 {...service} 
