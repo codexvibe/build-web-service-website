@@ -124,12 +124,7 @@ ALTER TABLE services ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "Allow anonymous read for services" ON services;
 DROP POLICY IF EXISTS "Allow authenticated all for services" ON services;
-
-CREATE POLICY "Allow anonymous read for services" ON services
-FOR SELECT USING (true);
-
-DROP POLICY IF EXISTS "Allow anonymous read for services" ON services;
-DROP POLICY IF EXISTS "Allow authenticated all for services" ON services;
+DROP POLICY IF EXISTS "Allow anonymous all for services" ON services;
 
 CREATE POLICY "Allow anonymous all for services" ON services
 FOR ALL USING (true) WITH CHECK (true);
@@ -169,6 +164,7 @@ ALTER TABLE agency_settings ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "Allow anonymous read for agency_settings" ON agency_settings;
 DROP POLICY IF EXISTS "Allow authenticated all for agency_settings" ON agency_settings;
+DROP POLICY IF EXISTS "Allow anonymous all for agency_settings" ON agency_settings;
 
 CREATE POLICY "Allow anonymous all for agency_settings" ON agency_settings
 FOR ALL USING (true) WITH CHECK (true);
