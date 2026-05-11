@@ -5,6 +5,7 @@
 @theme {
   /* CLEAN CORPORATE COLOR SYSTEM */
   --color-brand: var(--brand-current);       /* Dynamic Premium Color */
+  --color-brand-content: var(--brand-contrast);
   --color-brand-dark: color-mix(in srgb, var(--brand-current) 80%, black); 
   --color-brand-glow: color-mix(in srgb, var(--brand-current) 15%, transparent);
   
@@ -16,6 +17,7 @@
 
 :root {
   --brand-current: var(--brand-light, #3b82f6);
+  --brand-contrast: #ffffff;
   --color-bg: #f8fafc;          /* Slate 50 */
   --color-surface: #ffffff;      /* White */
   --color-card: #ffffff;
@@ -28,6 +30,7 @@
 /* Dark Mode Overrides */
 .dark {
   --brand-current: var(--brand-dark, #ffffff);
+  --brand-contrast: #000000;
   --color-bg: #0f172a;          /* Slate 900 */
   --color-surface: #1e293b;     /* Slate 800 */
   --color-card: #1e293b;
@@ -93,7 +96,7 @@
     justify-content: center;
     gap: 0.5rem;
     background: var(--color-brand);
-    color: #ffffff;
+    color: var(--color-brand-content);
     font-weight: 600;
     font-family: var(--font-sans);
     padding: 0.75rem 1.5rem;

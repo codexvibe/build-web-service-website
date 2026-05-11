@@ -12,6 +12,7 @@ import {
 export default function SettingsView({ initialSettings = [] }: { initialSettings?: any[] }) {
   const [activeSection, setActiveSection] = useState('general')
   const [isPending, startTransition] = useTransition()
+  const [saveStatus, setSaveStatus] = useState<'idle' | 'success' | 'error'>('idle')
 
   // Initialize from props if available
   const getInitialValue = (key: string, fallback: string) => {
@@ -38,17 +39,31 @@ export default function SettingsView({ initialSettings = [] }: { initialSettings
   }, [])
 
   const handleSaveGeneral = () => {
+    setSaveStatus('idle')
     startTransition(async () => {
-      await updateSettingAction('agency_name', formData.agency_name)
-      await updateSettingAction('admin_email', formData.admin_email)
-      await updateSettingAction('agency_bio', formData.agency_bio)
+      try {
+        await updateSettingAction('agency_name', formData.agency_name)
+        await updateSettingAction('admin_email', formData.admin_email)
+        await updateSettingAction('agency_bio', formData.agency_bio)
+        setSaveStatus('success')
+        setTimeout(() => setSaveStatus('idle'), 3000)
+      } catch (e) {
+        setSaveStatus('error')
+      }
     })
   }
 
   const handleSaveAppearance = () => {
+    setSaveStatus('idle')
     startTransition(async () => {
-      await updateSettingAction('brand_color_light', formData.brand_color_light)
-      await updateSettingAction('brand_color_dark', formData.brand_color_dark)
+      try {
+        await updateSettingAction('brand_color_light', formData.brand_color_light)
+        await updateSettingAction('brand_color_dark', formData.brand_color_dark)
+        setSaveStatus('success')
+        setTimeout(() => setSaveStatus('idle'), 3000)
+      } catch (e) {
+        setSaveStatus('error')
+      }
     })
   }
 
@@ -124,7 +139,8 @@ export default function SettingsView({ initialSettings = [] }: { initialSettings
 
               <div className="pt-6 border-t border-white/5">
                 <button onClick={handleSaveGeneral} disabled={isPending} className="px-8 py-4 bg-white text-black font-bold text-[11px] uppercase tracking-widest rounded-xl hover:bg-brand transition-all flex items-center gap-2 disabled:opacity-50">
-                  <Save size={14} /> Mettre à jour
+                  {isPending ? <RefreshCw className="animate-spin" size={14} /> : saveStatus === 'success' ? <Check className="text-green-600" size={14} /> : <Save size={14} />}
+                  {isPending ? 'Enregistrement...' : saveStatus === 'success' ? 'Enregistré !' : 'Mettre à jour'}
                 </button>
               </div>
             </motion.div>
@@ -277,7 +293,8 @@ export default function SettingsView({ initialSettings = [] }: { initialSettings
                   
                   <div className="pt-2">
                     <button onClick={handleSaveAppearance} disabled={isPending} className="px-8 py-4 bg-white text-black font-bold text-[11px] uppercase tracking-widest rounded-xl hover:bg-brand transition-all flex items-center gap-2 disabled:opacity-50">
-                      <Save size={14} /> Mettre à jour l'apparence
+                      {isPending ? <RefreshCw className="animate-spin" size={14} /> : saveStatus === 'success' ? <Check className="text-green-600" size={14} /> : <Save size={14} />}
+                      {isPending ? 'Enregistrement...' : saveStatus === 'success' ? 'Enregistré !' : "Mettre à jour l'apparence"}
                     </button>
                   </div>
                 </div>

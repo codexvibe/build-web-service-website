@@ -20,7 +20,7 @@ const WhatsAppButton = () => {
         right: "1.75rem",
         zIndex: 999,
         background: "var(--color-brand)",
-        color: "var(--brand-dark, #fff)",
+        color: "var(--color-brand-content)",
         width: "56px",
         height: "56px",
         border: "1px solid var(--color-border)"
