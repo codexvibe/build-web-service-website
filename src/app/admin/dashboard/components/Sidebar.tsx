@@ -27,8 +27,8 @@ export default function Sidebar({ activeTab, setActiveTab, onLogout }: SidebarPr
     <aside className="w-full md:w-20 lg:w-72 bg-[#09090b] border-r border-white/5 flex flex-col z-50 h-screen sticky top-0">
       {/* Brand Header */}
       <div className="p-6 lg:p-8 flex items-center gap-4">
-        <div className="w-10 h-10 rounded-xl bg-linear-to-tr from-brand to-blue-400 flex items-center justify-center drop-shadow-[0_0_12px_rgba(255,255,255,0.4)]">
-          <LayoutDashboard size={20} className="text-white" />
+        <div className="w-10 h-10 rounded-xl bg-brand flex items-center justify-center shadow-[0_0_20px_var(--color-brand-glow)]">
+          <LayoutDashboard size={20} className="text-white dark:text-black transition-colors" />
         </div>
         <div className="hidden lg:block overflow-hidden">
           <h1 className="font-heading font-bold text-lg tracking-tight text-white leading-none">

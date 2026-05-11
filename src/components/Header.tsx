@@ -64,7 +64,7 @@ const Header = () => {
       <div className="max-w-[1400px] mx-auto px-6 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-3 z-50 group">
           <div className="relative flex items-center justify-center">
-            <div className="absolute inset-0 bg-brand/20 blur-xl rounded-full group-hover:bg-brand/40 transition-all"></div>
+            <div className="absolute inset-0 bg-brand/20 blur-xl rounded-full group-hover:bg-brand/40 transition-all shadow-[0_0_20px_var(--color-brand-glow)]"></div>
             <img 
               src="/logo.png" 
               alt="ProServices" 

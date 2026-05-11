@@ -4,9 +4,9 @@
 
 @theme {
   /* CLEAN CORPORATE COLOR SYSTEM */
-  --color-brand: #3b82f6;       /* Premium Blue */
-  --color-brand-dark: #2563eb; 
-  --color-brand-glow: rgba(59, 130, 246, 0.15);
+  --color-brand: var(--brand-current);       /* Dynamic Premium Color */
+  --color-brand-dark: color-mix(in srgb, var(--brand-current) 80%, black); 
+  --color-brand-glow: color-mix(in srgb, var(--brand-current) 15%, transparent);
   
   --font-sans: 'Inter', system-ui, sans-serif;
   --font-display: 'Inter', system-ui, sans-serif;
@@ -15,6 +15,7 @@
 }
 
 :root {
+  --brand-current: var(--brand-light, #3b82f6);
   --color-bg: #f8fafc;          /* Slate 50 */
   --color-surface: #ffffff;      /* White */
   --color-card: #ffffff;
@@ -26,6 +27,7 @@
 
 /* Dark Mode Overrides */
 .dark {
+  --brand-current: var(--brand-dark, #ffffff);
   --color-bg: #0f172a;          /* Slate 900 */
   --color-surface: #1e293b;     /* Slate 800 */
   --color-card: #1e293b;

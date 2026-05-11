@@ -13,16 +13,17 @@ const WhatsAppButton = () => {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Nous contacter sur WhatsApp"
-      className="hover:scale-110 transition-transform duration-200 ease-out flex items-center justify-center rounded-full shadow-[0_8px_24px_rgba(37,211,102,0.4)]"
+      className="hover:scale-110 transition-transform duration-200 ease-out flex items-center justify-center rounded-full shadow-[0_8px_24px_var(--color-brand-glow)]"
       style={{
         position: "fixed",
         bottom: "1.75rem",
         right: "1.75rem",
         zIndex: 999,
-        background: "#25D366",
-        color: "#fff",
+        background: "var(--color-brand)",
+        color: "var(--brand-dark, #fff)",
         width: "56px",
         height: "56px",
+        border: "1px solid var(--color-border)"
       }}
     >
       <svg

@@ -99,20 +99,26 @@ const jsonLd = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  let brandColor = "#D4FF00"; // default brand color
+  let brandLight = "#3b82f6"; // default light mode color (blue)
+  let brandDark = "#ffffff";  // default dark mode color (white)
 
   try {
     const supabase = await createClient();
-    const { data } = await supabase.from('agency_settings').select('*').eq('key', 'brand_color').single();
-    if (data && data.value) {
-      brandColor = data.value;
+    const { data } = await supabase.from('agency_settings').select('*').in('key', ['brand_color_light', 'brand_color_dark']);
+    
+    if (data) {
+      const lightSetting = data.find(s => s.key === 'brand_color_light');
+      const darkSetting = data.find(s => s.key === 'brand_color_dark');
+      
+      if (lightSetting?.value) brandLight = lightSetting.value;
+      if (darkSetting?.value) brandDark = darkSetting.value;
     }
   } catch (error) {
-    console.error("Failed to fetch brand_color", error);
+    console.error("Failed to fetch brand colors", error);
   }
 
   return (
-    <html lang="fr" className="scroll-smooth" suppressHydrationWarning style={{ '--color-brand': brandColor } as React.CSSProperties}>
+    <html lang="fr" className="scroll-smooth" suppressHydrationWarning style={{ '--brand-light': brandLight, '--brand-dark': brandDark } as React.CSSProperties}>
       <head>
         <script dangerouslySetInnerHTML={{ __html: `
           (function() {

@@ -127,16 +127,24 @@ FOR ALL USING (auth.role() = 'authenticated') WITH CHECK (auth.role() = 'authent
 
 -- Insert initial dummy data for services if empty
 INSERT INTO services (name, description, price, delivery_time, is_available)
-SELECT 'Site Vitrine Pro', 'Idéal pour les entreprises et indépendants.', '45,000 DA', '7-10 jours', true
-WHERE NOT EXISTS (SELECT 1 FROM services LIMIT 1);
+SELECT 'Sites Vitrines', 'Présentez votre activité avec un design élégant et professionnel. Idéal pour les artisans et PME.', '15 000 DA', '7 jours', true
+WHERE NOT EXISTS (SELECT 1 FROM services WHERE name = 'Sites Vitrines');
 
 INSERT INTO services (name, description, price, delivery_time, is_available)
-SELECT 'E-commerce Complet', 'Boutique en ligne avec gestion de stock.', '85,000 DA', '15-20 jours', true
-WHERE NOT EXISTS (SELECT 1 FROM services WHERE name = 'E-commerce Complet');
+SELECT 'Pack Business', 'E-commerce, Immobilier, Plateformes de Gestion, Réservations... Des solutions sur mesure pour booster votre activité.', '45 000 DA', '15 jours', true
+WHERE NOT EXISTS (SELECT 1 FROM services WHERE name = 'Pack Business');
 
 INSERT INTO services (name, description, price, delivery_time, is_available)
-SELECT 'Landing Page High-Conv', 'Optimisé pour vos campagnes publicitaires.', '25,000 DA', '3-5 jours', true
-WHERE NOT EXISTS (SELECT 1 FROM services WHERE name = 'Landing Page High-Conv');
+SELECT 'Pack Agence', 'Solution Premium pour Agences : Site haute performance, SEO Local, Intégration CRM et Support VIP dédié.', '85 000 DA', '20 jours', true
+WHERE NOT EXISTS (SELECT 1 FROM services WHERE name = 'Pack Agence');
+
+INSERT INTO services (name, description, price, delivery_time, is_available)
+SELECT 'Applications Web', 'Développement sur mesure d''outils métiers et de plateformes complexes pour votre entreprise.', 'Sur Devis', 'Variable', true
+WHERE NOT EXISTS (SELECT 1 FROM services WHERE name = 'Applications Web');
+
+INSERT INTO services (name, description, price, delivery_time, is_available)
+SELECT 'SEO & Visibilité', 'Optimisez votre positionnement sur Google et attirez plus de clients qualifiés.', '10 000 DA', 'Mensuel', true
+WHERE NOT EXISTS (SELECT 1 FROM services WHERE name = 'SEO & Visibilité');
 
 -- ============================================
 -- Agency Settings Table
@@ -160,6 +168,8 @@ CREATE POLICY "Allow authenticated all for agency_settings" ON agency_settings
 FOR ALL USING (auth.role() = 'authenticated') WITH CHECK (auth.role() = 'authenticated');
 
 -- Insert default settings
+DELETE FROM agency_settings WHERE key = 'brand_color';
+
 INSERT INTO agency_settings (key, value)
 VALUES ('agency_name', 'ProServices Digital')
 ON CONFLICT (key) DO NOTHING;
@@ -173,5 +183,9 @@ VALUES ('agency_bio', 'Solutions digitales premium basées en Algérie.')
 ON CONFLICT (key) DO NOTHING;
 
 INSERT INTO agency_settings (key, value)
-VALUES ('brand_color', '#D4FF00')
+VALUES ('brand_color_light', '#3b82f6')
+ON CONFLICT (key) DO NOTHING;
+
+INSERT INTO agency_settings (key, value)
+VALUES ('brand_color_dark', '#ffffff')
 ON CONFLICT (key) DO NOTHING;
