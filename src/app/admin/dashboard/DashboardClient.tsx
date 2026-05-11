@@ -37,7 +37,7 @@ import { ServiceRequest, AdminProfile } from '@/types'
 
 
 export default function DashboardClient({ initialRequests, initialServices, initialSettings }: { initialRequests: any[], initialServices: any[], initialSettings: any[] }) {
-  const [activeTab, setActiveTab] = useState<'requests' | 'stats' | 'team' | 'settings' | 'services'>('requests')
+  const [activeTab, setActiveTab] = useState<'requests' | 'stats' | 'team' | 'settings' | 'services' | 'editor'>('requests')
   const [requests, setRequests] = useState<ServiceRequest[]>(initialRequests)
   const [admins, setAdmins] = useState<AdminProfile[]>([])
   const [stats, setStats] = useState<any>(null)
@@ -139,6 +139,7 @@ export default function DashboardClient({ initialRequests, initialServices, init
                   {activeTab === 'stats' && 'Performance Analytics'}
                   {activeTab === 'team' && 'Équipe Administrative'}
                   {activeTab === 'settings' && 'Paramètres Système'}
+                  {activeTab === 'editor' && 'Éditeur visuel du Site'}
                 </h2>
                 <p className="text-[10px] text-white/30 uppercase tracking-widest font-bold">ProServices Control Panel</p>
               </div>
@@ -385,6 +386,12 @@ export default function DashboardClient({ initialRequests, initialServices, init
               {activeTab === 'settings' && (
                 <motion.div key="settings" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="max-w-[1000px] mx-auto w-full">
                    <SettingsView initialSettings={initialSettings} />
+                </motion.div>
+              )}
+
+              {activeTab === 'editor' && (
+                <motion.div key="editor" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="max-w-[1200px] mx-auto w-full">
+                   <SettingsView initialSettings={initialSettings} mode="editor" />
                 </motion.div>
               )}
            </AnimatePresence>

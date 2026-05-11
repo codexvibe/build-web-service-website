@@ -18,6 +18,7 @@ export default function Sidebar({ activeTab, setActiveTab, onLogout }: SidebarPr
   const menuItems = [
     { id: 'requests', label: 'Demandes', icon: MessageSquare },
     { id: 'services', label: 'Catalogue', icon: Layout },
+    { id: 'editor', label: 'Éditeur de Site', icon: Palette },
     { id: 'stats', label: 'Analytiques', icon: BarChart3 },
     { id: 'team', label: 'Équipe', icon: Users },
     { id: 'settings', label: 'Paramètres', icon: Settings },

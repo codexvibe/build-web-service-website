@@ -10,8 +10,8 @@ import {
   MapPin, Type, Share2
 } from 'lucide-react'
 
-export default function SettingsView({ initialSettings = [] }: { initialSettings?: any[] }) {
-  const [activeSection, setActiveSection] = useState('general')
+export default function SettingsView({ initialSettings = [], mode = 'full' }: { initialSettings?: any[], mode?: 'full' | 'editor' }) {
+  const [activeSection, setActiveSection] = useState(mode === 'editor' ? 'appearance' : 'general')
   const [isPending, startTransition] = useTransition()
   const [saveStatus, setSaveStatus] = useState<'idle' | 'success' | 'error'>('idle')
 
@@ -128,7 +128,7 @@ export default function SettingsView({ initialSettings = [] }: { initialSettings
     { id: 'appearance', label: 'Apparence', icon: Palette },
     { id: 'footer', label: 'Pied de page', icon: Mail },
     { id: 'security', label: 'Sécurité', icon: Shield },
-  ]
+  ].filter(s => mode === 'full' || ['hero', 'appearance', 'footer'].includes(s.id))
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 min-h-[600px]">

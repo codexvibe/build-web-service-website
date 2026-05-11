@@ -68,16 +68,21 @@ export default function ServicesView({ initialServices = [] }: { initialServices
     startTransition(async () => {
       if (editingService) {
         const result = await updateServiceAction(editingService.id, formData)
-        if (result.success) {
+        if (result.error) {
+          alert("Erreur: " + result.error)
+        } else {
           setServices(services.map(s => s.id === editingService.id ? { ...s, ...formData } : s))
+          setIsModalOpen(false)
         }
       } else {
         const result = await addServiceAction(formData)
-        if (result.success) {
-          // initialServices will be updated via Next.js revalidatePath, useEffect will handle syncing
+        if (result.error) {
+          alert("Erreur: " + result.error)
+        } else {
+          setIsModalOpen(false)
+          window.location.reload()
         }
       }
-      setIsModalOpen(false)
     })
   }
 
