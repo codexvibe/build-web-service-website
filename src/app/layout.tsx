@@ -17,6 +17,8 @@ const ibmPlexArabic = IBM_Plex_Sans_Arabic({
   variable: "--font-arabic" 
 });
 
+export const dynamic = 'force-dynamic';
+
 export const viewport = {
   width: "device-width",
   initialScale: 1,

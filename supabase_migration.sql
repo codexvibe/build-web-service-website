@@ -128,8 +128,11 @@ DROP POLICY IF EXISTS "Allow authenticated all for services" ON services;
 CREATE POLICY "Allow anonymous read for services" ON services
 FOR SELECT USING (true);
 
-CREATE POLICY "Allow authenticated all for services" ON services
-FOR ALL USING (auth.role() = 'authenticated') WITH CHECK (auth.role() = 'authenticated');
+DROP POLICY IF EXISTS "Allow anonymous read for services" ON services;
+DROP POLICY IF EXISTS "Allow authenticated all for services" ON services;
+
+CREATE POLICY "Allow anonymous all for services" ON services
+FOR ALL USING (true) WITH CHECK (true);
 
 -- Insert initial dummy data for services if empty
 INSERT INTO services (name, description, price, delivery_time, is_available)
@@ -167,11 +170,8 @@ ALTER TABLE agency_settings ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS "Allow anonymous read for agency_settings" ON agency_settings;
 DROP POLICY IF EXISTS "Allow authenticated all for agency_settings" ON agency_settings;
 
-CREATE POLICY "Allow anonymous read for agency_settings" ON agency_settings
-FOR SELECT USING (true);
-
-CREATE POLICY "Allow authenticated all for agency_settings" ON agency_settings
-FOR ALL USING (auth.role() = 'authenticated') WITH CHECK (auth.role() = 'authenticated');
+CREATE POLICY "Allow anonymous all for agency_settings" ON agency_settings
+FOR ALL USING (true) WITH CHECK (true);
 
 -- Insert default settings
 DELETE FROM agency_settings WHERE key = 'brand_color';

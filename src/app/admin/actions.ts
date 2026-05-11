@@ -1,7 +1,7 @@
 'use server'
 
 import { z } from 'zod'
-import { createSession, deleteSession } from '@/lib/session'
+import { createSession, deleteSession, verifySession } from '@/lib/session'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/utils/supabase/server'
 import { revalidatePath } from 'next/cache'
@@ -150,29 +150,41 @@ export async function getServicesAction() {
 }
 
 export async function addServiceAction(service: any) {
+  const { isAuth } = await verifySession()
+  if (!isAuth) return { error: 'Non autorisé' }
+  
   const supabase = await createClient()
   const { error } = await supabase.from('services').insert([service])
   if (error) return { error: error.message }
   revalidatePath('/admin/dashboard')
   revalidatePath('/services')
+  revalidatePath('/')
   return { success: true }
 }
 
 export async function updateServiceAction(id: string, service: any) {
+  const { isAuth } = await verifySession()
+  if (!isAuth) return { error: 'Non autorisé' }
+
   const supabase = await createClient()
   const { error } = await supabase.from('services').update(service).eq('id', id)
   if (error) return { error: error.message }
   revalidatePath('/admin/dashboard')
   revalidatePath('/services')
+  revalidatePath('/')
   return { success: true }
 }
 
 export async function deleteServiceAction(id: string) {
+  const { isAuth } = await verifySession()
+  if (!isAuth) return { error: 'Non autorisé' }
+
   const supabase = await createClient()
   const { error } = await supabase.from('services').delete().eq('id', id)
   if (error) return { error: error.message }
   revalidatePath('/admin/dashboard')
   revalidatePath('/services')
+  revalidatePath('/')
   return { success: true }
 }
 
@@ -187,10 +199,16 @@ export async function getSettingsAction() {
 }
 
 export async function updateSettingAction(key: string, value: string) {
+  const { isAuth } = await verifySession()
+  if (!isAuth) return { error: 'Non autorisé' }
+
   const supabase = await createClient()
   const { error } = await supabase.from('agency_settings').upsert({ key, value }, { onConflict: 'key' })
   if (error) return { error: error.message }
+  
   revalidatePath('/admin/dashboard')
   revalidatePath('/', 'layout')
+  revalidatePath('/')
+  revalidatePath('/services')
   return { success: true }
 }
